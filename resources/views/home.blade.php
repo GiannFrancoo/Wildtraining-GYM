@@ -20,6 +20,7 @@
         </div>
     @endif
 
+    <!-- Card headers -->
     <div class="row">
 
         <!-- Earnings (Monthly) Card Example -->
@@ -28,11 +29,11 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Recaudación (Mensual)</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -45,7 +46,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Recaudación (Anual)</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
                         </div>
                         <div class="col-auto">
@@ -62,7 +63,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks</div>
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Pendiente a pago</div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
                                     <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
@@ -82,14 +83,14 @@
             </div>
         </div>
 
-        <!-- Users -->
+        <!-- Total Users -->
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">{{ __('Users') }}</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $widget['users'] }}</div>
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Usuarios</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $users->count() }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-users fa-2x text-gray-300"></i>
@@ -100,6 +101,86 @@
         </div>
     </div>
 
+    <!-- User table -->
+    <div class="row">
+        <div class="col mb-4">
+            <div class="card shadow mb-4">
+
+                <div class="card-header py-3">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-6 my-2">
+                            <h6 class="m-0 font-weight-bold text-primary">Lista de usuarios</h6>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <input type="text" id="myInput" onkeyup="tableSearch()" class="form-control" placeholder="Nombre de usuario&hellip;">
+                        </div>
+                        <div class="col-lg-1 col-md-2 col-sm-3">
+                            <a href="" type="button" class="btn btn-success float-right" title="add" data-toggle="tooltip"><i class="fa-solid fa-circle-plus mx-1"></i>Nuevo</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <table class="table-reponsive">
+                        <table class="table table-bordered table-hover text-center" id="myTable">    
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Apellido</th>
+                                    <th scope="col">Telefono</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($users as $user)
+                                    <tr>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->last_name }}</td>
+                                        <td>{{ $user->primary_phone }}</td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewModal">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+
+                                            <!-- View Modal -->
+                                            <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">{{ $user->getFullNameAttribute() }}</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+
+                                                        <!-- tabla vegana invertida; -->
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="" type="button" class="btn btn-primary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mr-1"></i>Editar</a>
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <a href="" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
+                                            <a href="" type="button" class="btn btn-danger" onclick="return confirm('¿Desea borrar al usuario {{$user->name}}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </table>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer panels -->
     <div class="row">
 
         <!-- Content Column -->
@@ -217,4 +298,5 @@
 
         </div>
     </div>
+
 @endsection
