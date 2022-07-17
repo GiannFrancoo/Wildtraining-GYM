@@ -67,6 +67,14 @@
             </a>
         </li>
 
+        <!-- Nav Item - Subscription -->
+        <li class="nav-item {{ Nav::isRoute('subscription.index') }}">
+            <a class="nav-link" href="{{ route('subscription.index') }}">
+                <i class="fa-solid fa-calendar"></i>
+                <span>{{ __('Subscriptions') }}</span>
+            </a>
+        </li>
+
         <!-- Nav Item - About -->
         <li class="nav-item {{ Nav::isRoute('about') }}">
             <a class="nav-link" href="{{ route('about') }}">
@@ -353,5 +361,13 @@
         }
     }
 </script>
+<script>
+    windows.setTimeout(function() {
+        $(".alert").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove(); 
+        });
+    }, 2000);
+</script>
+
 </body>
 </html>
