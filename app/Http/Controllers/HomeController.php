@@ -23,14 +23,9 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
-        $users = User::count();
+    {        
+        $users = User::all();
 
-        $widget = [
-            'users' => $users,
-            //...
-        ];
-
-        return view('home', compact('widget'));
+        return view('home',)->with('users', $users);
     }
 }
