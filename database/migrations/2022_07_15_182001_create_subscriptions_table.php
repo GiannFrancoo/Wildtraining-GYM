@@ -20,6 +20,7 @@ return new class extends Migration
             $table->float('month_price');
             $table->date('modification_date');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

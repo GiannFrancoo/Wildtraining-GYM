@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Role extends Model
 {
     use SoftDeletes;
+    
+    protected $table = 'roles';
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +20,6 @@ class Role extends Model
         'name',
     ];
 
-    //Un rol puede pertenece a muchos usuarios
     public function users()
     {
         return $this->hasMany(User::class);

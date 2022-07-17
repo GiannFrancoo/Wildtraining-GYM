@@ -15,12 +15,13 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_subscription_id')->nullable();
             $table->float('price');
             $table->datetime('date');
             $table->timestamps();
-
-            $table->foreign('user_subscription_id')->references('id')->on('user_subscriptions')->nullOnDelete();
+            $table->softDeletes();
+            
+            $table->unsignedBigInteger('user_subscription_id');
+            $table->foreign('user_subscription_id')->references('id')->on('user_subscriptions')->onDelete('cascade');
         });
     }
 

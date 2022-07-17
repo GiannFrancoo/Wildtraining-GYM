@@ -18,6 +18,7 @@ class UserFactory extends Factory
     {
         return [
             'name'                  => $this->faker->name(),
+            'last_name'             => $this->faker->name(),
             'email'                 => $this->faker->unique()->safeEmail(),
             'email_verified_at'     => now(),
             'password'              => 'password',
@@ -29,7 +30,7 @@ class UserFactory extends Factory
             'start_date'            => Carbon::now()->subYears(rand(1, 55)),
             'personal_information'  => $this->faker->realText(),
             'social_work'           => $this->faker->words(2,true),
-            'role_id'               => Role::inRandomOrder()->first()->id, //llamo todos lo roles en orden random (serian 2 igual), y de ahi agarro el primero 
+            'role_id'               => Role::inRandomOrder()->first()->id, 
         ];
     }
 

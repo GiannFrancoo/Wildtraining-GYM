@@ -11,13 +11,23 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, SoftDeletes;
 
+    protected $table = 'users';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'primary_phone', 'secundary_phone', 'address', 'birthday', 'start_date', 'personal_information', 'social_work',
+        'name',
+        'last_name',
+        'email',
+        'password',
+        'primary_phone',
+        'secundary_phone',
+        'address', 'birthday', 
+        'start_date', 
+        'personal_information', 
+        'social_work',
     ];
 
     /**
@@ -39,6 +49,20 @@ class User extends Authenticatable
     ];
 
     /**
+     * Get the user's full name.
+     *
+     * @return string
+     */
+    public function getFullNameAttribute()
+    {
+        if (is_null($this->last_name)) {
+            return "{$this->name}";
+        }
+
+        return "{$this->name} {$this->last_name}";
+    }
+
+    /**
      * Set the user's password.
      *
      * @param string $value
@@ -49,10 +73,19 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
 
-    //El usuario va a pertenecer a un rol
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function assistances()
+    {
+        return $this->hasMany(Assistance::class);
+    }
+
+    public function subscriptions()
+    {
+        return $this->belongsToMany(Subscription::class, 'user_subscriptions', 'user_id', 'subscription_id');
     }
     
 

@@ -17,12 +17,13 @@ return new class extends Migration
             $table->id();
             $table->datetime('start_date');
             $table->timestamps();
+            $table->softDeletes();
             
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->unsignedBigInteger('subscription_id')->nullable();
-            $table->foreign('subscription_id')->references('id')->on('subscriptions')->nullOnDelete();
+            $table->unsignedBigInteger('subscription_id');
+            $table->foreign('subscription_id')->references('id')->on('subscriptions')->onDelete('cascade');
         });
     }
 

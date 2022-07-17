@@ -4,8 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Role;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class RoleSeeder extends Seeder
 {
@@ -18,10 +16,11 @@ class RoleSeeder extends Seeder
     {
         $roles = [
             ['id' => 1, 'name' => 'Administrador'],
-            ['id' => 2, 'name' => 'Usuario'],
+            ['id' => 2, 'name' => 'Profesor'],
+            ['id' => 3, 'name' => 'Usuario'],
         ];
 
-        foreach ($roles as $role){
+        foreach ($roles as $role) {
             Role::updateOrCreate($role);
         } 
 
