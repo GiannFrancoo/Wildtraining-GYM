@@ -16,7 +16,7 @@ class ProfileController extends Controller
 
     public function index()
     {
-        return view('profile');
+        return view('profile_crud.profile');
     }
 
     public function update(Request $request)
@@ -48,4 +48,10 @@ class ProfileController extends Controller
 
         return redirect()->route('profile')->withSuccess('Profile updated successfully.');
     }
+
+    public function edit($id){
+        $user = User::findOrFail($id);
+        return view('profile_crud.edit');
+    }
+
 }

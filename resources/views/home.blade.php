@@ -155,17 +155,53 @@
                                                     <div class="modal-body">
 
                                                         <!-- tabla vegana invertida; -->
-
+                                                        <table>
+                                                        <table class="table table-striped">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th scope="row">Email</th>
+                                                                    <td>{{$user->email}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">Celular</th>
+                                                                    <td>{{$user->primary_phone}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">Celular secundario</th>
+                                                                    <td>{{$user->secondary_phone}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">Direccion</th>
+                                                                    <td>{{$user->address}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">Fecha de nacimiento</th>
+                                                                    <td>{{$user->birthday}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">Fecha de inicio</th>
+                                                                    <td>{{$user->start_date}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">Informacion personal</th>
+                                                                    <td>{{$user->personal_information}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">Obra social</th>
+                                                                    <td>{{$user->social_work}}</td>
+                                                                </tr>                                                            
+                                                        </tbody>
+                                                        </table>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <a href="" type="button" class="btn btn-primary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mr-1"></i>Editar</a>
+                                                        <a href="{{route('profile.edit', ['id' => $user->id])}}" type="button" class="btn btn-primary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mr-1"></i>Editar</a>
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                                                     </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <a href="" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
+                                            <a href="{{route('profile.edit', ['id' => $user->id])}}" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
                                             <a href="" type="button" class="btn btn-danger" onclick="return confirm('¿Desea borrar al usuario {{$user->name}}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></a>
                                         </td>
                                     </tr>
