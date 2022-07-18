@@ -16,6 +16,10 @@ class Payment extends Model
         'date',
     ];
 
+    protected $casts = [
+        "date" => "datetime",
+    ];
+
     public function userSubscription(){
         return $this->belongsTo(User_subscription::class);
     }

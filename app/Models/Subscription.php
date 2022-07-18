@@ -29,6 +29,6 @@ class Subscription extends Model
             ->using(UserSubscription::class)
             ->withPivot('start_date')
             ->withTimestamps()
-            ->where('user_subscriptions.deleted_at', NULL);
+            ->where('user_subscriptions.deleted_at', NULL); //por el softDelete
     }
 }

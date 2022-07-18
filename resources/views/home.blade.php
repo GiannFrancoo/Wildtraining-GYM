@@ -111,16 +111,18 @@
                         <div class="col-lg-8 col-md-6 my-2">
                             <h6 class="m-0 font-weight-bold text-primary">Lista de usuarios</h6>
                         </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <input type="text" id="myInput" onkeyup="tableSearch()" class="form-control" placeholder="Nombre de usuario&hellip;">
-                        </div>
                         <div class="col-lg-1 col-md-2 col-sm-3">
                             <a href="" type="button" class="btn btn-success float-right" title="add" data-toggle="tooltip"><i class="fa-solid fa-circle-plus mx-1"></i>Nuevo</a>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <input type="text" id="myInput" onkeyup="tableSearch()" class="form-control" placeholder="Nombre de usuario&hellip;">
+                        </div>
+                    </div>
                 </div>
 
-                <div class="card-body table-responsive">
+                <div class="table-responsive">
                     <table class="table table-bordered table-hover text-center" id="myTable">    
                             <thead>
                                 <tr>

@@ -16,7 +16,7 @@ class SubscriptionController extends Controller
     public function index()
     {
         $subscriptions = Subscription::all();
-        return view('subscription_crud.subscription')->with('subscriptions', $subscriptions);
+        return view('subscription.subscription')->with('subscriptions', $subscriptions);
     }
 
     /**

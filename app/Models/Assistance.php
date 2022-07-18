@@ -16,6 +16,10 @@ class Assistance extends Model
         'date',
     ];
 
+    protected $casts = [
+        "date" => "datetime",
+    ];
+
     public function user(){
         return $this->belongsTo(User::class);
     }
