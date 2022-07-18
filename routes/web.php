@@ -29,8 +29,8 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 //profile
 Route::put('/profile/store', [ProfileController::class, 'store'])->name('profile.store');
 Route::get('/profile/create', [ProfileController::class, 'create'])->name('profile.create');
-Route::get('/profile', 'ProfileController@index')->name('profile');
-Route::put('/profile', 'ProfileController@update')->name('profile.update');
+//Route::get('/profile', 'ProfileController@index')->name('profile');
+//Route::put('/profile', 'ProfileController@update')->name('profile.update');
 Route::get('/profile/edit/{id}', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::get('/profile/{id}', [ProfileController::class, 'index'])->name('profile.index');
 Route::put('/profile/update/{id}', [ProfileController::class, 'update'])->name('profile.update');
