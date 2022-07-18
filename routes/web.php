@@ -30,10 +30,10 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::put('/profile', 'ProfileController@update')->name('profile.update');
 Route::get('/profile/edit/{id}', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::get('/profile/{id}', [ProfileController::class, 'index'])->name('profile.index');
+Route::put('/profile/update/{id}', [ProfileController::class, 'update'])->name('profile.update');
+Route::get('/profile/destroy/{id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-
-Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
 Route::get('/subscription', [SubscriptionController::class, 'index'])->name('subscription.index');
 Route::get('/subscription/create', [SubscriptionController::class, 'create'])->name('subscription.create');
