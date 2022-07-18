@@ -3,7 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubscriptionController;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,14 +36,14 @@ Route::get('/profile/{id}', [ProfileController::class, 'index'])->name('profile.
 Route::put('/profile/update/{id}', [ProfileController::class, 'update'])->name('profile.update');
 Route::get('/profile/destroy/{id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+//Routes for subscriptions
 Route::get('/subscription', [SubscriptionController::class, 'index'])->name('subscription.index');
 Route::get('/subscription/create', [SubscriptionController::class, 'create'])->name('subscription.create');
 Route::post('/subscription', [SubscriptionController::class, 'store'])->name('subscription.store');
-Route::get('/subscription/{subscription}', [SubscriptionController::class, 'show'])->name('subscription.show');
-Route::get('/subscription/{subscription}/edit', [SubscriptionController::class, 'edit'])->name('subscription.edit');
-Route::put('/subscription/{subscription}', [SubscriptionController::class, 'update'])->name('subscription.update');
-Route::delete('/subscription/{subscription_id}', [SubscriptionController::class, 'destroy'])->name('subscription.destroy');
-
+// Route::get('/subscription/{subscription_id}', [SubscriptionController::class, 'show'])->name('subscription.show');
+Route::get('/subscription/{subscription_id}/edit', [SubscriptionController::class, 'edit'])->name('subscription.edit');
+Route::put('/subscription/{subscription_id}', [SubscriptionController::class, 'update'])->name('subscription.update');
+Route::get('/subscription/{subscription_id}', [SubscriptionController::class, 'destroy'])->name('subscription.destroy'); //para uno usar un form le puse Get
 
 
 Route::get('/about', function () {
