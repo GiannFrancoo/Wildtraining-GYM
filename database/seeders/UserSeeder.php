@@ -2,7 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
+use App\Models\SocialWork;
 use App\Models\User;
+use Carbon\Carbon;
+Use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -14,7 +18,46 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        
+        $usersAdmin = [
+            [
+                'name'                  => 'Lucas',
+                'last_name'             => 'Cervelli Haderne',
+                'email'                 => 'lucasch98.lch@gmail.com',
+                'email_verified_at'     => now(),
+                'password'              => 'password',
+                'remember_token'        => Str::random(10),     
+                'primary_phone'         => '123456',
+                'secundary_phone'       => '1234567',
+                'address'               => 'avenida siempre viva 123',
+                'birthday'              => Carbon::now()->subYears(rand(1, 55)),
+                'start_date'            => Carbon::now()->subYears(rand(1, 55)),
+                'role_id'               => Role::find('1')->id, 
+                'social_work_id'        => SocialWork::inRandomOrder()->first()->id,
+            ],
+            [
+                'name'                  => 'Gian Franco',
+                'last_name'             => 'Bentivegna',
+                'email'                 => 'GiannFrancoo1@hotmail.com',
+                'email_verified_at'     => now(),
+                'password'              => 'password',
+                'remember_token'        => Str::random(10),     
+                'primary_phone'         => '12345678',
+                'secundary_phone'       => '123456789',
+                'address'               => 'avenida siempre viva 123',
+                'birthday'              => Carbon::now()->subYears(rand(1, 55)),
+                'start_date'            => Carbon::now()->subYears(rand(1, 55)),
+                'role_id'               => Role::find('1')->id, 
+                'social_work_id'        => SocialWork::inRandomOrder()->first()->id,   
+            ]
+        ];
+
+        foreach ($usersAdmin as $userAdmin) {
+            User::updateOrCreate($userAdmin);
+        }       
+        
         User::factory(10)
-            ->create();
+             ->create();       
+
     }
 }

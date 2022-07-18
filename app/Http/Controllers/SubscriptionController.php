@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subscription;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use App\Http\Requests\Subscription\SubscriptionStoreRequest;
+use App\Http\Requests\Subscription\SubscriptionUpdateRequest;
 
 class SubscriptionController extends Controller
 {
@@ -15,7 +18,7 @@ class SubscriptionController extends Controller
      */
     public function index()
     {
-        $subscriptions = Subscription::all();
+        $subscriptions = Subscription::orderBy('times_a_week')->get();
         return view('subscription.subscription')->with('subscriptions', $subscriptions);
     }
 
@@ -26,7 +29,7 @@ class SubscriptionController extends Controller
      */
     public function create()
     {
-        //
+        return view('subscription.create');
     }
 
     /**
@@ -37,7 +40,20 @@ class SubscriptionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $subscription = new Subscription();
+            $subscription->name = $request->name;
+            $subscription->times_a_week = $request->times_a_week;
+            $subscription->month_price = $request->month_price;
+            $subscription->modification_date = Carbon::now();
+            
+            $subscription->save();
+
+            return redirect()->route('subscription.index')->withSucess('Subscripción agregada correctamente');
+        }
+        catch(Exception $e){
+            return redirect()->back->withErrors('Error al guardar la nueva subscripción');
+        }
     }
 
     /**
@@ -48,7 +64,7 @@ class SubscriptionController extends Controller
      */
     public function show($id)
     {
-        //
+        //not neccesary
     }
 
     /**
@@ -59,7 +75,13 @@ class SubscriptionController extends Controller
      */
     public function edit($id)
     {
-        //
+        try{
+            $subscription = Subscription::find($id);
+            return view('subscription.edit')->with('subscription', $subscription);
+        }
+        catch(Exception $e){
+            return redirect()->back()->withErrors('Error al editar una susbscripción');
+        }
     }
 
     /**
@@ -71,7 +93,19 @@ class SubscriptionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $subscription = Subscription::findOrFail($id);
+            $subscription->name = $request->name;
+            $subscription->times_a_week = $request->times_a_week;
+            $subscription->month_price = $request->month_price;
+            $subscription->modification_date = now();
+            
+            $subscription->save();
+            return redirect()->route('subscription.index')->withSuccess('Subscripción modificada correctamente');
+        }
+        catch(Exception $e){
+            return redirect()->back()->withErrors('Error al editar una subscripción');
+        }    
     }
 
     /**
@@ -83,13 +117,13 @@ class SubscriptionController extends Controller
     public function destroy($id)
     {
         try{
-            $subcription = Subscription::find($id);            
+            $subcription = Subscription::findOrFail($id);            
             $subcription->delete();
 
-            return redirect()->route('subscription.index')->with('success','Se elimino correctamente');
+            return redirect()->route('subscription.index')->withSucess('Se elimino correctamente');
         }
         catch(Exception $e){
-            return redirect()->back()->with('error','Error al eliminar la subscripción');
+            return redirect()->back()->withErrors('Error al eliminar la subscripción');
         }
     }
 }

@@ -25,7 +25,7 @@ class HomeController extends Controller
     public function index()
     {        
         //ordenarlo
-        $users = User::all();
+        $users = User::orderBy('last_name')->get();
 
         return view('home',)->with('users', $users);
     }
