@@ -112,7 +112,7 @@
                             <h6 class="m-0 font-weight-bold text-primary">Lista de usuarios</h6>
                         </div>
                         <div class="col-lg-1 col-md-2 col-sm-3">
-                            <a href="" type="button" class="btn btn-success float-right" title="add" data-toggle="tooltip"><i class="fa-solid fa-circle-plus mx-1"></i>Nuevo</a>
+                            <a href="{{route('profile.create')}}" type="button" class="btn btn-success float-right" title="add" method="GET" data-toggle="tooltip"><i class="fa-solid fa-circle-plus mx-1"></i>Nuevo</a>
                         </div>
                     </div>
                     <div class="row">
@@ -139,35 +139,12 @@
                                         <td>{{ $user->last_name }}</td>
                                         <td>{{ $user->primary_phone }}</td>
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#viewModal">
+                                            <a href="{{route('profile.index', ['id' => $user->id])}}" type="button" class="btn btn-primary">
                                                 <i class="fa fa-eye"></i>
-                                            </button>
+                                            </a>
 
-                                            <!-- View Modal -->
-                                            <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">{{ $user->getFullNameAttribute() }}</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-
-                                                        <!-- tabla vegana invertida; -->
-
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <a href="" type="button" class="btn btn-primary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mr-1"></i>Editar</a>
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <a href="" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
-                                            <a href="" type="button" class="btn btn-danger" onclick="return confirm('¿Desea borrar al usuario {{$user->name}}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></a>
+                                            <a href="{{route('profile.edit', ['id' => $user->id])}}" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
+                                            <a href="{{route('profile.destroy', ['id' => $user->id])}}" type="button" class="btn btn-danger" onclick="return confirm('¿Desea borrar al usuario {{$user->name}}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
