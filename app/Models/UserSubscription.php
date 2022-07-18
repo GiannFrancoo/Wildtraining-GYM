@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class User_subscription extends Model
+class UserSubscription extends Pivot
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
     protected $table = "user_subscriptions";
     protected $fillable = [
@@ -18,8 +17,10 @@ class User_subscription extends Model
         'payment_id',
     ];
 
+    protected $casts = [
+        "start_date" => "datetime",
+    ];
 
-    //preguntar ema;
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -30,12 +31,8 @@ class User_subscription extends Model
         return $this->belongsTo(Subscription::class);
     }
 
-    public function payment()
+    public function payments()
     {
-        return $this->hasOne(Payment::class, 'user_subcription_id');
+        return $this->hasMany(Payment::class, 'user_subscription_id');
     }
-
-
-
-
 }
