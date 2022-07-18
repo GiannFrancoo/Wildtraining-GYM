@@ -20,7 +20,11 @@ class Subscription extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'user_subscriptions', 'subscription_id', 'user_id');
+        return $this
+            ->belongsToMany(User::class, 'user_subscriptions', 'subscription_id', 'user_id')
+            ->using(UserSubscription::class)
+            ->withPivot('start_date')
+            ->withTimestamps()
+            ->where('user_subscriptions.deleted_at', NULL);
     }
-
 }
