@@ -17,6 +17,13 @@ class ProfileController extends Controller
         $this->middleware('auth');
     }
 
+    public function create()
+    {
+        $social_works = SocialWork::all();
+        $roles = Role::all();
+        return view('profile.create')->with('social_works', $social_works)->with('roles', $roles);
+    }
+
     public function index($id)
     {
         $user = User::findOrFail($id);
@@ -119,4 +126,30 @@ class ProfileController extends Controller
 
         return redirect('home')->with('success', 'Se elimino con éxito');
     }
+
+    public function store(Request $request){
+        $user = new User();
+        $user->name = $request->name;
+        $user->last_name = $request->last_name;
+        $user->email = $request->email;
+        $user->primary_phone = $request->primary_phone;
+       
+        //if($user->secundary_phone != NULL){
+            $user->secundary_phone = $request->secundary_phone;
+        //}
+
+        //if($user->secundary_phone != NULL){
+            $user->address = $request->address;
+        //}
+        $user->birthday = $request->birthday;
+        $user->start_date = $request->start_date;
+        $user->personal_information = $request->personal_information;
+        $user->social_work_id = $request->social_work_id;
+        $user->password = $request->password;
+        $user->role_id = $request->role_id;
+        $user->save();
+        return redirect('home')->with('success','Se creo con exito el nuevo usuario');
+    }
+
+
 }

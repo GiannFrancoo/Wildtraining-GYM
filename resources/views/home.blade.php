@@ -112,7 +112,7 @@
                             <h6 class="m-0 font-weight-bold text-primary">Lista de usuarios</h6>
                         </div>
                         <div class="col-lg-1 col-md-2 col-sm-3">
-                            <a href="" type="button" class="btn btn-success float-right" title="add" data-toggle="tooltip"><i class="fa-solid fa-circle-plus mx-1"></i>Nuevo</a>
+                            <a href="{{route('profile.create')}}" type="button" class="btn btn-success float-right" title="add" method="GET" data-toggle="tooltip"><i class="fa-solid fa-circle-plus mx-1"></i>Nuevo</a>
                         </div>
                     </div>
                     <div class="row">
