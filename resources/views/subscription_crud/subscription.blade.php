@@ -23,30 +23,51 @@
         </div>
     @endif
 
-    <!-- Card view 
     <div class="row">
         @foreach ($subscriptions as $subscription) 
         <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">                            
+                <div class="card-header d-flex justify-content-between">
+                    <h5 class="font-weight-bold">{{ $subscription->name }}</h5>
+                    <div>
+                        <a href="#" class="btn btn-success mr-1">A</a>
+                        <a href="#" class="btn btn-success">B</a>
+                    </div>
+                </div>
+                <div class="card-body p-1">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <td>Veces por semana:</td>
+                                <td class="text-right">{{ $subscription->times_a_week }}</td>
+                            </tr>
+                            <tr>
+                                <td>Precio mensual:</td>
+                                <td class="text-right">${{ $subscription->month_price }}</td>
+                            </tr>
+                            <tr>
+                                <td>Fecha de modificación:</td>
+                                <td class="text-right">{{ $subscription->modification_date->format('d/m/Y') }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    {{-- <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{$subscription->name}}</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Veces por semana: {{$subscription->times_a_week}}</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Precio mensual: ${{$subscription->month_prince}}</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Fecha de modificación: {{$subscription->modification_date}}</div>
+                            <div class="h5 mb-0 text-gray-800">Veces por semana: {{$subscription->times_a_week}}</div>
+                            <div class="h5 mb-0 text-gray-800">Precio mensual: ${{$subscription->month_prince}}</div>
+                            <div class="h5 mb-0 text-gray-800">Fecha de modificación: {{$subscription->modification_date}}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
         @endforeach
 
     </div>
-    -->
     
     <!-- Subscriptions table -->
     <div class="row">
@@ -68,9 +89,6 @@
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('subscription.destroy',['subscription_id' => $subscription->id]) }}">
-                        @method('delete')
-                        @csrf
                         <table class="table-reponsive">
                             <table class="table table-bordered table-hover text-center" id="myTable">    
                                 <thead>
@@ -88,29 +106,24 @@
                                             <td>{{ $subscription->name }}</td>
                                             <td>{{ $subscription->times_a_week }}</td>
                                             <td>${{ $subscription->month_price }}</td>
-                                            <td>{{ $subscription->modification_date }}</td>                                
+                                            <td>{{ $subscription->modification_date->format('d/m/Y') }}</td>                                
                                             <td>
                                                 <a href="" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
                                                 <!-- <a href="route('profile.destroy')" type="button" class="btn btn-danger" onclick="return confirm('¿Desea borrar la subscripción: {{$subscription->name}}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></a> -->
-                                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Desea borrar la subscripción: {{$subscription->name}}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button>
+                                                
+                                                <form method="POST" action="{{ route('subscription.destroy', ['subscription_id' => $subscription->id]) }}" class="d-inline">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('¿Desea borrar la subscripción: {{$subscription->name}}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         </table>
-                    </form>
                 </div>
-
-
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
 @endsection

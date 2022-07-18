@@ -120,9 +120,8 @@
                     </div>
                 </div>
 
-                <div class="card-body">
-                    <table class="table-reponsive">
-                        <table class="table table-bordered table-hover text-center" id="myTable">    
+                <div class="card-body table-responsive">
+                    <table class="table table-bordered table-hover text-center" id="myTable">    
                             <thead>
                                 <tr>
                                     <th scope="col">Nombre</th>
@@ -171,7 +170,6 @@
                                     </tr>
                                 @endforeach
                             </tbody>
-                        </table>
                     </table>
                 </div>
 
