@@ -51,7 +51,7 @@ class ProfileController extends Controller
 
     public function edit($id){
         $user = User::findOrFail($id);
-        return view('profile_crud.edit');
+        return view('profile.edit')->with('user', $user);
     }
 
 }

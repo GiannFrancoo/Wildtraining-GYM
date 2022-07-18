@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Role;
+use App\Models\SocialWork;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
@@ -29,8 +30,8 @@ class UserFactory extends Factory
             'birthday'              => Carbon::now()->subYears(rand(1, 55)),
             'start_date'            => Carbon::now()->subYears(rand(1, 55)),
             'personal_information'  => $this->faker->realText(),
-            'social_work'           => $this->faker->words(2,true),
             'role_id'               => Role::inRandomOrder()->first()->id, 
+            'social_work_id'        => SocialWork::inRandomOrder()->first()->id,
         ];
     }
 

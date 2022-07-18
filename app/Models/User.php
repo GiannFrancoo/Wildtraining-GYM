@@ -24,10 +24,10 @@ class User extends Authenticatable
         'password',
         'primary_phone',
         'secundary_phone',
-        'address', 'birthday', 
+        'address', 
+        'birthday', 
         'start_date', 
         'personal_information', 
-        'social_work',
     ];
 
     /**
@@ -46,6 +46,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'birthday' => 'date',
+        'start_date' => 'date',
     ];
 
     /**
@@ -88,6 +90,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Subscription::class, 'user_subscriptions', 'user_id', 'subscription_id');
     }
     
-
+    public function social_work()
+    {
+        return $this->belongsTo(SocialWork::class);
+    }
 
 }

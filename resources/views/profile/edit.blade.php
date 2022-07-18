@@ -36,29 +36,8 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="text-center">
-                                <h5 class="font-weight-bold">{{  Auth::user()->fullName }}</h5>
-                                <p>Administrator</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card-profile-stats">
-                                <span class="heading">22</span>
-                                <span class="description">Friends</span>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card-profile-stats">
-                                <span class="heading">10</span>
-                                <span class="description">Photos</span>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card-profile-stats">
-                                <span class="heading">89</span>
-                                <span class="description">Comments</span>
+                                <h5 class="font-weight-bold">{{  $user->getFullNameAttribute() }}</h5>
+                                <p>{{$user->role->name}}</p>
                             </div>
                         </div>
                     </div>
@@ -89,13 +68,13 @@
                                 <div class="col-lg-6">
                                     <div class="form-group focused">
                                         <label class="form-control-label" for="name">Nombre<span class="small text-danger">*</span></label>
-                                        <input type="text" id="name" class="form-control" name="name" placeholder="Name" value="{{ old('name', Auth::user()->name) }}">
+                                        <input type="text" id="name" class="form-control" name="name" placeholder="Name" value="{{ old('name', $user->name) }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group focused">
                                         <label class="form-control-label" for="last_name">Apellido(s)</label>
-                                        <input type="text" id="last_name" class="form-control" name="last_name" placeholder="Last name" value="{{ old('last_name', Auth::user()->last_name) }}">
+                                        <input type="text" id="last_name" class="form-control" name="last_name" placeholder="Last name" value="{{ old('last_name', $user->last_name) }}">
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +83,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="form-control-label" for="email">Email<span class="small text-danger">*</span></label>
-                                        <input type="email" id="email" class="form-control" name="email" placeholder="example@example.com" value="{{ old('email', Auth::user()->email) }}">
+                                        <input type="email" id="email" class="form-control" name="email" placeholder="example@example.com" value="{{ old('email', $user->email) }}">
                                     </div>
                                 </div>
                             </div>
@@ -112,13 +91,17 @@
                             <div class="col-lg-6">
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="new_password">Celular</label>
-                                    <input type="input" id="new_password" class="form-control" name="new_password">
+                                    <input type="text" id="new_password" class="form-control" name="new_password" value="{{ old('primary_phone', $user->primary_phone)}}">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="new_password">Celular secundario</label>
-                                    <input type="input" id="new_password" class="form-control" name="new_password">
+                                    @if($user->secundary_phone === "")
+                                        <input type="text" id="new_password" class="form-control" name="new_password" value = "-">
+                                    @else
+                                        <input type="text" id="new_password" class="form-control" name="new_password" value="{{old('secundary_phone', $user->secundary_phone)}}">
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -126,13 +109,13 @@
                             <div class="col-lg-6">
                                     <div class="form-group focused">
                                         <label class="form-control-label" for="new_password">Direccion</label>
-                                        <input type="input" id="new_password" class="form-control" name="new_password">
+                                        <input type="text" id="new_password" class="form-control" name="new_password" value="{{old('address', $user->address)}}">
                                     </div>
                             </div>
                             <div class="col-lg-6">
                                     <div class="form-group focused">
                                         <label class="form-control-label" for="new_password">Fecha de nacimiento</label>
-                                        <input type="input" id="new_password" class="form-control" name="new_password">
+                                        <input type="date" id="new_password" class="form-control" name="new_password" value="{{old('birthday', $user->birthday->format('d/m/Y'))}}">
                                     </div>
                             </div>
                         </div>
@@ -140,25 +123,34 @@
                             <div class="col-lg-6">
                                     <div class="form-group focused">
                                         <label class="form-control-label" for="new_password">Fecha de inicio</label>
-                                        <input type="input" id="new_password" class="form-control" name="new_password">
+                                        <input type="text" id="new_password" class="form-control" name="new_password">
                                     </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="form-group row">
-                                <label for="inputPassword3" class="col-sm-2 col-form-label">Seleccione una obra social</label>
+                                <div class="form-group focused">
+                                <label class="form-control-label" for="new_password">Obra social</label>
                                 <div class="col-sm-10">
-                                    <select class="custom-select" name="" >
-                                        <option disabled selected>Generos</option>
-                                            <option value="{{$user->id}}">{{$user->social_work}}</option>
+                                    <select class="custom-select" name="social_work" value="{{old('social_work', $user->social_work)}}">
+                                        <option disabled selected> {{old('social_work', $user->social_work)}}</option>
+                                            @if($user->social_work === 'IOMA')
+                                                <option value="PAMI" name="">PAMI</option>
+                                                <option value="OSECAC" name="">OSECAC</option>
+                                            @elseif($user->social_work === 'OSECAC')
+                                                <option value="PAMI" name="">PAMI</option>
+                                                <option value="IOMA" name="">IOMA</option>
+                                            @else
+                                                <option value="OSECAC" name="">OSECAC</option>
+                                                <option value="IOMA" name="">IOMA</option>
+                                            @endif
                                     </select>
                                 </div>
-                    </div>
                             </div>
                         </div>
+                    </div>
 
                         <div class="form-group focused">
-                                        <label class="form-control-label" for="new_password">informacion personal</label>
-                                        <input type="text" id="new_password" class="form-control" name="new_password">
+                            <label class="form-control-label" for="new_password">Informacion personal</label>
+                            <input type="text" id="new_password" class="form-control" name="new_password">
                         </div>
 
                     </div>
