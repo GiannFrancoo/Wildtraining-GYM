@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             SocialWorkSeeder::class,
             UserSeeder::class,
             SubscriptionSeeder::class,
+            UserSubscriptionSeeder::class,
         ]);
         
         

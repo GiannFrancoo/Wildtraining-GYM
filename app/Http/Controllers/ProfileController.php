@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\SocialWork;
+use App\Models\UserSubscription;
 use App\Models\Role;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -21,14 +23,18 @@ class ProfileController extends Controller
     {
         $social_works = SocialWork::all();
         $roles = Role::all();
-        return view('profile.create')->with('social_works', $social_works)->with('roles', $roles);
+        $subscriptions = Subscription::all();
+        return view('profile.create')->with('social_works', $social_works)->with('roles', $roles)->with('subscriptions', $subscriptions);
     }
 
     public function index($id)
     {
         $user = User::findOrFail($id);
         $age = $this->getAge($user);
-        return view('profile.profile')->with('user', $user)->with('age', $age);
+        $subscription = $user->subscriptions()->first()->name;
+        $user_subscription = UserSubscription::where('user_id', $id)->first();
+        $subscriptionAdded = Subscription::findOrFail($user_subscription->subscription_id);
+        return view('profile.profile')->with('user', $user)->with('age', $age)->with('subscription', $subscription)->with('my_subscription', $subscriptionAdded);
     }
 
     public function update(Request $request, $id)
@@ -45,6 +51,11 @@ class ProfileController extends Controller
             'primary_phone' => 'required|string|min:10'
         ]);
 
+        //Actualizo la userSubscription
+        $user_subscription = UserSubscription::findOrFail($id);
+        $user_subscription->subscription_id = $request->subscriptionIdSelected;
+        $user_subscription->save();
+        //
 
         $user = User::findOrFail($id);
         $user->name = $request->name;
@@ -95,7 +106,6 @@ class ProfileController extends Controller
             if ($request->input('new_password') === $request->input('password_confirmation')) {
                     bcrypt($request->password_confirmation);
                     $user->password = $request->password_confirmation;
-                    dd($user->password);
             } else {
                 return redirect()->back()->withError('Las contraseñas no coinciden');
             }
@@ -111,7 +121,10 @@ class ProfileController extends Controller
         $social_works = SocialWork::all();
         $roles = Role::all();
         $age = $this->getAge($user);
-        return view('profile.edit')->with('user', $user)->with('social_works', $social_works)->with('roles', $roles)->with('age', $age);
+        $subscriptions = Subscription::all();
+        $user_subscription = UserSubscription::where('user_id', $id)->first();
+        $subscriptionAdded = Subscription::findOrFail($user_subscription->subscription_id);
+        return view('profile.edit')->with('user', $user)->with('social_works', $social_works)->with('roles', $roles)->with('age', $age)->with('subscriptions', $subscriptions)->with('my_subscription', $subscriptionAdded);
     }
 
     public function getAge($user){
@@ -147,7 +160,17 @@ class ProfileController extends Controller
         $user->social_work_id = $request->social_work_id;
         $user->password = $request->password;
         $user->role_id = $request->role_id;
+
         $user->save();
+
+        //Creo la user subscription asociada
+        $user_subscription = new UserSubscription();
+        $user_subscription->user_id = $user->id;
+        $user_subscription->subscription_id = $request->subscription;
+        $user_subscription->start_date = now();
+        $user_subscription->save();
+        //
+        
         return redirect('home')->with('success','Se creo con exito el nuevo usuario');
     }
 

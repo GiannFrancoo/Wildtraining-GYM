@@ -159,10 +159,22 @@
                                 </div>
                             </div>
 
-                            <div class="form-group focused">
-                                <label class="form-control-label" for="personal_information">Informacion personal</label>
-                                <textarea rows="4" id="new_password" class="form-control" name="personal_information" value="{{old('personal_information', $user->personal_information)}}">{{old('personal_information', $user->personal_information)}}</textarea>
+                            <div class="row">
+                                <div class="col-lg-6 -sm-10 mb-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="new_password">Subscripcion</label>
+                                        <select  class="custom-select" required name="subscriptionIdSelected" value="{{$my_subscription->name}}">
+                                            @foreach($subscriptions as $subscription)
+                                                <option required value="{{$subscription->id}}" {{($my_subscription->id ===$subscription->id) ? 'Selected' : ''}}>{{$subscription->name}}</option>
+                                            @endforeach
+                                        </select>
+                                </div>
                             </div>
+
+                                <div class="col-lg-12 form-group focused">
+                                    <label class="form-control-label" for="personal_information">Informacion personal</label>
+                                    <textarea rows="4" id="new_password" class="form-control" name="personal_information" value="{{old('personal_information', $user->personal_information)}}">{{old('personal_information', $user->personal_information)}}</textarea>
+                                </div>
 
                                 <div class="row">
                                     <div class="col-lg-4">
@@ -173,7 +185,7 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group focused">
-                                            <label class="form-control-label" for="new_password">Contraseña nueva (minimo 8)</label>
+                                            <label class="form-control-label" for="new_password">Contraseña nueva</label>
                                             <input type="password" id="new_password" class="form-control" name="new_password" placeholder="Contraseña nueva...">
                                         </div>
                                     </div>

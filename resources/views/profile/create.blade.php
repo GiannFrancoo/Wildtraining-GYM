@@ -75,7 +75,7 @@
 
                                     <div class="col-lg-6 -sm-10 mb-4">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="new_password">Roles</label>
+                                        <label class="form-control-label" for="new_password">Rol</label>
                                         <select  class="custom-select" required name="role_id" value="{{old('role_id')}}">                                           
                                             @foreach($roles as $role)
                                                 <option required value="{{$role->id}}">{{$role->name}}</option>
@@ -131,13 +131,24 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="form-group focused">
-                                <label class="form-control-label" for="personal_information">Informacion personal</label>
-                                <textarea rows="4" id="new_password" class="form-control" name="personal_information" placeholder="....." value="{{old('personal_information')}}"></textarea>
+                            <div class="row">
+                                <div class="col-lg-6 -sm-10 mb-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="new_password">Subscripcion</label>
+                                        <select  class="custom-select" required name="subscription" value="{{old('subscription')}}">                                           
+                                            @foreach($subscriptions as $subscription)
+                                                <option required value="{{$subscription->id}}">{{$subscription->name}}</option>
+                                            @endforeach
+                                        </select>
+                                </div>
                             </div>
+                            
+                            
+                                <div class="col-lg-12 form-group focused">
+                                    <label class="form-control-label" for="personal_information">Informacion personal</label>
+                                    <textarea rows="4" id="new_password" class="form-control" name="personal_information" placeholder="....." value="{{old('personal_information')}}"></textarea>
+                                </div>
 
-                                <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group focused">
                                             <label class="form-control-label" required for="current_password">Contraseña (8 caracteres min)</label>
@@ -150,9 +161,7 @@
                                             <input type="password" required data-toggle="tooltip" data-placement="top" title="8 caracteres minimo" data-tip="8 caracteres minimo" id="confirm_password" class="form-control" name="password_confirmation" placeholder="Confirmar contraseña..." value="{{old('password_confirmation')}}">
                                         </div>
                                     </div>
-                                </div>
-
-                        </div>
+                            </div>
 
 
                             <!-- Button -->

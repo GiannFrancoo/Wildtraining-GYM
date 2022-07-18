@@ -114,19 +114,28 @@
                                 </div>
                             </div>
 
-                            <div class="form-group focused">
+
+                            <div class="row">
+                                <div class="col-lg-6 -sm-10 mb-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="new_password">Subscripcion</label>
+                                        <input type="text" readonly id="subscription_id" class="form-control" value="{{$my_subscription->name}}">
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-12 form-group focused">
                                 <label class="form-control-label" for="personal_information">Informacion personal</label>
                                 <textarea rows="4" id="personal_information" readonly class="form-control" name="personal_information" value="{{old('personal_information', $user->personal_information)}}">{{old('personal_information', $user->personal_information)}}</textarea>
                             </div>
 
-                                <div class="row">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6 -sm-10 mb-4">
                                         <div class="form-group focused">
                                             <label class="form-control-label" for="current_password">Contraseña</label>
                                             <input type="text" readonly id="password" class="form-control" name="password" value="{{$user->password}}">
                                         </div>
                                     </div>
-                                </div>
+                                
                         </div>
                             <!-- Button -->
                             <div class="pl-lg-4">
