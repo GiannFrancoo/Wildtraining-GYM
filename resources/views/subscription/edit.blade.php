@@ -35,7 +35,6 @@
             @csrf
             @method('PUT')
                 <div class="row">
-
                     <div class="col-lg-6">
                         <div class="form-group focused">
                             <label class="form-control-label" for="name">Nombre: <span class="small text-danger">*</span></label>

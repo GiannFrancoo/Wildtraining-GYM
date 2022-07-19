@@ -28,9 +28,6 @@
             <h6 class="m-0 font-weight-bold text-primary">Nueva subscripción</h6>
         </div>
         <div class="card-body">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <input type="hidden" name="_method" value="PUT">
-
             <h6 class="heading-small text-muted mb-4">Informacion</h6>
             
             <form action="{{ route('subscription.store')}}" method="POST">

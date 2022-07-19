@@ -49,7 +49,7 @@ class SubscriptionController extends Controller
             
             $subscription->save();
 
-            return redirect()->route('subscription.index')->withSucess('Subscripción agregada correctamente');
+            return redirect()->route('subscription.index')->withSuccess('Subscripción agregada correctamente');
         }
         catch(Exception $e){
             return redirect()->back->withErrors('Error al guardar la nueva subscripción');
@@ -120,7 +120,7 @@ class SubscriptionController extends Controller
             $subcription = Subscription::findOrFail($id);            
             $subcription->delete();
 
-            return redirect()->route('subscription.index')->withSucess('Se elimino correctamente');
+            return redirect()->route('subscription.index')->withSuccess('Se elimino correctamente');
         }
         catch(Exception $e){
             return redirect()->back()->withErrors('Error al eliminar la subscripción');

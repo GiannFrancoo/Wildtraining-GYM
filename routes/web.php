@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssistanceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubscriptionController;
@@ -38,10 +39,19 @@ Route::get('/profile/destroy/{id}', [ProfileController::class, 'destroy'])->name
 Route::get('/subscription', [SubscriptionController::class, 'index'])->name('subscription.index');
 Route::get('/subscription/create', [SubscriptionController::class, 'create'])->name('subscription.create');
 Route::post('/subscription', [SubscriptionController::class, 'store'])->name('subscription.store');
-// Route::get('/subscription/{subscription_id}', [SubscriptionController::class, 'show'])->name('subscription.show');
 Route::get('/subscription/{subscription_id}/edit', [SubscriptionController::class, 'edit'])->name('subscription.edit');
 Route::put('/subscription/{subscription_id}', [SubscriptionController::class, 'update'])->name('subscription.update');
-Route::get('/subscription/{subscription_id}', [SubscriptionController::class, 'destroy'])->name('subscription.destroy'); //para uno usar un form le puse Get
+Route::get('/subscription/{subscription_id}', [SubscriptionController::class, 'destroy'])->name('subscription.destroy');
+
+//Routes for assistances
+Route::get('/assistance', [AssistanceController::class, 'index'])->name('assistance.index');
+Route::get('/assistance/create', [AssistanceController::class, 'create'])->name('assistance.create');
+Route::post('/assistance', [AssistanceController::class, 'store'])->name('assistance.store');
+Route::get('/assistance/{assistance_id}/edit}', [AssistanceController::class, 'edit'])->name('assistance.edit');
+Route::put('/assistance/{assistance_id}', [AssistanceController::class, 'update'])->name('assistance.update');
+Route::delete('/assistance/{assistance_id}', [AssistanceController::class, 'destroy'])->name('assistance.destroy');
+
+
 
 
 Route::get('/about', function () {
