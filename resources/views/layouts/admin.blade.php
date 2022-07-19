@@ -36,9 +36,9 @@
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
             <div class="sidebar-brand-icon rotate-n-15">
-                <i class="fas fa-laugh-wink"></i>
+                <i class="fa fa-dumbbell"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+            <div class="sidebar-brand-text mx-3">Wildtraining</div>
         </a>
 
         <!-- Divider -->
@@ -48,7 +48,7 @@
         <li class="nav-item {{ Nav::isRoute('home') }}">
             <a class="nav-link" href="{{ route('home') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>{{ __('Dashboard') }}</span></a>
+                <span>{{ __('Panel') }}</span></a>
         </li>
 
         <!-- Divider -->
@@ -56,10 +56,10 @@
 
         <!-- Heading -->
         <div class="sidebar-heading">
-            {{ __('Settings') }}
+            {{ __('Opciones') }}
         </div>
 
-        <!-- Nav Item - Profile -->
+        <!-- Nav Item - Profiles -->
         <li class="nav-item {{ Nav::isRoute('profile') }}">
             <a class="nav-link" href="{{ route('profile.index', ['id' => Auth::user()->id]) }}">
                 <i class="fas fa-fw fa-user"></i>
@@ -67,11 +67,19 @@
             </a>
         </li>
 
-        <!-- Nav Item - Subscription -->
+        <!-- Nav Item - Subscriptions -->
         <li class="nav-item {{ Nav::isRoute('subscription.index') }}">
             <a class="nav-link" href="{{ route('subscription.index') }}">
                 <i class="fa-solid fa-calendar"></i>
                 <span>{{ __('Subscripciones') }}</span>
+            </a>
+        </li>
+
+        <!-- Nav Item - Assistances -->
+        <li class="nav-item {{ Nav::isRoute('assistance.index') }}">
+            <a class="nav-link" href="{{ route('assistance.index') }}">
+                <i class="fa-solid fa-clipboard-list"></i>
+                <span>{{ __('Asistencias') }}</span>
             </a>
         </li>
 
