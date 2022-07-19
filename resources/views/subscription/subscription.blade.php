@@ -1,8 +1,14 @@
 @extends('layouts.admin')
 
 @section('main-content')
+
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">{{ __('Subscripciones') }}</h1>
+    <div class="d-flex justify-content-between">
+        <h1 class="h3 mb-4 text-gray-800">{{ __('Subscripciones') }}</h1>
+        <div>
+            <a href="{{route('subscription.create')}}" class="btn btn-success mr-1"><i class="fa fa-add mr-1"></i>Agregar</a>    
+        </div>        
+    </div>
 
     @if (session('success'))
         <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
@@ -23,15 +29,21 @@
         </div>
     @endif
 
+    <!-- Card with subscriptions -->
     <div class="row">
         @foreach ($subscriptions as $subscription) 
         <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-header d-flex justify-content-between">
                     <h5 class="font-weight-bold">{{ $subscription->name }}</h5>
-                    <div>
-                        <a href="#" class="btn btn-success mr-1">A</a>
-                        <a href="#" class="btn btn-success">B</a>
+                    <div class="row">                        
+                        <a href="{{ route('subscription.edit', ['subscription_id' => $subscription->id]) }}" class="btn btn-primary mr-1"><i class="fa fa-pencil mr-1"></i>Editar</a>
+                        <a href="{{ route('subscription.destroy', ['subscription_id' => $subscription->id]) }}" onclick="return confirm('Desea eliminar esta subscripción y con ella todos los alumnos subscriptos?')" class="btn btn-danger mr-1"><i class="fa fa-pencil mr-1"></i>Eliminar</a>
+                        <!-- <form action="{{ route('subscription.destroy', ['subscription_id' => $subscription->id]) }}" method="POST">
+                            @csrf
+                            @method("DELETE")    
+                            <button class="btn btn-danger" type="submit"><i class="fa fa-trash mr-1"></i>Eliminar</button>
+                        </form> PORQUE TIENE EL METODO GET AHORA -->
                     </div>
                 </div>
                 <div class="card-body p-1">
@@ -49,6 +61,10 @@
                                 <td>Fecha de modificación:</td>
                                 <td class="text-right">{{ $subscription->modification_date->format('d/m/Y') }}</td>
                             </tr>
+                            <tr>
+                                <td>Cantidad inscriptos:</td>
+                                <td class="text-right">{{ $subscription->users->count() }}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -58,7 +74,28 @@
 
     </div>
     
-    <!-- Subscriptions table -->
+    <hr class="py-2">
+
+    <!-- Cantidad inscriptos total y lo que no tienen plan
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="card bg-primary text-white shadow">
+                <div class="card-body">
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+            <div class="card bg-success text-white shadow">
+                <div class="card-body">
+                    Cantidad inscriptos
+                </div>
+            </div>
+        </div>
+    </div>
+     -->
+
+    <!-- Subscriptions table 
     <div class="row">
         <div class="col mb-4">
             <div class="card shadow mb-4">
@@ -98,7 +135,6 @@
                                             <td>{{ $subscription->modification_date->format('d/m/Y') }}</td>                                
                                             <td>
                                                 <a href="" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
-                                                <!-- <a href="route('profile.destroy')" type="button" class="btn btn-danger" onclick="return confirm('¿Desea borrar la subscripción: {{$subscription->name}}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></a> -->
                                                 
                                                 <form method="POST" action="{{ route('subscription.destroy', ['subscription_id' => $subscription->id]) }}" class="d-inline">
                                                     @method('delete')
@@ -115,4 +151,5 @@
             </div>
         </div>
     </div>
+    -->
 @endsection

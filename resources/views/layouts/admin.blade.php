@@ -63,7 +63,7 @@
         <li class="nav-item {{ Nav::isRoute('profile') }}">
             <a class="nav-link" href="{{ route('profile') }}">
                 <i class="fas fa-fw fa-user"></i>
-                <span>{{ __('Profile') }}</span>
+                <span>{{ __('Perfil') }}</span>
             </a>
         </li>
 
@@ -71,7 +71,7 @@
         <li class="nav-item {{ Nav::isRoute('subscription.index') }}">
             <a class="nav-link" href="{{ route('subscription.index') }}">
                 <i class="fa-solid fa-calendar"></i>
-                <span>{{ __('Subscriptions') }}</span>
+                <span>{{ __('Subscripciones') }}</span>
             </a>
         </li>
 
@@ -79,7 +79,7 @@
         <li class="nav-item {{ Nav::isRoute('about') }}">
             <a class="nav-link" href="{{ route('about') }}">
                 <i class="fas fa-fw fa-hands-helping"></i>
-                <span>{{ __('About') }}</span>
+                <span>{{ __('Sobre nosotros') }}</span>
             </a>
         </li>
 
