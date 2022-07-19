@@ -122,7 +122,7 @@ class ProfileController extends Controller
         $roles = Role::all();
         $age = $this->getAge($user);
         $subscriptions = Subscription::all();
-        $user_subscription = UserSubscription::where('user_id', $id)->first();
+        $user_subscription = UserSubscription::where('user_id', $id)->latest()->first();//Me traigo el ultimo userSubscription
         $subscriptionAdded = Subscription::findOrFail($user_subscription->subscription_id);
         return view('profile.edit')->with('user', $user)->with('social_works', $social_works)->with('roles', $roles)->with('age', $age)->with('subscriptions', $subscriptions)->with('my_subscription', $subscriptionAdded);
     }
