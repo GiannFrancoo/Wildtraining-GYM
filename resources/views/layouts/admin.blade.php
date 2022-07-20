@@ -22,7 +22,7 @@
     <!-- Favicon -->
     <link href="{{ asset('img/favicon.png') }}" rel="icon" type="image/png">
 
-    <!-- icons -->
+    <!-- Icons -->
     <script src="https://kit.fontawesome.com/d8957ec940.js" crossorigin="anonymous"></script>
 
 </head>
@@ -376,6 +376,5 @@
         });
     }, 2000);
 </script>
-
 </body>
 </html>

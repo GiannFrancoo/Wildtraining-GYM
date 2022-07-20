@@ -3,7 +3,7 @@
 @section('main-content')
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">{{ __('Dashboard') }}</h1>
+    <h1 class="h3 mb-4 text-gray-800">Panel administrativo</h1>
 
     @if (session('success'))
     <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
@@ -29,8 +29,13 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Recaudación (Mensual)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            <div class="d-flex justify-content-between">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" id="ganancia">Ganancia estimada (Mensual)</div>
+                                <a data-toggle="collapse" data-target="#collapseMonthlyRevenue" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-eye"></i></a>
+                            </div>
+                            <div class="row collapse" id="collapseMonthlyRevenue">    
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">${{ number_format($monthlyRevenue, 2, '.',',') }}</div>
+                            </div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -46,8 +51,8 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Recaudación (Anual)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Ganancia estimada (Anual)</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">${{ number_format($monthlyRevenue*12, 2, '.',',') }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -89,8 +94,8 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Usuarios</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $users->count() }}</div>
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Usuarios   -   Sin subscripción</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $users->count() }}   -   {{ $usersWithoutSubscription }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-users fa-2x text-gray-300"></i>
@@ -99,6 +104,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
     <!-- User table -->

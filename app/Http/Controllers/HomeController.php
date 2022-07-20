@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -24,9 +25,19 @@ class HomeController extends Controller
      */
     public function index()
     {        
-        //ordenarlo
         $users = User::orderBy('last_name')->get();
+        $monthlyRevenue = 0;
+        $usersWithoutSubscription = 0;
 
-        return view('home',)->with('users', $users);
+        foreach ($users as $user) {
+            if($user->subscriptions()->latest()->first() != null){
+                $monthlyRevenue = $monthlyRevenue + $user->subscriptions()->latest()->first()->month_price;  
+            }  
+            else{
+                $usersWithoutSubscription++;
+            }        
+        }
+
+        return view('home',)->with(['users' => $users, 'monthlyRevenue' => $monthlyRevenue, 'usersWithoutSubscription' => $usersWithoutSubscription]);
     }
 }
