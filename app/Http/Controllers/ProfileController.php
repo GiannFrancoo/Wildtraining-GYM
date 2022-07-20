@@ -32,8 +32,8 @@ class ProfileController extends Controller
         $user = User::findOrFail($id);
         $age = $this->getAge($user);
         $subscription = $user->subscriptions()->first()->name;
-        $user_subscription = UserSubscription::where('user_id', $id)->first();
-        $subscriptionAdded = Subscription::findOrFail($user_subscription->subscription_id);
+        $user_subscription = UserSubscription::where('user_id', $id)->latest()->first();
+        $subscriptionAdded = Subscription::findOrFail($user_subscription->subscription_id)->name;
         return view('profile.profile')->with('user', $user)->with('age', $age)->with('subscription', $subscription)->with('my_subscription', $subscriptionAdded);
     }
 
@@ -51,13 +51,24 @@ class ProfileController extends Controller
             'primary_phone' => 'required|string|min:10'
         ]);
 
-        //Actualizo la userSubscription
-        $user_subscription = UserSubscription::findOrFail($id);
+        //Creo la nueva userSubscription
+        /*$user_subscription = UserSubscription::findOrFail($id);
         $user_subscription->subscription_id = $request->subscriptionIdSelected;
         $user_subscription->save();
-        //
+        */
+       
 
-        $user = User::findOrFail($id);
+        $user = User::findOrFail($id);        
+            //Creo la nueva userSubscription si es que cambio la subscripcion
+            if($request->subscriptionIdSelected != UserSubscription::where('user_id', $id)->latest()->first()->subscription_id){
+                $user_subscription = new UserSubscription();
+                $user_subscription->user_id = $user->id;
+                $user_subscription->subscription_id = $request->subscriptionIdSelected;
+                $user_subscription->start_date = now();
+                $user_subscription->save();
+            }
+            
+        //Actualizo los atributos del usuario
         $user->name = $request->name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;

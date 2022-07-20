@@ -119,7 +119,7 @@
                                 <div class="col-lg-6 -sm-10 mb-4">
                                     <div class="form-group">
                                         <label class="form-control-label" for="new_password">Subscripcion</label>
-                                        <input type="text" readonly id="subscription_id" class="form-control" value="{{$my_subscription->name}}">
+                                        <input type="text" readonly id="subscription_id" class="form-control" value="{{$my_subscription}}">
                                 </div>
                             </div>
 

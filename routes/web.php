@@ -3,6 +3,7 @@
 use App\Http\Controllers\AssistanceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -27,8 +28,8 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
-//profile
-Route::put('/profile/store', [ProfileController::class, 'store'])->name('profile.store');
+//Routes for profile
+Route::post('/profile/store', [ProfileController::class, 'store'])->name('profile.store');
 Route::get('/profile/create', [ProfileController::class, 'create'])->name('profile.create');
 Route::get('/profile/edit/{id}', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::get('/profile/{id}', [ProfileController::class, 'index'])->name('profile.index');
@@ -39,6 +40,7 @@ Route::get('/profile/destroy/{id}', [ProfileController::class, 'destroy'])->name
 Route::get('/subscription', [SubscriptionController::class, 'index'])->name('subscription.index');
 Route::get('/subscription/create', [SubscriptionController::class, 'create'])->name('subscription.create');
 Route::post('/subscription', [SubscriptionController::class, 'store'])->name('subscription.store');
+
 Route::get('/subscription/{subscription_id}/edit', [SubscriptionController::class, 'edit'])->name('subscription.edit');
 Route::put('/subscription/{subscription_id}', [SubscriptionController::class, 'update'])->name('subscription.update');
 Route::get('/subscription/{subscription_id}', [SubscriptionController::class, 'destroy'])->name('subscription.destroy');
@@ -53,6 +55,15 @@ Route::delete('/assistance/{assistance_id}', [AssistanceController::class, 'dest
 
 
 
+//Routes for payments
+Route::post('/payment/{id}', [PaymentController::class, 'store'])->name('payment.store');
+Route::get('/payment/user/{id}', [PaymentController::class, 'userSelected'])->name('payment.userSelected');
+Route::get('/payment/users', [PaymentController::class, 'users'])->name('payment.users');
+Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+Route::get('/payment/create', [PaymentController::class, 'create'])->name('payment.create');
+Route::get('/payment/edit/{id}', [PaymentController::class, 'edit'])->name('payment.edit');
+Route::get('/payment/{id}', [PaymentController::class, 'destroy'])->name('payment.destroy');
+Route::put('/payment/update/{id}', [PaymentController::class, 'update'])->name('payment.update');
 
 Route::get('/about', function () {
     return view('about');
