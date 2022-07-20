@@ -5,6 +5,7 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">Panel administrativo</h1>
 
+
     @if (session('success'))
     <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
         {{ session('success') }}
@@ -118,7 +119,7 @@
                             <h6 class="m-0 font-weight-bold text-primary">Lista de usuarios</h6>
                         </div>
                         <div class="col-lg-1 col-md-2 col-sm-3">
-                            <a href="{{route('profile.create')}}" type="button" class="btn btn-success float-right" title="add" method="GET" data-toggle="tooltip"><i class="fa-solid fa-circle-plus mx-1"></i>Nuevo</a>
+                            <a href="{{route('profile.create')}}" type="button" class="btn btn-success float-right" title="add" method="GET" data-toggle="tooltip"><i class="fa-solid fa-circle-plus mx-1"></i>Agregar</a>
                         </div>
                     </div>
                     <div class="row">
@@ -148,7 +149,7 @@
                                             <a href="{{route('profile.index', ['id' => $user->id])}}" type="button" class="btn btn-primary">
                                                 <i class="fa fa-eye"></i>
                                             </a>
-
+                                            
                                             <a href="{{route('profile.edit', ['id' => $user->id])}}" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
                                             <a href="{{route('profile.destroy', ['id' => $user->id])}}" type="button" class="btn btn-danger" onclick="return confirm('¿Desea borrar al usuario {{$user->name}}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></a>
                                         </td>

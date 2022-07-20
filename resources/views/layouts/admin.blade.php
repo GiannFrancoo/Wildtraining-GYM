@@ -38,7 +38,9 @@
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fa fa-dumbbell"></i>
             </div>
+            
             <div class="sidebar-brand-text mx-3">Wildtraining</div>
+
         </a>
 
         <!-- Divider -->
@@ -88,6 +90,14 @@
             <a class="nav-link" href="{{ route('about') }}">
                 <i class="fas fa-fw fa-hands-helping"></i>
                 <span>{{ __('Sobre nosotros') }}</span>
+            </a>
+        </li>
+
+        <!-- Nav Item - Payment -->
+        <li class="nav-item {{ Nav::isRoute('payment') }}">
+            <a class="nav-link" href="{{ route('payment.index') }}">
+                <i class="fas fa-fw fa fa-money"></i>
+                <span>{{ __('Pagos') }}</span>
             </a>
         </li>
 
@@ -327,15 +337,15 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">{{ __('Ready to Leave?') }}</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{{ __('¿Desea cerrar sesion?') }}</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-body">Si desea cerrar la sesion presione el bonton cerrar sesion.</div>
             <div class="modal-footer">
-                <button class="btn btn-link" type="button" data-dismiss="modal">{{ __('Cancel') }}</button>
-                <a class="btn btn-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                <button class="btn btn-link" type="button" data-dismiss="modal">{{ __('Cancelar') }}</button>
+                <a class="btn btn-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Cerrar sesion') }}</a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>

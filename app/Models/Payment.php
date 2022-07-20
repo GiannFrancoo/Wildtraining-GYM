@@ -21,6 +21,7 @@ class Payment extends Model
     ];
 
     public function userSubscription(){
-        return $this->belongsTo(User_subscription::class);
+        return $this->belongsTo(UserSubscription::class);
     }
+
 }
