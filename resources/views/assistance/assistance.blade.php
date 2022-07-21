@@ -63,9 +63,9 @@
                                         <td>
                                             <a href="{{ route('assistance.edit', ['assistance_id' => $assistance->id]) }}" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
                                             
-                                            <form method="POST" action="{{ route('assistance.destroy', ['assistance_id' => $assistance->id]) }}" class="d-inline">
-                                                @method('delete')
-                                                @csrf
+                                            <form method="POST" action="{{ route('assistance.destroy', ['assistance_id' => $assistance->id]) }}" class="d-inline">  
+                                                @csrf    
+                                                @method('DELETE')
                                                 <button type="submit" class="btn btn-danger" onclick="return confirm('¿Desea borrar la assistencia de: {{ $assistance->user->getFullNameAttribute() }}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button>
                                             </form>
                                         </td>

@@ -8,6 +8,9 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Http\Requests\Subscription\SubscriptionStoreRequest;
 use App\Http\Requests\Subscription\SubscriptionUpdateRequest;
+use App\Models\User;
+use App\Models\UserSubscription;
+use Illuminate\Support\Arr;
 
 class SubscriptionController extends Controller
 {
@@ -17,9 +20,29 @@ class SubscriptionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $subscriptions = Subscription::orderBy('times_a_week')->get();
-        return view('subscription.subscription')->with('subscriptions', $subscriptions);
+    {        
+        $subscriptions = Subscription::all();
+        $users = User::all();
+        $subscriptionArray = array();
+        $totalSubscription = 0;
+
+        foreach ($subscriptions as $subscription){
+            $totalSubscription = 0;            
+
+            foreach ($users as $user){
+                if (UserSubscription::where('user_id', $user->id)->latest()->first() != null){
+                    $lastSubscriptionId = UserSubscription::where('user_id', $user->id)->latest()->first()->subscription_id;
+
+                    if ($subscription->id == $lastSubscriptionId){
+                        $totalSubscription++;
+                    }
+                }
+            }
+
+            $subscriptionArray = Arr::add($subscriptionArray, $subscription->id, $totalSubscription);
+        }
+
+        return view('subscription.subscription')->with(['subscriptions' => $subscriptions, 'subscriptionArray' => $subscriptionArray]);
     }
 
     /**
@@ -64,7 +87,24 @@ class SubscriptionController extends Controller
      */
     public function show($id)
     {
-        //not neccesary
+        $subscription = Subscription::find($id);
+        $users = User::all();
+        $subscriptionArray = array();
+
+        foreach ($users as $user){
+            if (UserSubscription::where('user_id', $user->id)->latest()->first() != null){
+                $lastSubscriptionId = UserSubscription::where('user_id', $user->id)->latest()->first()->subscription_id;
+
+                if ($subscription->id == $lastSubscriptionId){
+                    $subscriptionArray = Arr::add($subscriptionArray, $user->id, $user);
+                }
+            }
+        }
+        
+        $subscriptionArray = Arr::flatten($subscriptionArray);
+
+        return view('subscription.show')->with(['subscription' => $subscription, 'subscriptionArray' => $subscriptionArray]);
+
     }
 
     /**
