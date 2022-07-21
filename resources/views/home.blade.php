@@ -114,16 +114,17 @@
             <div class="card shadow mb-4">
 
                 <div class="card-header py-3">
-                    <div class="row">
+                    <div class="row d-flex justify-content-between">
                         <div class="col-lg-8 col-md-6 my-2">
                             <h6 class="m-0 font-weight-bold text-primary">Lista de usuarios</h6>
                         </div>
-                        <div class="col-lg-1 col-md-2 col-sm-3">
-                            <a href="{{route('profile.create')}}" type="button" class="btn btn-success float-right" title="add" method="GET" data-toggle="tooltip"><i class="fa-solid fa-circle-plus mx-1"></i>Agregar</a>
+                        <div>
+                            <a href="{{route('profile.create')}}" type="button" class="btn btn-success" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>Agregar</a>
                         </div>
                     </div>
+                    <hr>
                     <div class="row">
-                        <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
                             <input type="text" id="myInput" onkeyup="tableSearch()" class="form-control" placeholder="Nombre de usuario&hellip;">
                         </div>
                     </div>
@@ -150,7 +151,7 @@
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                             
-                                            <a href="{{route('profile.edit', ['id' => $user->id])}}" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
+                                            <a href="{{route('profile.edit', ['id' => $user->id])}}" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
                                             <a href="{{route('profile.destroy', ['id' => $user->id])}}" type="button" class="btn btn-danger" onclick="return confirm('¿Desea borrar al usuario {{$user->name}}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></a>
                                         </td>
                                     </tr>
