@@ -29,7 +29,7 @@
     @endif
 
     
-    <form action="{{ route('profile.update', ['id' => $user->id])}}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('profile.update', ['profile_id' => $user->id])}}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PATCH')
         <div class="row">
@@ -136,7 +136,12 @@
                                 <div class="col-lg-6">
                                         <div class="form-group focused"><!-- AGREGAR VALIDACION con fecha minima y maxima-->
                                             <label class="form-control-label" for="birthday">Fecha de nacimiento</label>
-                                            <input type="date" max="2022-07-18" id="birthday" class="form-control" name="birthday" value="{{old('birthday', $user->birthday->format('Y-m-d'))}}">
+                                            @if($user->birthday != NULL)
+                                                <input type="date" max="2022-07-18" id="birthday" class="form-control" name="birthday" value="{{old('birthday', $user->birthday->format('Y-m-d'))}}">
+                                            @else
+                                                <input type="date" max="2022-07-18" id="birthday" class="form-control" name="birthday" value="">
+                                            @endif
+                                            
                                         </div>
                                 </div>
                             </div>
@@ -176,27 +181,21 @@
                                     <textarea rows="4" id="new_password" class="form-control" name="personal_information" value="{{old('personal_information', $user->personal_information)}}">{{old('personal_information', $user->personal_information)}}</textarea>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <div class="form-group focused">
-                                            <label class="form-control-label" for="current_password">Contraseña</label>
-                                            <input type="text" id="password" class="form-control" name="current_password" value="{{(old('password', $user->password))}}">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="form-group focused">
                                             <label class="form-control-label" for="new_password">Contraseña nueva</label>
                                             <input type="password" id="new_password" class="form-control" name="new_password" placeholder="Contraseña nueva...">
+                                            <small id="passwordHelpBlock" class="form-text text-muted">
+                                               La contraseña debe tener un minimo de 8 caracteres
+                                            </small>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-6">
                                         <div class="form-group focused">
                                             <label class="form-control-label" for="confirm_password">Confirmar contraseña</label>
                                             <input type="password" id="confirm_password" class="form-control" name="password_confirmation" placeholder="Confirmar contraseña...">
                                         </div>
                                     </div>
-                                </div>
-
                         </div>
 
 

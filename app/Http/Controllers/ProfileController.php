@@ -27,17 +27,64 @@ class ProfileController extends Controller
         return view('profile.create')->with('social_works', $social_works)->with('roles', $roles)->with('subscriptions', $subscriptions);
     }
 
-    public function index($id)
+    public function index($profile_id)
     {
-        $user = User::findOrFail($id);
+        $user = User::findOrFail($profile_id);
         $age = $this->getAge($user);
         $subscription = $user->subscriptions()->first()->name;
-        $user_subscription = UserSubscription::where('user_id', $id)->latest()->first();
+        $user_subscription = UserSubscription::where('user_id', $profile_id)->latest()->first();
         $subscriptionAdded = Subscription::findOrFail($user_subscription->subscription_id)->name;
         return view('profile.profile')->with('user', $user)->with('age', $age)->with('subscription', $subscription)->with('my_subscription', $subscriptionAdded);
     }
 
-    public function update(Request $request, $id)
+
+    public function store(Request $request){
+        $request->validate([
+        'password' => 'nullable|min:8|required_with:password_confirmation',
+        'password_confirmation' => 'nullable|min:8|required_with:new_password|same:password',
+        'primary_phone' => 'required|string|min:9'
+        ]);
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->last_name = $request->last_name;
+        $user->email = $request->email;
+        $user->primary_phone = $request->primary_phone;
+       
+        //if($user->secundary_phone != NULL){
+            $user->secundary_phone = $request->secundary_phone;
+        //}
+
+        //if($user->secundary_phone != NULL){
+            $user->address = $request->address;
+        //}
+        $user->birthday = $request->birthday;
+        $user->start_date = $request->start_date;
+        $user->personal_information = $request->personal_information;
+        $user->social_work_id = $request->social_work_id;
+
+        //Verifico que las contraseñas ingresadas tengan el formato correcto
+        if($request->password != NULL  && $request->password === $request->password_confirmation){
+            $user->password = $request->password;
+        }
+
+        $user->role_id = $request->role_id;
+
+        $user->save();
+
+        //Creo la user subscription asociada
+        $user_subscription = new UserSubscription();
+        $user_subscription->user_id = $user->id;
+        $user_subscription->subscription_id = $request->subscription;
+        $user_subscription->start_date = now();
+        $user_subscription->save();
+        //
+        return redirect('home')->with('success','Se creo con exito el nuevo usuario');
+    }
+
+
+
+    public function update(Request $request, $profile_id)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -46,9 +93,9 @@ class ProfileController extends Controller
             //                Rule::unique('users')->ignore(Auth::user()->id),
             //'email' => 'required|string|email|max:255|unique:users,email,' . Auth::user()->id, //. Auth::user()->email,
             //'current_password' => 'nullable|required_with:new_password',
-            //'new_password' => 'nullable|min:8|max:12|required_with:current_password',
-            //'password_confirmation' => 'nullable|min:8|max:12|required_with:new_password|same:new_password',
-            'primary_phone' => 'required|string|min:10'
+            'new_password' => 'nullable|min:8|required_with:current_password',
+            'password_confirmation' => 'nullable|min:8|required_with:new_password|same:new_password',
+            'primary_phone' => 'required|string|min:9'
         ]);
 
         //Creo la nueva userSubscription
@@ -58,9 +105,9 @@ class ProfileController extends Controller
         */
        
 
-        $user = User::findOrFail($id);        
+        $user = User::findOrFail($profile_id);        
             //Creo la nueva userSubscription si es que cambio la subscripcion
-            if($request->subscriptionIdSelected != UserSubscription::where('user_id', $id)->latest()->first()->subscription_id){
+            if($request->subscriptionIdSelected != UserSubscription::where('user_id', $profile_id)->latest()->first()->subscription_id){
                 $user_subscription = new UserSubscription();
                 $user_subscription->user_id = $user->id;
                 $user_subscription->subscription_id = $request->subscriptionIdSelected;
@@ -113,77 +160,61 @@ class ProfileController extends Controller
             }
         }*/
 
-        if ($request->input('new_password') != NULL) { //VER ESTO DE LAS CONTRASEÑAS
+        if ($request->input('new_password') != NULL) {
+
+            if (!Hash::check($user->password , $request->new_password)) {
+                if($request->new_password != NULL  && $request->new_password === $request->password_confirmation){
+                    $user->password = $request->new_password;
+                }
+            } else {
+                return redirect()->back()->withInput();
+            }
+        }
+
+        /*if ($request->input('new_password') != NULL) { //VER ESTO DE LAS CONTRASEÑAS
             if ($request->input('new_password') === $request->input('password_confirmation')) {
                     bcrypt($request->password_confirmation);
                     $user->password = $request->password_confirmation;
             } else {
                 return redirect()->back()->withError('Las contraseñas no coinciden');
             }
-        }
+        }*/
 
         $user->save();
 
         return redirect()->route('home')->withSuccess('Se guardaron con exito los cambios.');
     }
 
-    public function edit($id){
-        $user = User::findOrFail($id);
+    public function edit($profile_id){
+        $user = User::findOrFail($profile_id);
         $social_works = SocialWork::all();
         $roles = Role::all();
-        $age = $this->getAge($user);
+        $age = 0;
+        if($user->birthday != null){
+            $age = $this->getAge($user);
+        }
         $subscriptions = Subscription::all();
-        $user_subscription = UserSubscription::where('user_id', $id)->latest()->first();//Me traigo el ultimo userSubscription
+        $user_subscription = UserSubscription::where('user_id', $profile_id)->latest()->first();//Me traigo el ultimo userSubscription
         $subscriptionAdded = Subscription::findOrFail($user_subscription->subscription_id);
         return view('profile.edit')->with('user', $user)->with('social_works', $social_works)->with('roles', $roles)->with('age', $age)->with('subscriptions', $subscriptions)->with('my_subscription', $subscriptionAdded);
     }
 
     public function getAge($user){
         $hoy = now();
-        $edad = $hoy->diff($user->birthday->format('Y-m-d'));
-        return $edad;
+        if($user->birthday != null){
+            $edad = $hoy->diff($user->birthday->format('Y-m-d'));
+             return $edad;
+        }
     }
 
-    public function destroy($id){
-        $user = User::findOrFail($id);
+    public function destroy($profile_id){
+        $user = User::findOrFail($profile_id);
         $user->delete();
 
         return redirect('home')->with('success', 'Se elimino con éxito');
     }
 
-    public function store(Request $request){
-        $user = new User();
-        $user->name = $request->name;
-        $user->last_name = $request->last_name;
-        $user->email = $request->email;
-        $user->primary_phone = $request->primary_phone;
-       
-        //if($user->secundary_phone != NULL){
-            $user->secundary_phone = $request->secundary_phone;
-        //}
-
-        //if($user->secundary_phone != NULL){
-            $user->address = $request->address;
-        //}
-        $user->birthday = $request->birthday;
-        $user->start_date = $request->start_date;
-        $user->personal_information = $request->personal_information;
-        $user->social_work_id = $request->social_work_id;
-        $user->password = $request->password;
-        $user->role_id = $request->role_id;
-
-        $user->save();
-
-        //Creo la user subscription asociada
-        $user_subscription = new UserSubscription();
-        $user_subscription->user_id = $user->id;
-        $user_subscription->subscription_id = $request->subscription;
-        $user_subscription->start_date = now();
-        $user_subscription->save();
-        //
-        
-        return redirect('home')->with('success','Se creo con exito el nuevo usuario');
-    }
+   
 
 
 }

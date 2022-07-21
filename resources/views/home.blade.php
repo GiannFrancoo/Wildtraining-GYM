@@ -95,7 +95,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Usuarios   -   Sin suscripción</div>
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Usuarios   -   Sin subscripción</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $users->count() }}   -   {{ $usersWithoutSubscription }}</div>
                         </div>
                         <div class="col-auto">
@@ -146,12 +146,16 @@
                                         <td>{{ $user->last_name }}</td>
                                         <td>{{ $user->primary_phone }}</td>
                                         <td class="text-center">
-                                            <a href="{{route('profile.index', ['id' => $user->id])}}" type="button" class="btn btn-primary">
+                                            <a href="{{route('profile.index', ['profile_id' => $user->id])}}" type="button" class="btn btn-primary">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                             
-                                            <a href="{{route('profile.edit', ['id' => $user->id])}}" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
-                                            <a href="{{route('profile.destroy', ['id' => $user->id])}}" type="button" class="btn btn-danger" onclick="return confirm('¿Desea borrar al usuario {{$user->name}}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></a>
+                                            <a href="{{route('profile.edit', ['profile_id' => $user->id])}}" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
+                                            <form action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" method="POST">
+                                                @csrf
+                                                @method("DELETE")
+                                                <button class="btn btn-danger" onclick="return confirm('¿Desea borrar al usuario {{$user->name}}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

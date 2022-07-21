@@ -60,11 +60,17 @@
                                         <th scope="row">${{ $payment->price }}</th>
                                         <td>{{ $payment->date->format('d-m-Y') }}</td>
                                         <td></td>
-                                        <td>{{$payment->userSubscription->user->name}}</td>
                                         <td>{{$payment->userSubscription->subscription->name}}</td>
+                                        @if($payment->userSubscription->user != NULL)
+                                            <td>{{$payment->userSubscription->user->name}}</td>
+                                        @endif
                                         <td class="text-center">
-                                            <a href="{{route('payment.edit', ['id' => $payment->id])}}" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
-                                            <a href="{{route('payment.destroy', ['id' => $payment->id])}}" type="button" class="btn btn-danger" onclick="return confirm('¿Desea borrar pago seleccionado?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></a>
+                                            <a href="{{route('payment.edit', ['payment_id' => $payment->id])}}" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
+                                            <form action="{{ route('payment.destroy', ['payment_id' => $payment->id]) }}" method="POST"> 
+                                                @csrf 
+                                                @method("DELETE") 
+                                                <button class="btn btn-danger" onclick="return confirm('¿Desea borrar pago seleccionado?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button> 
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

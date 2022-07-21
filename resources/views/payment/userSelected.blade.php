@@ -28,7 +28,7 @@
         </div>
     @endif
 
-    <form action="{{ route('payment.store', ['id' => $user->id])}}" method="POST">
+    <form action="{{ route('payment.store', ['payment_id' => $user->id])}}" method="POST">
     @csrf
 
         <div class="row">
