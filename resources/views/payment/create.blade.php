@@ -60,7 +60,7 @@
                             <div class="col-lg-6 md-8 sm-9">
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="payment">Fecha<span class="small text-danger">*</span></label>
-                                    <input type="date" id="payment" required class="form-control" name="date" placeholder="payment" value="{{ old('date')}}">
+                                    <input type="time" id="payment" required class="form-control" name="date" placeholder="payment" value="{{ old('date')}}">
                                 </div>
                             </div>
                     </div>

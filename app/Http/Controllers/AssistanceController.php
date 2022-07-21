@@ -17,7 +17,7 @@ class AssistanceController extends Controller
      */
     public function index()
     {
-        $assistances = Assistance::orderBy('date')->get();
+        $assistances = Assistance::orderByDesc('date')->get();
         return view('assistance.assistance')->with('assistances', $assistances);
     }
 
