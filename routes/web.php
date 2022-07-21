@@ -40,10 +40,10 @@ Route::get('/profile/destroy/{id}', [ProfileController::class, 'destroy'])->name
 Route::get('/subscription', [SubscriptionController::class, 'index'])->name('subscription.index');
 Route::get('/subscription/create', [SubscriptionController::class, 'create'])->name('subscription.create');
 Route::post('/subscription', [SubscriptionController::class, 'store'])->name('subscription.store');
-
+Route::get('/subscription/{subscription_id}', [SubscriptionController::class, 'show'])->name('subscription.show');
 Route::get('/subscription/{subscription_id}/edit', [SubscriptionController::class, 'edit'])->name('subscription.edit');
 Route::put('/subscription/{subscription_id}', [SubscriptionController::class, 'update'])->name('subscription.update');
-Route::get('/subscription/{subscription_id}', [SubscriptionController::class, 'destroy'])->name('subscription.destroy');
+Route::delete('/subscription/{subscription_id}', [SubscriptionController::class, 'destroy'])->name('subscription.destroy');
 
 //Routes for assistances
 Route::get('/assistance', [AssistanceController::class, 'index'])->name('assistance.index');
@@ -52,8 +52,6 @@ Route::post('/assistance', [AssistanceController::class, 'store'])->name('assist
 Route::get('/assistance/{assistance_id}/edit}', [AssistanceController::class, 'edit'])->name('assistance.edit');
 Route::put('/assistance/{assistance_id}', [AssistanceController::class, 'update'])->name('assistance.update');
 Route::delete('/assistance/{assistance_id}', [AssistanceController::class, 'destroy'])->name('assistance.destroy');
-
-
 
 //Routes for payments
 Route::post('/payment/{id}', [PaymentController::class, 'store'])->name('payment.store');
