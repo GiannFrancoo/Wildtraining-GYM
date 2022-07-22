@@ -46,7 +46,7 @@
 
                 <!-- Modal -->
                 
-
+                
 
 
 
@@ -54,12 +54,12 @@
                     <table class="table table-bordered table-hover text-center" id="myTable">    
                             <thead>
                                 <tr>
-                                    <th scope="col"><i class="fa fa-user" aria-hidden="true"></i></th>
-                                    <th scope="col"><i class="fa fa-money" aria-hidden="true"></i></th>
-                                    <th scope="col"><i class="fa fa-calendar" aria-hidden="true"></i></th>
+                                    <th scope="col">Usuario</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Fecha</th>
                                     <th scope="col"><i class="fa fa-clock-o" aria-hidden="true"></i></th>
-                                    <th scope="col"><i class="fa fa-address-card" aria-hidden="true"></i></th>
-                                    <th scope="col"><i class="fa fa-tasks" aria-hidden="true"></i></th>
+                                    <th scope="col">Subscripcion</th>
+                                    <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
