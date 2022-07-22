@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -63,6 +63,3 @@ Route::get('/payment/{payment_id}/edit', [PaymentController::class, 'edit'])->na
 Route::delete('/payment/{payment_id}', [PaymentController::class, 'destroy'])->name('payment.destroy');
 Route::put('/payment/{payment_id}', [PaymentController::class, 'update'])->name('payment.update');
 
-Route::get('/about', function () {
-    return view('about');
-})->name('about');

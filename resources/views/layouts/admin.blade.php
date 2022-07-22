@@ -34,13 +34,11 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fa fa-dumbbell"></i>
-            </div>
-            
+            </div>            
             <div class="sidebar-brand-text mx-3">Wildtraining</div>
-
         </a>
 
         <!-- Divider -->
@@ -85,19 +83,25 @@
             </a>
         </li>
 
-        <!-- Nav Item - About -->
-        <li class="nav-item {{ Nav::isRoute('about') }}">
-            <a class="nav-link" href="{{ route('about') }}">
-                <i class="fas fa-fw fa-hands-helping"></i>
-                <span>{{ __('Sobre nosotros') }}</span>
-            </a>
-        </li>
-
         <!-- Nav Item - Payment -->
         <li class="nav-item {{ Nav::isRoute('payment') }}">
             <a class="nav-link" href="{{ route('payment.index') }}">
                 <i class="fas fa-fw fa fa-money"></i>
                 <span>{{ __('Pagos') }}</span>
+            </a>
+        </li>
+
+        <hr class="sidebar-divider">
+
+        <div class="sidebar-heading">
+            {{ __('Información') }}
+        </div>
+
+        <!-- Nav Item - About -->
+        <li class="nav-item {{ Nav::isRoute('about') }}">
+            <a class="nav-link" href="{{ route('about') }}">
+                <i class="fas fa-fw fa-hands-helping"></i>
+                <span>{{ __('Sobre nosotros') }}</span>
             </a>
         </li>
 
@@ -248,7 +252,7 @@
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <span>Copyright &copy;  | Bentivegna Gian Franco - Cervelli Haderne Lucas {{ now()->year }}</span>
+                    <span>Copyright &copy;  | Bentivegna Gian Franco - Cervelli Haderne Lucas | {{ now()->year }}</span>
                 </div>
             </div>
         </footer>
