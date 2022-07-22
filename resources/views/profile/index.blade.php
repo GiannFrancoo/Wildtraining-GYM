@@ -99,7 +99,7 @@
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="col-6">
                             <input type="text" id="myInput" onkeyup="tableSearch()" class="form-control" placeholder="Nombre de usuario&hellip;">
                         </div>
                     </div>
