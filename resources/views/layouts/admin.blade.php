@@ -42,7 +42,11 @@
         </a>
 
         <!-- Divider -->
-        <hr class="sidebar-divider my-0">
+        <hr class="sidebar-divider">
+
+        <div class="sidebar-heading">
+            {{ __('General') }}
+        </div>
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item {{ Nav::isRoute('home') }}">
@@ -51,10 +55,12 @@
                 <span>{{ __('Panel') }}</span></a>
         </li>
 
-        <!-- Divider -->
         <hr class="sidebar-divider">
 
-
+        <!-- Divider -->
+        <div class="sidebar-heading">
+            {{ __('Personal') }}
+        </div>
 
          <!-- Nav Item - Profile -->
          <li class="nav-item {{ Nav::isRoute('profile') }}">
@@ -64,9 +70,11 @@
             </a>
         </li>
 
+        <hr class="sidebar-divider">
+
         <!-- Nav Item - Users -->
         <div class="sidebar-heading">
-            {{ __('Opciones') }}
+            {{ __('Administración') }}
         </div>
 
        <!-- Nav Item - Profiles -->
@@ -104,13 +112,13 @@
         <hr class="sidebar-divider">
 
         <div class="sidebar-heading">
-            {{ __('Información') }}
+            {{ __('Contacto') }}
         </div>
 
         <!-- Nav Item - About -->
         <li class="nav-item {{ Nav::isRoute('about') }}">
             <a class="nav-link" href="{{ route('about') }}">
-                <i class="fas fa-fw fa-hands-helping"></i>
+                <i class="fa-solid fa-handshake-angle"></i>
                 <span>{{ __('Sobre nosotros') }}</span>
             </a>
         </li>
