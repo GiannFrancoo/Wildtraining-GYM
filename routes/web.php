@@ -28,13 +28,13 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
-//Routes for profile
-Route::post('/profile/store', [ProfileController::class, 'store'])->name('profile.store');
+//Routes for profile    
+Route::put('/profile/{profile_id}', [ProfileController::class, 'update'])->name('profile.update');
 Route::get('/profile/create', [ProfileController::class, 'create'])->name('profile.create');
-Route::get('/profile/edit/{id}', [ProfileController::class, 'edit'])->name('profile.edit');
-Route::get('/profile/{id}', [ProfileController::class, 'index'])->name('profile.index');
-Route::put('/profile/update/{id}', [ProfileController::class, 'update'])->name('profile.update');
-Route::get('/profile/destroy/{id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::post('/profile', [ProfileController::class, 'store'])->name('profile.store');
+Route::get('/profile/{profile_id}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::get('/profile/{profile_id}', [ProfileController::class, 'index'])->name('profile.index');
+Route::delete('/profile/{profile_id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 //Routes for subscriptions
 Route::get('/subscription', [SubscriptionController::class, 'index'])->name('subscription.index');
@@ -54,12 +54,12 @@ Route::put('/assistance/{assistance_id}', [AssistanceController::class, 'update'
 Route::delete('/assistance/{assistance_id}', [AssistanceController::class, 'destroy'])->name('assistance.destroy');
 
 //Routes for payments
-Route::post('/payment/{id}', [PaymentController::class, 'store'])->name('payment.store');
-Route::get('/payment/user/{id}', [PaymentController::class, 'userSelected'])->name('payment.userSelected');
-Route::get('/payment/users', [PaymentController::class, 'users'])->name('payment.users');
+Route::post('/payment/{payment_id}', [PaymentController::class, 'store'])->name('payment.store');
+Route::get('/payment/{payment_id}', [PaymentController::class, 'userSelected'])->name('payment.userSelected');
+Route::get('/paymentUsers', [PaymentController::class, 'users'])->name('payment.users');
 Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
 Route::get('/payment/create', [PaymentController::class, 'create'])->name('payment.create');
-Route::get('/payment/edit/{id}', [PaymentController::class, 'edit'])->name('payment.edit');
-Route::get('/payment/{id}', [PaymentController::class, 'destroy'])->name('payment.destroy');
-Route::put('/payment/update/{id}', [PaymentController::class, 'update'])->name('payment.update');
+Route::get('/payment/{payment_id}/edit', [PaymentController::class, 'edit'])->name('payment.edit');
+Route::delete('/payment/{payment_id}', [PaymentController::class, 'destroy'])->name('payment.destroy');
+Route::put('/payment/{payment_id}', [PaymentController::class, 'update'])->name('payment.update');
 

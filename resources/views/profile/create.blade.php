@@ -3,16 +3,6 @@
 @section('main-content')
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">{{ __('Perfil') }}</h1>
-
-    @if (session('success'))
-        <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-
     @if(Session::has('error'))
         <div class="alert alert-danger">{{ Session::get('error') }}</div>
     @endif
@@ -28,8 +18,7 @@
         </div>
     @endif
 
-    
-    <form action="{{ route('profile.store')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('profile.store')}}" enctype="multipart/form-data" method="POST">
     @csrf
 
         <div class="row">
@@ -43,10 +32,6 @@
                     </div>
 
                     <div class="card-body">
-
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <input type="hidden" name="_method" value="PUT">
-
                             <h6 class="heading-small text-muted mb-4">Informacion</h6>
 
                             <div class="pl-lg-4">
@@ -84,12 +69,15 @@
                                     </div>
                                 </div>
 
-                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group focused">
                                         <label class="form-control-label" for="new_password">Celular<span class="small text-danger">*</span></label>
                                         <input type="text" id="new_password" class="form-control" required name="primary_phone" placeholder="2915678987" value="{{ old('primary_phone')}}">
+                                        <small id="passwordHelpBlock" class="form-text text-muted">
+                                            El celular debe tener un minimo de 9 caracteres
+                                        </small>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -116,8 +104,8 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                         <div class="form-group focused"><!-- AGREGAR VALIDACION con min="2017-07-18" y max-->
-                                            <label class="form-control-label" for="start_date">Fecha de inicio</label>
-                                            <input type="date" id="new_password" class="form-control" placeholder="2022-07-15" name="start_date" value="{{old('start_date')}}">
+                                            <label class="form-control-label" for="start_date">Fecha de inicio<span class="small text-danger">*</span></label>
+                                            <input type="date" id="new_password" required class="form-control" placeholder="2022-07-15" name="start_date" value="{{old('start_date')}}">
                                         </div>
                                 </div>
                                 <div class="col-lg-6 -sm-10 mb-4">
@@ -151,13 +139,13 @@
 
                                     <div class="col-lg-6">
                                         <div class="form-group focused">
-                                            <label class="form-control-label" required for="current_password">Contraseña (8 caracteres min)</label>
+                                            <label class="form-control-label" required for="current_password">Contraseña (8 caracteres min)<span class="small text-danger">*</span></label>
                                             <input type="password" required id="confirm_password" class="form-control" name="password" placeholder="hola1234" value="{{old('password')}}">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group focused">
-                                            <label class="form-control-label" for="confirm_password">Confirmar contraseña</label>
+                                            <label class="form-control-label" for="confirm_password">Confirmar contraseña<span class="small text-danger">*</span></label>
                                             <input type="password" required data-toggle="tooltip" data-placement="top" title="8 caracteres minimo" data-tip="8 caracteres minimo" id="confirm_password" class="form-control" name="password_confirmation" placeholder="Confirmar contraseña..." value="{{old('password_confirmation')}}">
                                         </div>
                                     </div>

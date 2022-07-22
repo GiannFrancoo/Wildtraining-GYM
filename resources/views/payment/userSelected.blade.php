@@ -28,7 +28,7 @@
         </div>
     @endif
 
-    <form action="{{ route('payment.store', ['id' => $user->id])}}" method="POST">
+    <form action="{{ route('payment.store', ['payment_id' => $user->id])}}" method="POST">
     @csrf
 
         <div class="row">
@@ -60,7 +60,7 @@
                             <div class="col-lg-6 md-8 sm-9">
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="payment">Fecha<span class="small text-danger">*</span></label>
-                                    <input type="date" id="payment" required class="form-control" name="date" placeholder="payment" value="{{$timePayment->format('Y-m-d')}}">
+                                    <input type="datetime-local" id="payment" required class="form-control" name="date" placeholder="payment" value="{{$dayHour->format('Y-m-d H:i:s')}}">
                                 </div>
                             </div>
                     </div>

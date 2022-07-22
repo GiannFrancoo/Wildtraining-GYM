@@ -95,14 +95,18 @@
                                 <div class="col-lg-6">
                                         <div class="form-group focused"><!-- AGREGAR VALIDACION con fecha minima y maxima-->
                                             <label class="form-control-label" for="birthday">Fecha de nacimiento</label>
-                                            <input type="date" readonly max="2022-07-18" id="birthday" class="form-control" name="birthday" value="{{old('birthday', $user->birthday->format('Y-m-d'))}}">
+                                            @if($user->birthday != NULL)
+                                                <input type="date" readonly max="2022-07-18" id="birthday" class="form-control" name="birthday" value="{{old('birthday', $user->birthday->format('Y-m-d'))}}">
+                                            @else
+                                                <input type="text"readonly max="2022-07-18" id="birthday" placeholder="-" class="form-control" name="birthday" value="">
+                                            @endif
                                         </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                         <div class="form-group focused"><!-- AGREGAR VALIDACION con min="2017-07-18" y max-->
-                                            <label class="form-control-label" for="start_date">Fecha de inicio</label>
+                                            <label class="form-control-label" for="start_date">Fecha de inicio<span class="small text-danger">*</span></label>
                                             <input type="date" readonly id="new_password" class="form-control" name="start_date" value="{{old('start_date', $user->start_date->format('Y-m-d'))}}">
                                         </div>
                                 </div>
@@ -128,14 +132,6 @@
                                 <label class="form-control-label" for="personal_information">Informacion personal</label>
                                 <textarea rows="4" id="personal_information" readonly class="form-control" name="personal_information" value="{{old('personal_information', $user->personal_information)}}">{{old('personal_information', $user->personal_information)}}</textarea>
                             </div>
-
-                                    <div class="col-lg-6 -sm-10 mb-4">
-                                        <div class="form-group focused">
-                                            <label class="form-control-label" for="current_password">Contraseña</label>
-                                            <input type="text" readonly id="password" class="form-control" name="password" value="{{$user->password}}">
-                                        </div>
-                                    </div>
-                                
                         </div>
                             <!-- Button -->
                             <div class="pl-lg-4">

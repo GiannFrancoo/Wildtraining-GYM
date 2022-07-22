@@ -28,7 +28,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('payment.update', ['id' => $payment->id]) }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('payment.update', ['payment_id' => $payment->id]) }}" enctype="multipart/form-data">
      @csrf
      @method('PUT')
 
@@ -61,7 +61,7 @@
                             <div class="col-lg-6 md-8 sm-9">
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="payment">Fecha<span class="small text-danger">*</span></label>
-                                    <input type="date" id="payment" required class="form-control" name="date" placeholder="payment" value="{{ old('date', $payment->date->format('Y-m-d'))}}">
+                                    <input type="datetime-local" id="payment" required class="form-control" name="date" placeholder="payment" value="{{ old('date', $payment->date->format('Y-m-d H:i:s'))}}">
                                 </div>
                             </div>
                     </div>

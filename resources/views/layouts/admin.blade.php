@@ -61,7 +61,7 @@
 
         <!-- Nav Item - Profiles -->
         <li class="nav-item {{ Nav::isRoute('profile') }}">
-            <a class="nav-link" href="{{ route('profile.index', ['id' => Auth::user()->id]) }}">
+            <a class="nav-link" href="{{ route('profile.index', ['profile_id' => Auth::user()->id]) }}">
                 <i class="fas fa-fw fa-user"></i>
                 <span>{{ __('Perfil') }}</span>
             </a>
@@ -212,7 +212,7 @@
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="{{ route('profile.index', ['id' => Auth::user()->id]) }}">
+                            <a class="dropdown-item" href="{{ route('profile.index', ['profile_id' => Auth::user()->id]) }}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 {{ __('Perfil') }}
                             </a>
