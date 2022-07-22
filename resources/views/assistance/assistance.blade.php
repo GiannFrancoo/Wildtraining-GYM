@@ -29,7 +29,7 @@
         </div>
     @endif
 
-
+    <!-- Cards -->
     <div class="row">
         <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-success shadow h-100 py-2">
@@ -41,6 +41,22 @@
                         </div>
                         <div class="col-auto">
                             <i class="fa fa-clock fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Asistencias de hoy : {{ now()->format('d-m-Y')}}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">In progress...</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-clipboard-list fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -69,18 +85,20 @@
                         <table class="table table-bordered table-hover text-center" id="myTable">    
                             <thead>
                                 <tr>
-                                    <th scope="col">Fecha<i class="fa fa-calendar ml-1"></i></th>
                                     <th scope="col">Usuario<i class="fa fa-user ml-1"></i></th>
+                                    <th scope="col">Fecha<i class="fa fa-calendar ml-1"></i></th>
+                                    <th scope="col">Hora<i class="fa fa-clock-o ml-1"></i></th>
                                     <th scope="col">Acciones<i class="fa fa-server ml-1"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($assistances as $assistance)
                                     <tr>
-                                        <td>{{ $assistance->date }}</td>
-                                        <td>{{ $assistance->user->getFullNameAttribute() }}</td>                              
+                                        <td>{{ $assistance->user->getFullNameAttribute() }}</td>
+                                        <td>{{ $assistance->date->format('d-m-Y') }}</td>
+                                        <td>{{ $assistance->date->format('H:i:s') }}</td>
                                         <td>
-                                            <a href="{{ route('assistance.edit', ['assistance_id' => $assistance->id]) }}" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
+                                            <a href="{{ route('assistance.edit', ['assistance_id' => $assistance->id]) }}" type="button" class="btn btn-primary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
                                             
                                             <form method="POST" action="{{ route('assistance.destroy', ['assistance_id' => $assistance->id]) }}" class="d-inline">  
                                                 @csrf    

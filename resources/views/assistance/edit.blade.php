@@ -2,7 +2,7 @@
 
 @section('main-content')
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">{{ __('Asistencia') }}</h1>
+    <h1 class="h3 mb-4 text-gray-800">{{ __('Asistencia') }} de {{ $assistance->user->getFullNameAttribute() }}</h1>
 
     @if (session('success'))
         <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
@@ -25,7 +25,7 @@
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Nueva asistencia</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Editando asistencia</h6>
         </div>
         <div class="card-body">
 
@@ -35,7 +35,8 @@
             @csrf
             @method('PUT')
                 <div class="row">
-                    <div class="col-lg-6">                        
+
+                    <div class="col-6">                        
                         <div class="form-group focused">
                             <label class="form-control-label" for="user">Usuario</label>
                             <select required class="custom-select" name="user_id" value="{{ $assistance->user->getFullNameAttribute() }}">                                         
@@ -48,16 +49,20 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-6">
+                    <div class="col-6">
                         <div class="form-group focused">
                             <label class="form-control-label" for="date">Fecha</label>
-                            <input type="datetime-local" id="date" class="form-control" placeholder="{{ date('d-m-Y H:i:s') }}" name="date" value="{{ old('date') ?? $assistance->date }}">
+                            <input type="date" id="date" class="form-control" placeholder="{{ date('d-m-Y H:i:s') }}" name="date" value="{{ old('date') ?? $assistance->date->format('d-m-Y H:i:s') }}">
                         </div>
                     </div>
+
                 </div>
-            
+
+                <hr class="mt-2">
                 
-                <button type="submit" class="btn btn-primary">Actualizar asistencia</button>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-disk mr-1"></i>Actualizar asistencia</button>
+                </div>
                 
             </form>            
         </div>

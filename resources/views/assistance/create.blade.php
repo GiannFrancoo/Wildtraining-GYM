@@ -34,7 +34,8 @@
             <form action="{{ route('assistance.store')}}" method="POST">
             @csrf
                 <div class="row">
-                    <div class="col-lg-6">                        
+
+                    <div class="col-6">                        
                         <div class="form-group focused">
                             <label class="form-control-label" for="user">Usuario</label>
                             <select  class="custom-select" required name="user_id" value="{{ old('user_id') }}">                                           
@@ -45,17 +46,21 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-6">
+                    <div class="col-6">
                         <div class="form-group focused">
                             <label class="form-control-label" for="date">Fecha</label>
-                            <input type="datetime-local" id="date" class="form-control" placeholder="{{ date('d-m-Y H:i:s') }}" name="date" value="{{ old('date') ?? date('d-m-Y H:i:s') }}">
+                            <input type="datetime-local" id="date" class="form-control" placeholder="{{ date('d-m-Y H:i:s') }}" name="date" value="{{ now()->format('d-m-Y H:i:s') }}">
                         </div>
                     </div>
+
                 </div>
-            
-                
-                <button type="submit" class="btn btn-primary">Marcar asistencia</button>
-                
+
+                <hr class="mt-2">
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-disk mr-1"></i> Marcar asistencia</button>
+                </div>
+
             </form>            
         </div>
     </div>
