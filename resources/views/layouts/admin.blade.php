@@ -107,21 +107,6 @@
             </a>
         </li>
 
-
-        <hr class="sidebar-divider">
-
-        <div class="sidebar-heading">
-            {{ __('Información') }}
-        </div>
-
-        <!-- Nav Item - About -->
-        <li class="nav-item {{ Nav::isRoute('about') }}">
-            <a class="nav-link" href="{{ route('about') }}">
-                <i class="fas fa-fw fa-hands-helping"></i>
-                <span>{{ __('Sobre nosotros') }}</span>
-            </a>
-        </li>
-
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
