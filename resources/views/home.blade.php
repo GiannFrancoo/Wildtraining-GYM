@@ -148,17 +148,16 @@
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->last_name }}</td>
                                         <td>{{ $user->primary_phone }}</td>
-                                        <td class="text-center">
-                                            <a href="{{route('profile.index', ['profile_id' => $user->id])}}" type="button" class="btn btn-primary">
-                                                <i class="fa fa-eye"></i>
-                                            </a>
-                                            
-                                            <a href="{{route('profile.edit', ['profile_id' => $user->id])}}" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
-                                            <form action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" method="POST">
-                                                @csrf
-                                                @method("DELETE")
-                                                <button class="btn btn-danger" onclick="return confirm('¿Desea borrar al usuario {{$user->name}}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button>
-                                            </form>
+                                        <td class="text-center d-flex justify-content-center">
+                                            <a href="{{route('profile.index', ['profile_id' => $user->id])}}" type="button" class="btn btn-primary mx-1"><i class="fa fa-eye"></i></a>
+                                            <a href="{{route('profile.edit', ['profile_id' => $user->id])}}" type="button" class="btn btn-secondary mx-1" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
+                                            <div class="mx-1">
+                                                <form action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" method="POST">
+                                                    @csrf
+                                                    @method("DELETE")
+                                                    <button class="btn btn-danger" onclick="return confirm('¿Desea borrar al usuario {{$user->name}}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button>
+                                                </form>
+                                            </div>
 
                                         </td>
                                     </tr>
