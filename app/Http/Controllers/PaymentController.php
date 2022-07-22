@@ -42,7 +42,7 @@ class PaymentController extends Controller
      */
     public function store(Request $request, $payment_id)
     {
-        //
+        //  
         $payments = Payment::all();
         $payment = new Payment();
         $user = User::findOrfail($payment_id);
@@ -131,7 +131,8 @@ class PaymentController extends Controller
         $subscription = UserSubscription::where('user_id', $user->id)->latest()->first()->subscription()->first();
         $timePayment = now();
         $priceSubscription = UserSubscription::where('user_id', $user->id)->latest()->first()->subscription()->first()->month_price;
-        $fecha_hora = now();
+        $fecha_hora = now();     
+
         return view('payment.userSelected')->with('user', $user)->with('timePayment', $timePayment)->with('priceSubscription', $priceSubscription)->with('subscription', $subscription)->with('dayHour', $fecha_hora);
     }
 }
