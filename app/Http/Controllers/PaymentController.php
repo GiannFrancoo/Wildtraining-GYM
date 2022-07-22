@@ -40,12 +40,12 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(Request $request, $payment_id)
     {
         //
         $payments = Payment::all();
         $payment = new Payment();
-        $user = User::findOrfail($id);
+        $user = User::findOrfail($payment_id);
         $subscription = UserSubscription::where('user_id', $user->id)->latest()->first()->subscription()->first();
         $payment->price = $request->price;
         $payment->date = $request->date;
@@ -62,7 +62,7 @@ class PaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($payment_id)
     {
         //
     }
@@ -79,9 +79,9 @@ class PaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($payment_id)
     {
-        $payment = Payment::findOrFail($id);
+        $payment = Payment::findOrFail($payment_id);
         $users = User::all();
         $subscriptions = Subscription::all();
         return view('payment.edit')->with('payment', $payment)->with('users', $users)->with('subscriptions', $subscriptions);
@@ -94,11 +94,11 @@ class PaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $payment_id)
     {
         //
         $payments = Payment::all();
-       $payment = Payment::findOrFail($id);
+       $payment = Payment::findOrFail($payment_id);
         $payment->price = $request->price;
         $payment->date = $request->date;
        // $payment->user_subscription_id = UserSubscription::where('user_id', $request->userSelected)->where('subscription_id', $request->subscriptionSelected)->latest()->first()->id;
@@ -113,12 +113,12 @@ class PaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($payment_id)
     {
         //try{
             
         $payments = Payment::all();
-            $payment = Payment::findOrFail($id);
+            $payment = Payment::findOrFail($payment_id);
              $payment->delete();
 
              return redirect()->route('payment.index')->with('payments', $payments)->withSuccess('Se elimino con exito el pago');
@@ -126,11 +126,12 @@ class PaymentController extends Controller
        
     }
 
-    public function userSelected($id){
-        $user = User::findOrFail($id);
+    public function userSelected($payment_id){
+        $user = User::findOrFail($payment_id);
         $subscription = UserSubscription::where('user_id', $user->id)->latest()->first()->subscription()->first();
         $timePayment = now();
         $priceSubscription = UserSubscription::where('user_id', $user->id)->latest()->first()->subscription()->first()->month_price;
-        return view('payment.userSelected')->with('user', $user)->with('timePayment', $timePayment)->with('priceSubscription', $priceSubscription)->with('subscription', $subscription);
+        $fecha_hora = now();
+        return view('payment.userSelected')->with('user', $user)->with('timePayment', $timePayment)->with('priceSubscription', $priceSubscription)->with('subscription', $subscription)->with('dayHour', $fecha_hora);
     }
 }

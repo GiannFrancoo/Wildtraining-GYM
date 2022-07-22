@@ -19,19 +19,27 @@
         </div>
     @endif
 
+ <div clas="row"></div>   
 <h1>Pagos</h1>
 <br>
+
 
     <div class="row">
         <div class="col mb-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <div class="row">
+                <div class="row d-flex justify-content-between">    
                         <div class="col-lg-8 col-md-6 my-2">
                             <h6 class="m-0 font-weight-bold text-primary">Lista de pagos</h6>
+                        </div>                                              
+                        <div>
+                            <a href="{{route('payment.users')}}" class="btn btn-success mr-1" data-toggle="tooltip"><i class="fa-solid fa fa-money"></i>Agregar</a>
                         </div>
-                        <div class="col-lg-1 col-md-2 col-sm-3" style="flight: right;">
-                            <a href="{{route('payment.users')}}" type="button" id="buttonModal" style="flight: right;" class="btn btn-success float-right" title="add" method="GET" data-toggle="tooltip"><i class="fa-solid fa fa-money"></i>Agregar</a>
+                </div>
+                <hr>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 col-sm-6">
+                            <input type="text" id="myInput" onkeyup="tableSearch()" class="form-control" placeholder="Nombre de usuario&hellip;">
                         </div>
                     </div>
                 </div>
@@ -46,26 +54,37 @@
                     <table class="table table-bordered table-hover text-center" id="myTable">    
                             <thead>
                                 <tr>
-                                    <th scope="col">Precio</th>
-                                    <th scope="col">Fecha</th>
-                                    <th scope="col">Hora</th>
-                                    <th scope="col">Usuario</th>
-                                    <th scope="col">Subscripcion</th>
-                                    <th scope="col">Acciones</th>
+                                    <th scope="col"><i class="fa fa-user" aria-hidden="true"></i></th>
+                                    <th scope="col"><i class="fa fa-money" aria-hidden="true"></i></th>
+                                    <th scope="col"><i class="fa fa-calendar" aria-hidden="true"></i></th>
+                                    <th scope="col"><i class="fa fa-clock-o" aria-hidden="true"></i></th>
+                                    <th scope="col"><i class="fa fa-address-card" aria-hidden="true"></i></th>
+                                    <th scope="col"><i class="fa fa-tasks" aria-hidden="true"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($payments as $payment)
                                     <tr>
+                                        @if($payment->userSubscription->user != NULL)
+                                            <td>{{$payment->userSubscription->user->name}}</td>
+                                        @endif
                                         <th scope="row">${{ $payment->price }}</th>
                                         <td>{{ $payment->date->format('d-m-Y') }}</td>
-                                        <td></td>
-                                        <td>{{$payment->userSubscription->user->name}}</td>
+                                        <td>{{$payment->date->format('H:i:s')}}</td>
+                                        
                                         <td>{{$payment->userSubscription->subscription->name}}</td>
-                                        <td class="text-center">
-                                            <a href="{{route('payment.edit', ['id' => $payment->id])}}" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
-                                            <a href="{{route('payment.destroy', ['id' => $payment->id])}}" type="button" class="btn btn-danger" onclick="return confirm('¿Desea borrar pago seleccionado?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></a>
-                                        </td>
+                                        <div class="row">
+                                            <td class="text-center">
+                                                <a href="{{route('payment.edit', ['payment_id' => $payment->id])}}" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
+                                                <div>
+                                                <form action="{{ route('payment.destroy', ['payment_id' => $payment->id]) }}" method="POST"> 
+                                                    @csrf 
+                                                    @method("DELETE") 
+                                                    <button class="btn btn-danger" onclick="return confirm('¿Desea borrar pago seleccionado?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button> 
+                                                </form>
+                                                </div>   
+                                            </td>
+                                        </div>
                                     </tr>
                                 @endforeach
                             </tbody>

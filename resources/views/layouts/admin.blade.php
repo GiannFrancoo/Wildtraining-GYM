@@ -61,7 +61,7 @@
 
         <!-- Nav Item - Profiles -->
         <li class="nav-item {{ Nav::isRoute('profile') }}">
-            <a class="nav-link" href="{{ route('profile.index', ['id' => Auth::user()->id]) }}">
+            <a class="nav-link" href="{{ route('profile.index', ['profile_id' => Auth::user()->id]) }}">
                 <i class="fas fa-fw fa-user"></i>
                 <span>{{ __('Perfil') }}</span>
             </a>
@@ -90,6 +90,23 @@
                 <span>{{ __('Pagos') }}</span>
             </a>
         </li>
+
+
+        
+        <hr class="sidebar-divider">
+
+        <div class="sidebar-heading">
+            {{ __('Información') }}
+        </div>
+
+        <!-- Nav Item - About -->
+        <li class="nav-item {{ Nav::isRoute('about') }}">
+            <a class="nav-link" href="{{ route('about') }}">
+                <i class="fas fa-fw fa-hands-helping"></i>
+                <span>{{ __('Sobre nosotros') }}</span>
+            </a>
+        </li>
+
 
         <hr class="sidebar-divider">
 
@@ -212,7 +229,7 @@
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="{{ route('profile.index', ['id' => Auth::user()->id]) }}">
+                            <a class="dropdown-item" href="{{ route('profile.index', ['profile_id' => Auth::user()->id]) }}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 {{ __('Perfil') }}
                             </a>
@@ -252,8 +269,8 @@
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <span>Copyright &copy;  | Bentivegna Gian Franco - Cervelli Haderne Lucas | {{ now()->year }}</span>
-                </div>
+                <span>Copyright &copy; | Bentivegna Gian Franco - Cervelli Haderne Lucas | {{ now()->year }}</span>                </div>
+
             </div>
         </footer>
         <!-- End of Footer -->

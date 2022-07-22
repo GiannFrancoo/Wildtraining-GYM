@@ -34,7 +34,7 @@
         <tbody>
             @foreach($users as $user)
             <tr>
-                <td><a href="{{route('payment.userSelected', ['id' => $user->id])}}" class="list-group-item list-group-item-action">{{$user->name}}</a></td>
+                <td><a href="{{route('payment.userSelected', ['payment_id' => $user->id])}}" class="list-group-item list-group-item-action">{{$user->name}}</a></td>
             </tr>
                 <!--<a id="generate" class="btn btn-primary" value="{{$user->id}}">{{$user->name}}</a>-->
                 
