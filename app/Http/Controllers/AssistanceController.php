@@ -18,20 +18,22 @@ class AssistanceController extends Controller
      */
     public function index()
     {
-
+        // dd(Carbon::now());
         $assistances = Assistance::orderByDesc('date')->get();
+        $busiestHourArray = array(); 
+        $busiestHour = 0;       
 
         //Traigo todas las [assistance->id => hora]
-        $busiestHourArray = array();        
         foreach($assistances as $assistance){
             $busiestHourArray = Arr::add($busiestHourArray, $assistance->id, $assistance->date->format('H'));
         }
 
-        $busiestHourArray = Arr::flatten($busiestHourArray); //Me quedo solo con las horas
-        
-        [$busiestHourArray, $values] = Arr::divide(array_count_values($busiestHourArray)); //cuento cual tiene más apariciones y divido keys y values
-
-        $busiestHour = Arr::first($busiestHourArray); //me quedo con la key
+        [$keys, $busiestHourArray] = Arr::divide($busiestHourArray);
+    
+        $busiestHourArray = array_count_values($busiestHourArray);
+        if ($busiestHourArray != []) {   
+            $busiestHour = array_search(max($busiestHourArray), $busiestHourArray);
+        }
         
         return view('assistance.assistance')->with(['assistances' => $assistances, 'busiestHour' => $busiestHour]);
     }
@@ -56,9 +58,12 @@ class AssistanceController extends Controller
     public function store(Request $request)
     {
         try{
+
+            
+
             $assistance = new Assistance();
-            $assistance->user_id = User::findOrFail($request->user_id)->id;;
-            $assistance->date = Carbon::parse($request->date)->format('Y-m-d h:m:s');
+            $assistance->user_id = User::findOrFail($request->user_id)->id;
+            $assistance->date = $request->date;
             
             $assistance->save();
 
@@ -111,7 +116,7 @@ class AssistanceController extends Controller
         try{
             $assistance = Assistance::findOrFail($id);
             $assistance->user_id = User::findOrFail($request->user_id)->id;;
-            $assistance->date = Carbon::parse($request->date)->format('Y-m-d h:m:s');
+            $assistance->date = $request->date;
             
             $assistance->save();
             return redirect()->route('assistance.index')->withSuccess('Asistencia modificada correctamente');

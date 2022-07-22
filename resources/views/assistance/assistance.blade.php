@@ -69,9 +69,9 @@
                         <table class="table table-bordered table-hover text-center" id="myTable">    
                             <thead>
                                 <tr>
-                                    <th scope="col">Fecha</th>
-                                    <th scope="col">Usuario</th>
-                                    <th scope="col">Acciones</th>
+                                    <th scope="col">Fecha<i class="fa fa-calendar ml-1"></i></th>
+                                    <th scope="col">Usuario<i class="fa fa-user ml-1"></i></th>
+                                    <th scope="col">Acciones<i class="fa fa-server ml-1"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
