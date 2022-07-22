@@ -105,7 +105,7 @@
                                             <!-- <td>{{ $subscription->modification_date->format('d/m/Y') }}</td> -->
                                             <td>
 
-                                                <a href="{{ route('profile.edit',['profile_id' => $user->id]) }}" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
+                                                <a href="{{ route('profile.edit',['profile_id' => $user->id]) }}" type="button" class="btn btn-primary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
                                                 
                                                 <form method="POST" action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" class="d-inline">
 
