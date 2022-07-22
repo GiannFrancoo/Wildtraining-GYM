@@ -29,6 +29,25 @@
         </div>
     @endif
 
+
+    <div class="row">
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Hora pico de asistencias</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ ($busiestHour == 0) ? 0 : $busiestHour }}:00</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-clock fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Assistances table  -->
     <div class="row">
         <div class="col mb-4">
@@ -61,7 +80,7 @@
                                         <td>{{ $assistance->date }}</td>
                                         <td>{{ $assistance->user->getFullNameAttribute() }}</td>                              
                                         <td>
-                                            <a href="{{ route('assistance.edit', ['assistance_id' => $assistance->id]) }}" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
+                                            <a href="{{ route('assistance.edit', ['assistance_id' => $assistance->id]) }}" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
                                             
                                             <form method="POST" action="{{ route('assistance.destroy', ['assistance_id' => $assistance->id]) }}" class="d-inline">  
                                                 @csrf    

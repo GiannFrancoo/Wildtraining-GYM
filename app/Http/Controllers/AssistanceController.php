@@ -7,6 +7,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class AssistanceController extends Controller
 {
@@ -17,8 +18,22 @@ class AssistanceController extends Controller
      */
     public function index()
     {
+
         $assistances = Assistance::orderByDesc('date')->get();
-        return view('assistance.assistance')->with('assistances', $assistances);
+
+        //Traigo todas las [assistance->id => hora]
+        $busiestHourArray = array();        
+        foreach($assistances as $assistance){
+            $busiestHourArray = Arr::add($busiestHourArray, $assistance->id, $assistance->date->format('H'));
+        }
+
+        $busiestHourArray = Arr::flatten($busiestHourArray); //Me quedo solo con las horas
+        
+        [$busiestHourArray, $values] = Arr::divide(array_count_values($busiestHourArray)); //cuento cual tiene más apariciones y divido keys y values
+
+        $busiestHour = Arr::first($busiestHourArray); //me quedo con la key
+        
+        return view('assistance.assistance')->with(['assistances' => $assistances, 'busiestHour' => $busiestHour]);
     }
 
     /**
