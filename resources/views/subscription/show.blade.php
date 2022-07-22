@@ -74,15 +74,18 @@
             <div class="card shadow mb-4">
 
                 <div class="card-header py-3">
-                    <div class="row">
-                        <div class="col-lg-8 col-md-6 my-2">
-                            <h6 class="m-0 font-weight-bold text-primary">Lista de usuarios en la suscripción</h6>
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-6 my-2">    
+                            <h6 class="m-0 font-weight-bold text-primary">{{ __('Lista de usuarios en la suscripción') }}</h6>
                         </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div>
+                            <a href="{{ route('profile.create') }}" type="button" class="btn btn-success float-right" title="Add" data-toggle="tooltip"><i class="fa fa-plus mr-1"></i>Agregar</a>                        
+                        </div>
+                    </div>
+                    <hr>  
+                    <div class="row">                  
+                        <div class="col-6">
                             <input type="text" id="myInput" onkeyup="tableSearch()" class="form-control" placeholder="Nombre de subscripcion&hellip;">
-                        </div>
-                        <div class="col-lg-1 col-md-2 col-sm-3">
-                            <a href="{{ route('profile.create') }}" type="button" class="btn btn-success float-right" title="add" data-toggle="tooltip"><i class="fa fa-plus mr-1"></i>Nuevo</a>
                         </div>
                     </div>
                 </div>
@@ -104,8 +107,9 @@
                                             <td>{{ $user->last_name }}</td>
                                             <!-- <td>{{ $subscription->modification_date->format('d/m/Y') }}</td> -->
                                             <td>
-
-                                                <a href="{{ route('profile.edit',['profile_id' => $user->id]) }}" type="button" class="btn btn-primary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
+                                                <!-- Hay que poner profile.show -->
+                                                <a href="{{ route('profile', ['profile_id' => $user->id]) }}" type="button" class="btn btn-secondary" title="Show" data-toggle="tooltip"><i class="fa fa-eye mx-1"></i></a>
+                                                <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-primary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
 
                                                 
                                                 <form method="POST" action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" class="d-inline">
