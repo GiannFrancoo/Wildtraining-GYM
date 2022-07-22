@@ -28,17 +28,15 @@
         <div class="col mb-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <div class="row">
+                <div class="row d-flex justify-content-between">    
                         <div class="col-lg-8 col-md-6 my-2">
                             <h6 class="m-0 font-weight-bold text-primary">Lista de pagos</h6>
                         </div>                                              
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    <a href="{{route('payment.users')}}" class="btn btn-success mr-1" data-toggle="tooltip"><i class="fa-solid fa fa-money"></i>Agregar</a>
-                                </div>
-                            </div>
-                    </div>
-
+                        <div>
+                            <a href="{{route('payment.users')}}" class="btn btn-success mr-1" data-toggle="tooltip"><i class="fa-solid fa fa-money"></i>Agregar</a>
+                        </div>
+                </div>
+                <hr>
                     <div class="row">
                         <div class="col-lg-3 col-md-4 col-sm-6">
                             <input type="text" id="myInput" onkeyup="tableSearch()" class="form-control" placeholder="Nombre de usuario&hellip;">
