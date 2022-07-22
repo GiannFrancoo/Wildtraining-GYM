@@ -29,6 +29,28 @@
         </div>
     @endif
 
+    <div class="row">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">{{__('Cantidad suscripciones')}}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $subscriptions->count() }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-square-check fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+    <hr class="py-2">
+
     <!-- Card with subscriptions -->
     <div class="row">
         @foreach ($subscriptions as $subscription) 
@@ -73,85 +95,6 @@
             </div>
         </div>
         @endforeach
-
     </div>
-    
-    <hr class="py-2">
-
-    <!-- Cantidad inscriptos total y lo que no tienen plan
-    <div class="row">
-        <div class="col-lg-6 mb-4">
-            <div class="card bg-primary text-white shadow">
-                <div class="card-body">
-
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6 mb-4">
-            <div class="card bg-success text-white shadow">
-                <div class="card-body">
-                    Cantidad inscriptos
-                </div>
-            </div>
-        </div>
-    </div>
-     -->
-
-    <!-- Subscriptions table 
-    <div class="row">
-        <div class="col mb-4">
-            <div class="card shadow mb-4">
-
-                <div class="card-header py-3">
-                    <div class="row">
-                        <div class="col-lg-8 col-md-6 my-2">
-                            <h6 class="m-0 font-weight-bold text-primary">Lista de subscripciones</h6>
-                        </div>
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <input type="text" id="myInput" onkeyup="tableSearch()" class="form-control" placeholder="Nombre de subscripcion&hellip;">
-                        </div>
-                        <div class="col-lg-1 col-md-2 col-sm-3">
-                            <a href="#" type="button" class="btn btn-success float-right" title="add" data-toggle="tooltip"><i class="fa-solid fa-circle-plus mx-1"></i>Nuevo</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-body">
-                        <table class="table-reponsive">
-                            <table class="table table-bordered table-hover text-center" id="myTable">    
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Veces por semana</th>
-                                        <th scope="col">Precio por mes</th>
-                                        <th scope="col">Ultima modificación</th>
-                                        <th scope="col">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($subscriptions as $subscription)
-                                        <tr>
-                                            <td>{{ $subscription->name }}</td>
-                                            <td>{{ $subscription->times_a_week }}</td>
-                                            <td>${{ $subscription->month_price }}</td>
-                                            <td>{{ $subscription->modification_date->format('d/m/Y') }}</td>                                
-                                            <td>
-                                                <a href="" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
-                                                
-                                                <form method="POST" action="{{ route('subscription.destroy', ['subscription_id' => $subscription->id]) }}" class="d-inline">
-                                                    @method('delete')
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('¿Desea borrar la subscripción: {{$subscription->name}}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    -->
+        
 @endsection
