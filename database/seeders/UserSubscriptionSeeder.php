@@ -26,6 +26,8 @@ class UserSubscriptionSeeder extends Seeder
             ['id' => 8, 'user_id' => 8, 'subscription_id' => 3, 'start_date' => Carbon::now()->subYears(rand(1, 55))],
             ['id' => 9, 'user_id' => 9, 'subscription_id' => 2, 'start_date' => Carbon::now()->subYears(rand(1, 55))],
             ['id' => 10, 'user_id' => 10, 'subscription_id' => 1, 'start_date' => Carbon::now()->subYears(rand(1, 55))],
+            ['id' => 11, 'user_id' => 11, 'subscription_id' => 2, 'start_date' => Carbon::now()->subYears(rand(1, 55))],
+            ['id' => 12, 'user_id' => 12, 'subscription_id' => 3, 'start_date' => Carbon::now()->subYears(rand(1, 55))],
             
         ];
 

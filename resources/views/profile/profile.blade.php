@@ -18,7 +18,10 @@
                                     <h5 class="font-weight-bold">{{  $user->getFullNameAttribute() }}</h5>
                                     <div class="text-center">
                                         @if($user->birthday != NULL)
-                                        {{$user->role->name}} - {{$age->y}} Años
+                                        {{$user->role->name}} 
+                                            @if($age != 0)
+                                                - {{$age}} Años
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -137,7 +140,7 @@
                             <div class="pl-lg-4">
                                 <div class="row">
                                     <div class="col text-center">
-                                        <a href="{{route('home')}}" type="submit" class="btn btn-primary">Volver</a>
+                                        <a href="{{route('profile.index')}}" type="submit" class="btn btn-primary">Volver</a>
                                 </div>
                             </div>
                     </div>

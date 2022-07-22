@@ -123,9 +123,11 @@
                                 <div class="col-lg-6 -sm-10 mb-4">
                                     <div class="form-group">
                                         <label class="form-control-label" for="new_password">Subscripcion</label>
-                                        <select  class="custom-select" required name="subscription" value="{{old('subscription')}}">                                           
+                                        
+                                        <select  class="custom-select" name="subscription" value="{{old('subscription')}}"> 
+                                        <option disabled selected>Subscripciones</option>                                          
                                             @foreach($subscriptions as $subscription)
-                                                <option required value="{{$subscription->id}}">{{$subscription->name}}</option>
+                                                <option value="{{$subscription->id}}">{{$subscription->name}}</option>
                                             @endforeach
                                         </select>
                                 </div>

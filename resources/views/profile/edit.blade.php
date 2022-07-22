@@ -45,8 +45,11 @@
                                 <div class="text-center">
                                     <h5 class="font-weight-bold">{{  $user->getFullNameAttribute() }}</h5>
                                     <div class="text-center">
-                                        @if($user->birthday != NULL)
-                                        {{$user->role->name}} - {{$age->y}} Años
+                                         @if($user->birthday != NULL)
+                                            {{$user->role->name}} 
+                                            @if($age != 0)
+                                                - {{$age}} Años
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -171,11 +174,21 @@
                                 <div class="col-lg-6 -sm-10 mb-4">
                                     <div class="form-group">
                                         <label class="form-control-label" for="new_password">Subscripcion</label>
-                                        <select  class="custom-select" required name="subscriptionIdSelected" value="{{$my_subscription->name}}">
+                                        @if($my_subscription != null)
+                                            <select  class="custom-select" required name="subscriptionIdSelected" value="{{$my_subscription->name}}">                                          
                                             @foreach($subscriptions as $subscription)
                                                 <option required value="{{$subscription->id}}" {{($my_subscription->id ===$subscription->id) ? 'Selected' : ''}}>{{$subscription->name}}</option>
                                             @endforeach
                                         </select>
+                                        @else
+                                            <select  class="custom-select" required name="subscriptionIdSelected" value="">
+                                            <option disabled selected>Subscripciones</option>                                          
+                                            @foreach($subscriptions as $subscription)
+                                                <option required value="{{$subscription->id}}">{{$subscription->name}}</option>
+                                            @endforeach
+                                        </select>
+                                        @endif
+                                        
                                 </div>
                             </div>
 

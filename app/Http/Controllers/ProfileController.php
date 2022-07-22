@@ -27,22 +27,54 @@ class ProfileController extends Controller
         return view('profile.create')->with('social_works', $social_works)->with('roles', $roles)->with('subscriptions', $subscriptions);
     }
 
-    public function index($profile_id)
+    public function show($profile_id)
     {
         $user = User::findOrFail($profile_id);
         $age = $this->getAge($user);
-        $subscription = $user->subscriptions()->first()->name;
+        
         $user_subscription = UserSubscription::where('user_id', $profile_id)->latest()->first();
-        $subscriptionAdded = Subscription::findOrFail($user_subscription->subscription_id)->name;
-        return view('profile.profile')->with('user', $user)->with('age', $age)->with('subscription', $subscription)->with('my_subscription', $subscriptionAdded);
+        if($user_subscription != null){//Este usuario tiene subscripcion
+            $subscriptionAdded = Subscription::findOrFail($user_subscription->subscription_id)->name;
+            $subscription = UserSubscription::where('user_id', $profile_id)->latest()->first();
+        }else{//Este usuario no tiene una subscripcion
+            $subscriptionAdded = "No tiene subscripcion";
+        }
+
+        return view('profile.profile')->with('user', $user)->with('age', $age)->with('my_subscription', $subscriptionAdded);
     }
 
+    public function index()
+    {
+
+        $users = User::orderBy('last_name')->get();
+        $monthlyRevenue = 0;
+        $usersWithoutSubscription = 0;
+        $ages = 0;
+        $usersWithoutBirthday = 0;
+        foreach ($users as $user) {
+            if($this->getAge($user) != 0){
+                $ages += $this->getAge($user); 
+            }else{
+                $usersWithoutBirthday++;
+            }
+
+            if($user->subscriptions()->latest()->first() != null){
+                $monthlyRevenue = $monthlyRevenue + $user->subscriptions()->latest()->first()->month_price;  
+            }  
+            else{
+                $usersWithoutSubscription++;
+            }        
+        }
+        return view('profile.index',)->with(['users' => $users, 'monthlyRevenue' => $monthlyRevenue, 'usersWithoutSubscription' => $usersWithoutSubscription])->with('averageAges', (floor($ages/($users->count() - $usersWithoutBirthday))));
+    }
 
     public function store(Request $request){
         $request->validate([
         'password' => 'nullable|min:8|required_with:password_confirmation',
         'password_confirmation' => 'nullable|min:8|required_with:new_password|same:password',
-        'primary_phone' => 'required|string|min:9'
+        'primary_phone' => 'required|string|min:9|unique:users',
+        'email' => 'required|string|email|max:255|unique:users,email,' . Auth::user()->email,
+
         ]);
 
         $user = new User();
@@ -73,13 +105,16 @@ class ProfileController extends Controller
         $user->save();
 
         //Creo la user subscription asociada
-        $user_subscription = new UserSubscription();
-        $user_subscription->user_id = $user->id;
-        $user_subscription->subscription_id = $request->subscription;
-        $user_subscription->start_date = now();
-        $user_subscription->save();
+        if($request->subscription != null){
+            $user_subscription = new UserSubscription();
+            $user_subscription->user_id = $user->id;
+            $user_subscription->subscription_id = $request->subscription;
+            $user_subscription->start_date = now();
+            $user_subscription->save();
+        }
+        
         //
-        return redirect('home')->with('success','Se creo con exito el nuevo usuario');
+        return redirect()->route('profile.index')->with('success','Se creo con exito el nuevo usuario');
     }
 
 
@@ -107,14 +142,15 @@ class ProfileController extends Controller
 
         $user = User::findOrFail($profile_id);        
             //Creo la nueva userSubscription si es que cambio la subscripcion
-            if($request->subscriptionIdSelected != UserSubscription::where('user_id', $profile_id)->latest()->first()->subscription_id){
+            if(UserSubscription::where('user_id', $profile_id)->latest()->first() != null){
+                if($request->subscriptionIdSelected != UserSubscription::where('user_id', $profile_id)->latest()->first()->subscription_id){
                 $user_subscription = new UserSubscription();
                 $user_subscription->user_id = $user->id;
                 $user_subscription->subscription_id = $request->subscriptionIdSelected;
                 $user_subscription->start_date = now();
                 $user_subscription->save();
             }
-            
+        }
         //Actualizo los atributos del usuario
         $user->name = $request->name;
         $user->last_name = $request->last_name;
@@ -182,7 +218,7 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return redirect()->route('home')->withSuccess('Se guardaron con exito los cambios.');
+        return redirect()->route('profile.index')->withSuccess('Se guardaron con exito los cambios.');
     }
 
     public function edit($profile_id){
@@ -195,23 +231,30 @@ class ProfileController extends Controller
         }
         $subscriptions = Subscription::all();
         $user_subscription = UserSubscription::where('user_id', $profile_id)->latest()->first();//Me traigo el ultimo userSubscription
-        $subscriptionAdded = Subscription::findOrFail($user_subscription->subscription_id);
+
+        if($user_subscription != null){
+            $subscriptionAdded = Subscription::findOrFail($user_subscription->subscription_id);
+        }else{//Este usuario no tiene una subscripcion
+            $subscriptionAdded = null;
+        }
         return view('profile.edit')->with('user', $user)->with('social_works', $social_works)->with('roles', $roles)->with('age', $age)->with('subscriptions', $subscriptions)->with('my_subscription', $subscriptionAdded);
     }
 
     public function getAge($user){
         $hoy = now();
+        $edad = 0;
         if($user->birthday != null){
-            $edad = $hoy->diff($user->birthday->format('Y-m-d'));
-             return $edad;
+            $edad = $hoy->diff($user->birthday->format('Y-m-d'))->y;
+             
         }
+        return $edad;
     }
 
     public function destroy($profile_id){
         $user = User::findOrFail($profile_id);
         $user->delete();
 
-        return redirect('home')->with('success', 'Se elimino con éxito');
+        return redirect()->route('profile.index')->withSuccess('Se elimino con éxito al usuario');
     }
 
    

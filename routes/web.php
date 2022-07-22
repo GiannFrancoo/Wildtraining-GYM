@@ -33,7 +33,8 @@ Route::put('/profile/{profile_id}', [ProfileController::class, 'update'])->name(
 Route::get('/profile/create', [ProfileController::class, 'create'])->name('profile.create');
 Route::post('/profile', [ProfileController::class, 'store'])->name('profile.store');
 Route::get('/profile/{profile_id}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-Route::get('/profile/{profile_id}', [ProfileController::class, 'index'])->name('profile.index');
+Route::get('/profiles', [ProfileController::class, 'index'])->name('profile.index');
+Route::get('/profile/{profile_id}', [ProfileController::class, 'show'])->name('profile');
 Route::delete('/profile/{profile_id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 //Routes for subscriptions

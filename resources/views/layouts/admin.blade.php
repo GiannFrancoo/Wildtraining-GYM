@@ -54,16 +54,26 @@
         <!-- Divider -->
         <hr class="sidebar-divider">
 
-        <!-- Heading -->
+
+
+         <!-- Nav Item - Profile -->
+         <li class="nav-item {{ Nav::isRoute('profile') }}">
+            <a class="nav-link" href="{{ route('profile', ['profile_id' => Auth::user()->id]) }}">
+                <i class="fas fa-fw fa-user"></i>
+                <span>{{ __('Perfil') }}</span>
+            </a>
+        </li>
+
+        <!-- Nav Item - Users -->
         <div class="sidebar-heading">
             {{ __('Opciones') }}
         </div>
 
-        <!-- Nav Item - Profiles -->
-        <li class="nav-item {{ Nav::isRoute('profile') }}">
-            <a class="nav-link" href="{{ route('profile.index', ['profile_id' => Auth::user()->id]) }}">
-                <i class="fas fa-fw fa-user"></i>
-                <span>{{ __('Perfil') }}</span>
+       <!-- Nav Item - Profiles -->
+       <li class="nav-item {{ Nav::isRoute('profile.index') }}">
+            <a class="nav-link" href="{{ route('profile.index') }}">
+                <i class="fas fa fa-users"></i>
+                <span>{{ __('Usuarios') }}</span>
             </a>
         </li>
 
@@ -84,14 +94,12 @@
         </li>
 
         <!-- Nav Item - Payment -->
-        <li class="nav-item {{ Nav::isRoute('payment') }}">
+        <li class="nav-item {{ Nav::isRoute('payment.index') }}">
             <a class="nav-link" href="{{ route('payment.index') }}">
-                <i class="fas fa-fw fa fa-money"></i>
+                <i class="fa-solid fa-fw fa fa-money"></i>
                 <span>{{ __('Pagos') }}</span>
             </a>
         </li>
-
-
         
         <hr class="sidebar-divider">
 
@@ -214,7 +222,7 @@
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="{{ route('profile.index', ['profile_id' => Auth::user()->id]) }}">
+                            <a class="dropdown-item" href="{{ route('profile', ['profile_id' => Auth::user()->id]) }}">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 {{ __('Perfil') }}
                             </a>

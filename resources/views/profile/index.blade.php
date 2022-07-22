@@ -3,7 +3,7 @@
 @section('main-content')
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">Panel administrativo</h1>
+    <h1 class="h3 mb-4 text-gray-800">Usuarios</h1>
 
 
     @if (session('success'))
@@ -24,55 +24,38 @@
     <!-- Card headers -->
     <div class="row">
 
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
+
+
+
+ <!-- Earnings (Monthly) Card Example -->
+ <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="d-flex justify-content-between">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" id="ganancia">Ganancia estimada (Mensual)</div>
-                                <a data-toggle="collapse" data-target="#collapseMonthlyRevenue" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-eye"></i></a>
-                            </div>
-                            <div class="row collapse" id="collapseMonthlyRevenue">    
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">${{ number_format($monthlyRevenue, 2, '.',',') }}</div>
-                            </div>
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" id="ganancia">Total</div>
+                            
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $users->count() }}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Ganancia estimada (Anual)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">${{ number_format($monthlyRevenue*12, 2, '.',',') }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
+    <!-- Average ages> -->
+    <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Pendiente a pago</div>
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Promedio de edad</div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$averageAges}} Años</div>
                                 </div>
                                 <div class="col">
                                     <div class="progress progress-sm mr-2">
@@ -89,23 +72,76 @@
             </div>
         </div>
 
-         <!-- Total Users -->
-         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Usuarios   -   Sin suscripción</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $users->count() }}   -   {{ $usersWithoutSubscription }}</div>
+
+
+
+    </div>
+
+
+
+
+
+    <!-- User table -->
+    <div class="row">
+        <div class="col mb-4">
+            <div class="card shadow mb-4">
+
+                <div class="card-header py-3">
+
+                    <div class="row d-flex justify-content-between">    
+                        <div class="col-lg-8 col-md-6 my-2">
+                            <h6 class="m-0 font-weight-bold text-primary">Lista de usuarios</h6>
                         </div>
-                        <div class="col-auto">
-                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        
+                        <div>
+                            <a href="{{route('profile.create')}}" type="button" class="btn btn-success" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>Agregar</a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <input type="text" id="myInput" onkeyup="tableSearch()" class="form-control" placeholder="Nombre de usuario&hellip;">
                         </div>
                     </div>
                 </div>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover text-center" id="myTable">    
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Apellido</th>
+                                    <th scope="col">Telefono</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($users as $user)
+                                    <tr>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->last_name }}</td>
+                                        <td>{{ $user->primary_phone }}</td>
+                                        <td class="text-center d-flex justify-content-center">
+                                            <a href="{{route('profile', ['profile_id' => $user->id])}}" type="button" class="btn btn-primary mx-1"><i class="fa fa-eye"></i></a>
+                                            <a href="{{route('profile.edit', ['profile_id' => $user->id])}}" type="button" class="btn btn-secondary mx-1" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
+                                            <div class="mx-1">
+                                                <form action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" method="POST">
+                                                    @csrf
+                                                    @method("DELETE")
+                                                    <button class="btn btn-danger" onclick="return confirm('¿Desea borrar al usuario {{$user->name}}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button>
+                                                </form>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                    </table>
+                </div>
+
+
             </div>
         </div>
-
     </div>
 
     <!-- Footer panels -->
