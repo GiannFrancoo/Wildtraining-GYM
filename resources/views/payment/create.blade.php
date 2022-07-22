@@ -60,7 +60,9 @@
                             <div class="col-lg-6 md-8 sm-9">
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="payment">Fecha<span class="small text-danger">*</span></label>
+
                                     <input type="datetime-local" id="payment" class="form-control" name="date"  value="{{ old('dayHour')}}">
+
                                 </div>
                             </div>
                     </div>
