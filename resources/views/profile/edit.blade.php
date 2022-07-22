@@ -113,6 +113,9 @@
                                     <div class="form-group focused">
                                         <label class="form-control-label" for="new_password">Celular<span class="small text-danger">*</span></label>
                                         <input type="text" id="new_password" class="form-control" name="primary_phone" value="{{ old('primary_phone', $user->primary_phone)}}">
+                                        <small id="passwordHelpBlock" class="form-text text-muted">
+                                            El celular debe tener un minimo de 9 caracteres
+                                        </small>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

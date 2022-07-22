@@ -131,6 +131,7 @@ class PaymentController extends Controller
         $subscription = UserSubscription::where('user_id', $user->id)->latest()->first()->subscription()->first();
         $timePayment = now();
         $priceSubscription = UserSubscription::where('user_id', $user->id)->latest()->first()->subscription()->first()->month_price;
-        return view('payment.userSelected')->with('user', $user)->with('timePayment', $timePayment)->with('priceSubscription', $priceSubscription)->with('subscription', $subscription);
+        $fecha_hora = now();
+        return view('payment.userSelected')->with('user', $user)->with('timePayment', $timePayment)->with('priceSubscription', $priceSubscription)->with('subscription', $subscription)->with('dayHour', $fecha_hora);
     }
 }
