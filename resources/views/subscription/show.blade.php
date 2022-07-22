@@ -111,9 +111,7 @@
                                                 <a href="{{ route('profile', ['profile_id' => $user->id]) }}" type="button" class="btn btn-secondary" title="Show" data-toggle="tooltip"><i class="fa fa-eye mx-1"></i></a>
                                                 <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-primary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
 
-                                                
                                                 <form method="POST" action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" class="d-inline">
-
                                                     @method('delete')
                                                     @csrf
                                                     <button type="submit" class="btn btn-danger" onclick="return confirm('¿Desea borrar este usuario: {{ $user->getFullNameAttribute() }}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button>
