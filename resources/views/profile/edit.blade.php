@@ -31,7 +31,7 @@
     
     <form action="{{ route('profile.update', ['profile_id' => $user->id])}}" method="POST" enctype="multipart/form-data">
     @csrf
-    @method('PATCH')
+    @method('PUT')
         <div class="row">
             <div class="col-lg-4 order-lg-2">
                 <div class="card shadow mb-4">

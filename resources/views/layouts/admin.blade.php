@@ -313,6 +313,10 @@
 <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+
+<script src="{{ asset('vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables/js/dataTables.bootstrap4.min.js' )}}"></script>
+
 <script>
     function tableSearch() {
         var input, filter, table, tr, td, i, txtValue;
@@ -333,12 +337,24 @@
         }
     }
 </script>
+
 <script>
+    $.extend(true, $.fn.dataTable.defaults, {
+        order: false,
+        bInfo: false,
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
+        },
+    });
+
     window.setTimeout(function() {
         $(".alert").fadeTo(500, 0).slideUp(500, function(){
             $(this).remove();
         });
     }, 2000);
 </script>
+
+@yield('custom_js')
+
 </body>
 </html>

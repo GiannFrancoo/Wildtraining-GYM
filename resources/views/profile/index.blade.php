@@ -85,27 +85,12 @@
     <div class="row">
         <div class="col mb-4">
             <div class="card shadow mb-4">
-
-                <div class="card-header py-3">
-
-                    <div class="row d-flex justify-content-between">    
-                        <div class="col-lg-8 col-md-6 my-2">
-                            <h6 class="m-0 font-weight-bold text-primary">Lista de usuarios</h6>
-                        </div>
-                        
-                        <div>
-                            <a href="{{route('profile.create')}}" type="button" class="btn btn-success" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>Agregar</a>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-6">
-                            <input type="text" id="myInput" onkeyup="tableSearch()" class="form-control" placeholder="Nombre de usuario&hellip;">
-                        </div>
-                    </div>
+                <div class="card-header py-3 d-flex justify-content-between"">
+                    <h6 class="m-0 font-weight-bold text-primary">Lista de usuarios</h6>
+                    <a href="{{route('profile.create')}}" type="button" class="btn btn-success" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>Agregar</a>
                 </div>
 
-                <div class="table-responsive">
+                <div class="card-body table-responsive">
                     <table class="table table-bordered table-hover text-center" id="myTable">    
                             <thead>
                                 <tr>
@@ -263,4 +248,12 @@
         </div>
     </div>
 
+@endsection
+
+@section('custom_js')
+<script>
+    $(document).ready(function () {
+        $('table').DataTable()
+    })
+</script>
 @endsection

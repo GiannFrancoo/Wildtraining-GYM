@@ -47,7 +47,7 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="form-group focused">
                             <label class="form-control-label" for="month_price">Precio por mes: <span class="small text-danger">*</span></label>
-                            <input type="number" step="0.50" id="month_price" class="form-control" required name="month_price" placeholder="$1234" value="{{old('month_price')}}">
+                            <input type="number" step="0.50" id="month_price" class="form-control" required name="month_price" min="0" placeholder="$1234" value="{{old('month_price')}}">
                         </div>
                     </div>
                 </div>
