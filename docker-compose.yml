@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  database:
+    platform: linux/x86_64
+    image: mysql:latest
+    container_name: wildtraining-db
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: wildtraining
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+
+
+  backend:
+    build: .
+    image: wildtraining-back
+    container_name: wildtraining-back
+    restart: unless-stopped
+    depends_on:
+      - database
+    volumes:
+      - .:/var/www/wildtraining
+      - ./.apache/default.conf:/etc/apache2/sites-enabled/000-default.conf
+    ports:
+      - 8000:80
+    stdin_open: true
+    tty: true
