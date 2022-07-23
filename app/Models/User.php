@@ -85,6 +85,17 @@ class User extends Authenticatable
         return $this->hasMany(Assistance::class);
     }
 
+    public function lastSubscription()
+    {
+        return $this
+            ->belongsToMany(Subscription::class, 'user_subscriptions', 'user_id', 'subscription_id')
+            ->using(UserSubscription::class)
+            ->withPivot('start_date')
+            ->withTimestamps()
+            ->where('user_subscriptions.deleted_at', NULL)
+            ->latest();
+    }
+
     public function subscriptions()
     {
         return $this

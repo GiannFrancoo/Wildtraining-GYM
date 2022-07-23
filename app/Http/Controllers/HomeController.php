@@ -25,19 +25,20 @@ class HomeController extends Controller
      */
     public function index()
     {        
-        $users = User::orderBy('last_name')->get();
+        $users = User::with('lastSubscription')->orderBy('last_name')->get();
         $monthlyRevenue = 0;
         $usersWithoutSubscription = 0;
 
         foreach ($users as $user) {
-            if($user->subscriptions()->latest()->first() != null){
-                $monthlyRevenue = $monthlyRevenue + $user->subscriptions()->latest()->first()->month_price;  
+            if($user->lastSubscription->isNotEmpty()){
+                // if($user->subscriptions->sortByDesc('created_at')->first() != null){
+                $monthlyRevenue = $monthlyRevenue + $user->lastSubscription->first()->month_price;  
             }  
             else{
                 $usersWithoutSubscription++;
             }        
         }
 
-        return view('home',)->with(['users' => $users, 'monthlyRevenue' => $monthlyRevenue, 'usersWithoutSubscription' => $usersWithoutSubscription]);
+        return view('home')->with(['users' => $users, 'monthlyRevenue' => $monthlyRevenue, 'usersWithoutSubscription' => $usersWithoutSubscription]);
     }
 }
