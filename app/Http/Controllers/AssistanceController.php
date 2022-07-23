@@ -20,6 +20,20 @@ class AssistanceController extends Controller
     {
         // dd(Carbon::now());
         $assistances = Assistance::orderByDesc('date')->get();
+
+        // $bussiestHours = $assistances
+        //     ->groupBy(function ($assistance) {
+        //         return $assistance->date->format('H');
+        //     })
+        //     ->map(function ($assistance, $hour) {
+        //         return [
+        //             "hour" => $hour,
+        //             "count" => $assistance->count()
+        //         ];
+        //     })
+        //     ->sortByDesc('count')
+        //     ->first();
+
         $busiestHourArray = array(); 
         $busiestHour = 0;       
 
@@ -34,8 +48,18 @@ class AssistanceController extends Controller
         if ($busiestHourArray != []) {   
             $busiestHour = array_search(max($busiestHourArray), $busiestHourArray);
         }
+
+        $todayAssists = $assistances
+            ->filter(function ($assist) {
+                return $assist->date->isToday();
+            })
+            ->count();
         
-        return view('assistance.assistance')->with(['assistances' => $assistances, 'busiestHour' => $busiestHour]);
+        return view('assistance.assistance')->with([
+            'assistances' => $assistances,
+            'busiestHour' => $busiestHour,
+            'todayAssists' => $todayAssists
+        ]);
     }
 
     /**
