@@ -46,7 +46,8 @@ class ProfileController extends Controller
     public function index()
     {
 
-        $users = User::orderBy('last_name')->get();
+        $users = User::latest()->get();
+        // $users = User::orderBy('last_name')->get();
         $monthlyRevenue = 0;
         $usersWithoutSubscription = 0;
         $ages = 0;
