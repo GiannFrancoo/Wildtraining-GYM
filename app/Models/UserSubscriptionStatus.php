@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PaymentState extends Model
+class UserSubscriptionStatus extends Model
 {
     use SoftDeletes;
     
-    protected $table = 'payment_statuses';
+    protected $table = 'user_subscription_statuses';
 
     /**
      * The attributes that are mass assignable.
@@ -20,9 +20,9 @@ class PaymentState extends Model
         'name',
     ];
 
-    public function payments()
+    public function userSubscriptions()
     {
-        return $this->hasMany(Payment::class);
+        return $this->hasMany(UserSubscription::class);
     }
 
 

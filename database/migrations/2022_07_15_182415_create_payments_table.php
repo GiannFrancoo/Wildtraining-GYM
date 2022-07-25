@@ -17,11 +17,15 @@ return new class extends Migration
             $table->id();
             $table->float('price');
             $table->datetime('date');
+            $table->date('payment_status_updated_at');
             $table->timestamps();
             $table->softDeletes();
             
             $table->unsignedBigInteger('user_subscription_id');
             $table->foreign('user_subscription_id')->references('id')->on('user_subscriptions')->onDelete('cascade');
+
+            $table->unsignedBigInteger('payment_status_id');
+            $table->foreign('payment_status_id')->references('id')->on('payment_statuses')->onDelete('cascade');
         });
     }
 

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\PaymentStatus;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -16,6 +17,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RoleSeeder::class,
+            PaymentStatusSeeder::class,
+            UserSubscriptionStatusSeeder::class,
             SocialWorkSeeder::class,
             UserSeeder::class,
             SubscriptionSeeder::class,

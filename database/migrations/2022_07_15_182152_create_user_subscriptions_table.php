@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('user_subscriptions', function (Blueprint $table) {
             $table->id();
             $table->datetime('start_date');
+            $table->date('user_subscription_status_updated_at');
             $table->timestamps();
             $table->softDeletes();
             
@@ -24,6 +25,9 @@ return new class extends Migration
 
             $table->unsignedBigInteger('subscription_id');
             $table->foreign('subscription_id')->references('id')->on('subscriptions')->onDelete('cascade');
+
+            $table->unsignedBigInteger('user_subscription_status_id');
+            $table->foreign('user_subscription_status_id')->references('id')->on('user_subscription_statuses')->onDelete('cascade');
         });
     }
 
