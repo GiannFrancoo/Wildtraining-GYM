@@ -7,10 +7,11 @@ use App\Models\SocialWork;
 use App\Models\UserSubscription;
 use App\Models\Role;
 use App\Models\Subscription;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Carbon;
+use Spatie\LaravelIgnition\Recorders\DumpRecorder\Dump;
 
 class ProfileController extends Controller
 {
@@ -27,20 +28,21 @@ class ProfileController extends Controller
         return view('profile.create')->with('social_works', $social_works)->with('roles', $roles)->with('subscriptions', $subscriptions);
     }
 
-    public function show($profile_id)
+    public function show($id)
     {
-        $user = User::findOrFail($profile_id);
-        $age = $this->getAge($user);
-        
-        $user_subscription = UserSubscription::where('user_id', $profile_id)->latest()->first();
-        if($user_subscription != null){//Este usuario tiene subscripcion
-            $subscriptionAdded = Subscription::findOrFail($user_subscription->subscription_id)->name;
-            $subscription = UserSubscription::where('user_id', $profile_id)->latest()->first();
-        }else{//Este usuario no tiene una subscripcion
-            $subscriptionAdded = "No tiene subscripcion";
+        try{
+            $userSubscriptions = UserSubscription::with('user')->where('user_id', $id)->get(); //check null?
+            $user = $userSubscriptions->first()->user; //recupero el usuario
+            
+            return view('profile.profile')->with([
+                'user' => $user,
+                'userSubscriptions' => $userSubscriptions,
+            ]);
         }
-
-        return view('profile.profile')->with('user', $user)->with('age', $age)->with('my_subscription', $subscriptionAdded);
+        catch (Exception $e){
+            dd($e->getMessage());
+            return redirect()->back()->withErrors('Error al mostrar el usuario');            
+        }
     }
 
     public function index()
@@ -66,10 +68,16 @@ class ProfileController extends Controller
                 $usersWithoutSubscription++;
             }        
         }
-        return view('profile.index',)->with(['users' => $users, 'monthlyRevenue' => $monthlyRevenue, 'usersWithoutSubscription' => $usersWithoutSubscription])->with('averageAges', (floor($ages/($users->count() - $usersWithoutBirthday))));
+        return view('profile.index')->with([
+            'users' => $users,
+            'monthlyRevenue' => $monthlyRevenue,
+            'usersWithoutSubscription' => $usersWithoutSubscription,
+            'averageAges' => (floor($ages/($users->count() - $usersWithoutBirthday))),
+        ]);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $request->validate([
         'password' => 'nullable|min:8|required_with:password_confirmation',
         'password_confirmation' => 'nullable|min:8|required_with:new_password|same:password',
@@ -117,8 +125,6 @@ class ProfileController extends Controller
         //
         return redirect()->route('profile.index')->with('success','Se creo con exito el nuevo usuario');
     }
-
-
 
     public function update(Request $request, $profile_id)
     {
@@ -222,7 +228,8 @@ class ProfileController extends Controller
         return redirect()->route('profile.index')->withSuccess('Se guardaron con exito los cambios.');
     }
 
-    public function edit($profile_id){
+    public function edit($profile_id)
+    {
         $user = User::findOrFail($profile_id);
         $social_works = SocialWork::all();
         $roles = Role::all();
@@ -241,7 +248,8 @@ class ProfileController extends Controller
         return view('profile.edit')->with('user', $user)->with('social_works', $social_works)->with('roles', $roles)->with('age', $age)->with('subscriptions', $subscriptions)->with('my_subscription', $subscriptionAdded);
     }
 
-    public function getAge($user){
+    public function getAge($user)
+    {
         $hoy = now();
         $edad = 0;
         if($user->birthday != null){
@@ -251,7 +259,8 @@ class ProfileController extends Controller
         return $edad;
     }
 
-    public function destroy($profile_id){
+    public function destroy($profile_id)
+    {
         $user = User::findOrFail($profile_id);
         $user->delete();
 
