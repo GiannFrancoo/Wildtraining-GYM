@@ -31,7 +31,6 @@ class HomeController extends Controller
 
         foreach ($users as $user) {
             if($user->lastSubscription->isNotEmpty()){
-                // if($user->subscriptions->sortByDesc('created_at')->first() != null){
                 $monthlyRevenue = $monthlyRevenue + $user->lastSubscription->first()->month_price;  
             }  
             else{
@@ -39,6 +38,10 @@ class HomeController extends Controller
             }        
         }
 
-        return view('home')->with(['users' => $users, 'monthlyRevenue' => $monthlyRevenue, 'usersWithoutSubscription' => $usersWithoutSubscription]);
+        return view('home')->with([
+            'users' => $users,
+            'monthlyRevenue' => $monthlyRevenue, 
+            'usersWithoutSubscription' => $usersWithoutSubscription,
+        ]);
     }
 }
