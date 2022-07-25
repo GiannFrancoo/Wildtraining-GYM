@@ -60,18 +60,25 @@ class PaymentController extends Controller
      */
     public function store(Request $request, $payment_id)
     {
-        $user = User::with('lastSubscription')->findOrfail($payment_id);
-        $userSubscription = $user->lastSubscription->first()->pivot;
+        try{
+            $user = User::with('lastSubscription')->findOrfail($payment_id);
+            $userSubscription = $user->lastSubscription->first()->pivot;
 
-        $userSubscription->payments()->create([
-            "user_subscription_id" => $userSubscription->id,
-            "price" => $request->price,
-            "date" => $request->date,
-        ]);
+            $userSubscription->payments()->create([
+                "user_subscription_id" => $userSubscription->id,
+                "price" => $request->price,
+                "date" => $request->date,
+            ]);
 
-        return redirect()
-            ->route('payment.index')
-            ->withSuccess('Se creo el nuevo pago con exito');
+            return redirect()
+                ->route('payment.index')
+                ->withSuccess('Se creo el nuevo pago con exito');
+        }
+        catch (Exception $e){
+            return redirect()
+                ->back()
+                ->withErrors('Error al guardar el nuevo pago');
+        }
     }
 
     /**
