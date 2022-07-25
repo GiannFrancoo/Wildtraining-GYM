@@ -36,4 +36,9 @@ class UserSubscription extends Pivot
     {
         return $this->hasMany(Payment::class, 'user_subscription_id');
     }
+
+    public function subscriptionStatuses()
+    {
+        return $this->belongsTo(SubscriptionState::class);
+    }
 }
