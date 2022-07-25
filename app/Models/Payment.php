@@ -14,10 +14,15 @@ class Payment extends Model
         'user_subscription_id',
         'price',
         'date',
+        'payment_status_id',
+        'payment_status_updated_at',
+
     ];
 
     protected $casts = [
-        "date" => "datetime",
+        'date' => 'datetime',
+        'payment_status_updated_at' => 'date', 
+        
     ];
 
     public function userSubscription(){
@@ -26,6 +31,6 @@ class Payment extends Model
 
     public function paymentStatuses()
     {
-        return $this->belongsTo(PaymentState::class);
+        return $this->belongsTo(PaymentStatus::class);
     }
 }

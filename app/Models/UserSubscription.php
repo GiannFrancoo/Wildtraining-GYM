@@ -16,10 +16,13 @@ class UserSubscription extends Pivot
         'subscription_id',
         'start_date',
         'payment_id',
+        'user_subscription_status_id',
+        'user_subscription_status_updated_at',
     ];
 
     protected $casts = [
-        "start_date" => "datetime",
+        'start_date' => 'datetime',
+        'user_subscription_status_updated_at' => 'date',
     ];
 
     public function user()
@@ -39,6 +42,7 @@ class UserSubscription extends Pivot
 
     public function subscriptionStatuses()
     {
-        return $this->belongsTo(SubscriptionState::class);
+        return $this->belongsTo(UserSubscriptionStatus::class);
     }
+    
 }

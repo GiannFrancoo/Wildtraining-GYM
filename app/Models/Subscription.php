@@ -19,7 +19,7 @@ class Subscription extends Model
     ];
 
     protected $casts = [
-        "modification_date" => "date",
+        'modification_date' => 'date',
     ];
 
     public function users()

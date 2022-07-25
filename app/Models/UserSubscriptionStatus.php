@@ -24,8 +24,5 @@ class UserSubscriptionStatus extends Model
     {
         return $this->hasMany(UserSubscription::class);
     }
-
-
-
-
+    
 }

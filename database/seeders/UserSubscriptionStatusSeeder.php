@@ -17,7 +17,6 @@ class UserSubscriptionStatusSeeder extends Seeder
         $userSubscriptionStatuses = [
             ['id' => 1, 'name' => 'Activa'],
             ['id' => 2, 'name' => 'Inactiva'],
-            ['id' => 3, 'name' => 'Inactiva'],
         ];
 
         foreach ($userSubscriptionStatuses as $userSubscriptionStatus) {
