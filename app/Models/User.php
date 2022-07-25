@@ -95,8 +95,7 @@ class User extends Authenticatable
             ->where([
                 ['user_subscriptions.deleted_at', '=', NULL],
                 ['user_subscriptions.user_subscription_status_id', '=', 1]
-            ])
-            ->first();
+            ]);
     }
 
     public function subscriptions()
@@ -104,7 +103,7 @@ class User extends Authenticatable
         return $this
             ->belongsToMany(Subscription::class, 'user_subscriptions', 'user_id', 'subscription_id')
             ->using(UserSubscription::class)
-            ->withPivot('id', 'start_date')
+            ->withPivot('id', 'start_date', 'user_subscription_status_id', 'user_subscription_status_updated_at')
             ->withTimestamps()
             ->where('user_subscriptions.deleted_at', NULL);
     }

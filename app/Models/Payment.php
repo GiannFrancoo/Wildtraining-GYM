@@ -29,8 +29,8 @@ class Payment extends Model
         return $this->belongsTo(UserSubscription::class);
     }
 
-    public function paymentStatuses()
+    public function paymentStatus()
     {
-        return $this->belongsTo(PaymentStatus::class);
+        return $this->belongsTo(PaymentStatus::class, 'payment_status_id', 'id');
     }
 }
