@@ -17,7 +17,6 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
         $payments = Payment::all();
         return view('payment.index')->with('payments', $payments);
     }
@@ -42,17 +41,18 @@ class PaymentController extends Controller
      */
     public function store(Request $request, $payment_id)
     {
-        //  
-        $payments = Payment::all();
-        $payment = new Payment();
-        $user = User::findOrfail($payment_id);
-        $subscription = UserSubscription::where('user_id', $user->id)->latest()->first()->subscription()->first();
-        $payment->price = $request->price;
-        $payment->date = $request->date;
-        $payment->user_subscription_id = UserSubscription::where('user_id', $user->id)->where('subscription_id', $subscription->id)->latest()->first()->id;
-        $payment->save();
+        $user = User::with('lastSubscription')->findOrfail($payment_id);
+        $userSubscription = $user->lastSubscription->first()->pivot;
 
-        return redirect()->route('payment.index')->with('payments', $payments)->withSuccess('Se creo el nuevo pago con exito');
+        $userSubscription->payments()->create([
+            "user_subscription_id" => $userSubscription->id,
+            "price" => $request->price,
+            "date" => $request->date,
+        ]);
+
+        return redirect()
+            ->route('payment.index')
+            ->withSuccess('Se creo el nuevo pago con exito');
 
     }
 
@@ -70,7 +70,25 @@ class PaymentController extends Controller
     public function users()
     {
         $users = User::all();
-        return view('payment.users')->with('users', $users);
+        $selectedUser = null;
+        $subscription = null;
+
+        if (isset($_GET['user'])) {
+            $selectedUser = User::with('lastSubscription')->find($_GET['user']);
+            $subscription = $selectedUser->lastSubscription->first();
+
+            if (is_null($subscription)) {
+                return redirect()
+                    ->back()
+                    ->with('error', 'El usuario no tiene suscripción');
+            }
+        }
+
+        return view('payment.users')->with([
+            'users' => $users,
+            'selectedUser' => $selectedUser,
+            'subscription' => $subscription,
+        ]);
     }
 
     /**

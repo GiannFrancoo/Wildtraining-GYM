@@ -27,7 +27,7 @@ class Subscription extends Model
         return $this
             ->belongsToMany(User::class, 'user_subscriptions', 'subscription_id', 'user_id')
             ->using(UserSubscription::class)
-            ->withPivot('start_date')
+            ->withPivot('id', 'start_date')
             ->withTimestamps()
             ->where('user_subscriptions.deleted_at', NULL); //por el softDelete
     }

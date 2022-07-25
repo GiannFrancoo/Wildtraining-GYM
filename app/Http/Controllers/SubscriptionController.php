@@ -61,9 +61,9 @@ class SubscriptionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SubscriptionStoreRequest $request)
     {
-        try{
+        try {
             $subscription = new Subscription();
             $subscription->name = $request->name;
             $subscription->times_a_week = $request->times_a_week;

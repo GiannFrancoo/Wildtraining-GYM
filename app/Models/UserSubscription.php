@@ -11,6 +11,7 @@ class UserSubscription extends Pivot
 
     protected $table = "user_subscriptions";
     protected $fillable = [
+        'id',
         'user_id',
         'subscription_id',
         'start_date',
