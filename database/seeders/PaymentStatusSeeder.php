@@ -16,7 +16,7 @@ class PaymentStatusSeeder extends Seeder
     {
         $paymentStatuses = [
             ['id' => 1, 'name' => 'Pendiente'],
-            ['id' => 2, 'name' => 'Pago'],
+            ['id' => 2, 'name' => 'Pagado'],
             ['id' => 3, 'name' => 'Cancelado'],
         ];
 
