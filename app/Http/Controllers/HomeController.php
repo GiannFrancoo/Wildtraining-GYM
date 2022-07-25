@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -25,11 +26,14 @@ class HomeController extends Controller
      */
     public function index()
     {        
-        $users = User::with('lastSubscription')->orderBy('last_name')->get();
+        $payments = Payment::take(5)->get();
+        
+
+        $users = User::with('lastSubscription')->get();
         $monthlyRevenue = 0;
         $usersWithoutSubscription = 0;
 
-        foreach ($users as $user) {
+        foreach ($users as $user) {            
             if($user->lastSubscription->isNotEmpty()){
                 $monthlyRevenue = $monthlyRevenue + $user->lastSubscription->first()->month_price;  
             }  
@@ -40,6 +44,7 @@ class HomeController extends Controller
 
         return view('home')->with([
             'users' => $users,
+            'payments' => $payments,
             'monthlyRevenue' => $monthlyRevenue, 
             'usersWithoutSubscription' => $usersWithoutSubscription,
         ]);

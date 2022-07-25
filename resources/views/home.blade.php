@@ -113,38 +113,34 @@
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">{{ __('Ultimos pagos agregados') }}</h6>
-                    <a href="{{ route('profile.create') }}" type="button" class="btn btn-success" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>Generar nuevo pago</a>
+                    <a href="{{ route('payment.create') }}" type="button" class="btn btn-success" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>Generar nuevo pago</a>
                 </div>
                 <div class="card-body table-responsive">
                     <table class="table table-bordered table-hover text-center" id="myTable">    
                         <thead>
                             <tr>
                                 <th>Nombre y apellido</th>
-                                <th>Telefono</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
                                 <th>Suscripción</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($users->take(5) as $user)
+                            @foreach ($payments as $payment)
                                 <tr>
-                                    <td>{{ $user->getFullNameAttribute() }}</td>
-                                    <td>{{ $user->primary_phone }}</td>
+                                    <td>{{ $payment->userSubscription->user->getFullNameAttribute() }}</td>
+                                    <td>{{ $payment->date->format('d/m/Y') }}</td>
+                                    <td>{{ $payment->paymentStatus->name }}</td>
+                                    <td>{{ $payment->userSubscription->subscription->name }}</td>
                                     <td>
-                                        @if ($user->lastSubscription->isEmpty())
-                                            Sin suscripción
-                                        @else
-                                            {{ $user->lastSubscription->first()->name }}                                               
-                                        @endif 
-                                    </td>
-                                    <td>
-                                        <a href="{{route('profile', ['profile_id' => $user->id])}}" type="button" class="btn btn-primary mx-1"><i class="fa fa-eye"></i></a>
-                                        <a href="{{route('profile.edit', ['profile_id' => $user->id])}}" type="button" class="btn btn-secondary mx-1" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
-                                        <form action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" method="POST" class="d-inline">
+                                        <!-- deberia cambiar el estado del pago -->
+                                        <a href="#" type="button" class="btn btn-secondary mx-1" title="changeStatus" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
+                                        <form action="{{ route('payment.destroy', ['payment_id' => $payment->id]) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method("DELETE")
-                                            <button class="btn btn-danger" onclick="return confirm('¿Desea borrar al usuario {{ $user->name }}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button>
-                                        </form>
+                                            <button class="btn btn-danger" onclick="return confirm('¿Desea borrar el pago asociado a {{ $payment->userSubscription->user->getFullNameAttribute() }}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button>
+                                        </form>                          
                                     </td>
                                 </tr>
                             @endforeach

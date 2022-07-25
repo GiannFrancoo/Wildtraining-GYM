@@ -40,7 +40,6 @@ class ProfileController extends Controller
             ]);
         }
         catch (Exception $e){
-            dd($e->getMessage());
             return redirect()->back()->withErrors('Error al mostrar el usuario');            
         }
     }

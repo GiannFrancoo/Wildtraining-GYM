@@ -92,7 +92,7 @@
                         <div class="col-md-6">
                             <div class="form-group focused">
                                 <label class="form-control-label" for="new_password">Subscripcion</label>
-                                <input type="text" readonly id="subscription_id" class="form-control" value="{{ $user->lastSubscription()->name }}">
+                                <input type="text" readonly id="subscription_id" class="form-control" value="{{ $user->lastSubscription()->first()->name }}">
                             </div>
                         </div>
 
