@@ -22,7 +22,7 @@ class UserSubscriptionStatus extends Model
 
     public function userSubscriptions()
     {
-        return $this->hasMany(UserSubscription::class);
+        return $this->hasMany(UserSubscription::class, 'user_subscription_status_id');
     }
     
 }
