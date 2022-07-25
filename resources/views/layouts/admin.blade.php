@@ -29,9 +29,11 @@
 <body id="page-top">
 
 <!-- Page Wrapper -->
-<div id="wrapper">
+<div id="wrapper">  
+
+
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
@@ -48,67 +50,129 @@
             {{ __('General') }}
         </div>
 
-        <!-- Nav Item - Dashboard -->
+        <!-- Nav Item - Panel -->
         <li class="nav-item {{ Nav::isRoute('home') }}">
             <a class="nav-link" href="{{ route('home') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>{{ __('Panel') }}</span></a>
         </li>
 
-        <hr class="sidebar-divider">
-
         <!-- Divider -->
-        <div class="sidebar-heading">
-            {{ __('Personal') }}
-        </div>
-
-         <!-- Nav Item - Profile -->
-         <li class="nav-item {{ Nav::isRoute('profile') }}">
-            <a class="nav-link" href="{{ route('profile', ['profile_id' => Auth::user()->id]) }}">
-                <i class="fas fa-fw fa-user"></i>
-                <span>{{ __('Perfil') }}</span>
-            </a>
-        </li>
-
         <hr class="sidebar-divider">
 
-        <!-- Nav Item - Users -->
         <div class="sidebar-heading">
             {{ __('Administración') }}
         </div>
 
-       <!-- Nav Item - Profiles -->
-       <li class="nav-item {{ Nav::isRoute('profile.index') }}">
-            <a class="nav-link" href="{{ route('profile.index') }}">
-                <i class="fas fa fa-users"></i>
+        <!-- Nav Item - Users -->
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#collapseUsers" role="button" aria-expanded="false" aria-controls="collapseUsers">
+                <i class="fa-solid fa-users"></i>
                 <span>{{ __('Usuarios') }}</span>
             </a>
         </li>
+        <div class="collapse ml-2" id="collapseUsers">
+
+            <!-- List of users -->
+            <li class="nav-item {{ Nav::isRoute('profile.index') }}">
+                <a class="nav-link" href="{{ route('profile.index') }}">
+                    <i class="fa-solid fa-list"></i>
+                    <span>{{ __('Lista de usuarios') }}</span>
+                </a>
+            </li>
+
+            <!-- Add new user -->
+            <li class="nav-item {{ Nav::isRoute('profile.create') }}">
+                <a class="nav-link" href="{{ route('profile.create') }}">
+                    <i class="fa-solid fa-add"></i>
+                    <span>{{ __('Agregar nuevo usuario') }}</span>
+                </a>
+            </li>
+
+        </div>
 
         <!-- Nav Item - Subscriptions -->
-        <li class="nav-item {{ Nav::isRoute('subscription.index') }}">
-            <a class="nav-link" href="{{ route('subscription.index') }}">
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#collapseSubscriptions" role="button" aria-expanded="false" aria-controls="collapseSubscriptions">
                 <i class="fa-solid fa-calendar"></i>
                 <span>{{ __('Subscripciones') }}</span>
             </a>
         </li>
+        <div class="collapse ml-2" id="collapseSubscriptions">
+
+            <!-- List of subscriptions -->
+            <li class="nav-item {{ Nav::isRoute('subscription.index') }}">
+                <a class="nav-link" href="{{ route('subscription.index') }}">
+                    <i class="fa-solid fa-list"></i>
+                    <span>{{ __('Lista de suscripciones') }}</span>
+                </a>
+            </li>
+
+            <!-- Add new subscription -->
+            <li class="nav-item {{ Nav::isRoute('subscription.create') }}">
+                <a class="nav-link" href="{{ route('subscription.create') }}">
+                    <i class="fa-solid fa-add"></i>
+                    <span>{{ __('Agregar nueva suscripción') }}</span>
+                </a>
+            </li>
+
+        </div>
 
         <!-- Nav Item - Assistances -->
-        <li class="nav-item {{ Nav::isRoute('assistance.index') }}">
-            <a class="nav-link" href="{{ route('assistance.index') }}">
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#collapseAssistances" role="button" aria-expanded="false" aria-controls="collapseAssistances">
                 <i class="fa-solid fa-clipboard-list"></i>
                 <span>{{ __('Asistencias') }}</span>
             </a>
         </li>
+        <div class="collapse ml-2" id="collapseAssistances">
 
-        <!-- Nav Item - Payment -->
-        <li class="nav-item {{ Nav::isRoute('payment.index') }}">
-            <a class="nav-link" href="{{ route('payment.index') }}">
+            <!-- List of assistances -->
+            <li class="nav-item {{ Nav::isRoute('assistance.index') }}">
+                <a class="nav-link" href="{{ route('assistance.index') }}">
+                    <i class="fa-solid fa-list"></i>
+                    <span>{{ __('Lista de asistencias') }}</span>
+                </a>
+            </li>
+
+            <!-- Add new assistance -->
+            <li class="nav-item {{ Nav::isRoute('assistance.create') }}">
+                <a class="nav-link" href="{{ route('assistance.create') }}">
+                    <i class="fa-solid fa-add"></i>
+                    <span>{{ __('Marcar nueva asistencia') }}</span>
+                </a>
+            </li>
+
+        </div>
+
+        <!-- Nav Item - Payments -->
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#collapsePayments" role="button" aria-expanded="false" aria-controls="collapsePayments">
                 <i class="fa-solid fa-fw fa fa-money"></i>
                 <span>{{ __('Pagos') }}</span>
             </a>
         </li>
-        
+        <div class="collapse ml-2" id="collapsePayments">
+
+            <!-- List of payments -->
+            <li class="nav-item {{ Nav::isRoute('payment.index') }}">
+                <a class="nav-link" href="{{ route('payment.index') }}">
+                    <i class="fa-solid fa-list"></i>
+                    <span>{{ __('Lista de pagos') }}</span>
+                </a>
+            </li>
+
+            <!-- Add new payment -->
+            <li class="nav-item {{ Nav::isRoute('payment.create') }}">
+                <a class="nav-link" href="{{ route('payment.create') }}">
+                    <i class="fa-solid fa-add"></i>
+                    <span>{{ __('Generar nuevo pago') }}</span>
+                </a>
+            </li>
+
+        </div>
+
+        <!-- Divider -->
         <hr class="sidebar-divider">
 
         <div class="sidebar-heading">
@@ -123,15 +187,12 @@
             </a>
         </li>
 
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
-
         <!-- Sidebar Toggler (Sidebar) -->
-        <div class="text-center d-none d-md-inline">
+        <div class="text-center d-none d-md-inline mt-3">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
         </div>
 
-    </ul>
+        </ul>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -280,6 +341,11 @@
     <!-- End of Content Wrapper -->
 
 </div>
+
+
+
+
+
 
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
