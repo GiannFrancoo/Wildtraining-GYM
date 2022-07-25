@@ -90,38 +90,36 @@
                     </div>
                 </div>
 
-                <div class="card-body">
-                        <table class="table-reponsive">
-                            <table class="table table-bordered table-hover text-center" id="myTable">    
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Apellido</th>
-                                        <th scope="col">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($subscriptionArray as $user)
-                                        <tr>
-                                            <td>{{ $user->name }}</td>
-                                            <td>{{ $user->last_name }}</td>
-                                            <!-- <td>{{ $subscription->modification_date->format('d/m/Y') }}</td> -->
-                                            <td>
-                                                <!-- Hay que poner profile.show -->
-                                                <a href="{{ route('profile', ['profile_id' => $user->id]) }}" type="button" class="btn btn-secondary" title="Show" data-toggle="tooltip"><i class="fa fa-eye mx-1"></i></a>
-                                                <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-primary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
+                <div class="card-body table-responsive">
+                    <table class="table table-bordered table-hover text-center" id="myTable">    
+                        <thead>
+                            <tr>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellido</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($subscriptionArray as $user)
+                                <tr>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->last_name }}</td>
+                                    <!-- <td>{{ $subscription->modification_date->format('d/m/Y') }}</td> -->
+                                    <td>
+                                        <!-- Hay que poner profile.show -->
+                                        <a href="{{ route('profile', ['profile_id' => $user->id]) }}" type="button" class="btn btn-secondary" title="Show" data-toggle="tooltip"><i class="fa fa-eye mx-1"></i></a>
+                                        <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-primary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
 
-                                                <form method="POST" action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" class="d-inline">
-                                                    @method('delete')
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('¿Desea borrar este usuario: {{ $user->getFullNameAttribute() }}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </table>
+                                        <form method="POST" action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" class="d-inline">
+                                            @method('delete')
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Desea borrar este usuario: {{ $user->getFullNameAttribute() }}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

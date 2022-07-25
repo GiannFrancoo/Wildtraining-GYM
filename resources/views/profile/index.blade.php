@@ -108,7 +108,7 @@
                                         <td class="text-center d-flex justify-content-center">
                                             <a href="{{route('profile', ['profile_id' => $user->id])}}" type="button" class="btn btn-primary mx-1"><i class="fa fa-eye"></i></a>
                                             <a href="{{route('profile.edit', ['profile_id' => $user->id])}}" type="button" class="btn btn-secondary mx-1" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
-                                            <div class="mx-1">
+                                            <div>
                                                 <form action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" method="POST">
                                                     @csrf
                                                     @method("DELETE")
