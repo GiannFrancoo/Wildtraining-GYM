@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use App\Models\Payment;
 use App\Models\User;
@@ -29,8 +30,26 @@ class PaymentController extends Controller
     public function create()
     {
         $users = User::all();
-        $subscriptions = Subscription::all();
-        return view('payment.create')->with('subscriptions', $subscriptions)->with('users', $users);
+        $selectedUser = null;
+        $subscription = null;
+
+        if (isset($_GET['user'])) { 
+            $selectedUser = User::with('lastSubscription')->find($_GET['user']);
+            $subscription = $selectedUser->lastSubscription->first();
+
+            if (is_null($subscription)) {
+                return redirect()
+                    ->back()
+                    ->with('error', 'El usuario no tiene suscripción');
+            }
+        }
+
+        return view('payment.create')->with([
+            'users' => $users,
+            'selectedUser' => $selectedUser,
+            'subscription' => $subscription,
+        ]);
+       
     }
 
     /**
@@ -53,7 +72,6 @@ class PaymentController extends Controller
         return redirect()
             ->route('payment.index')
             ->withSuccess('Se creo el nuevo pago con exito');
-
     }
 
     /**
@@ -73,7 +91,7 @@ class PaymentController extends Controller
         $selectedUser = null;
         $subscription = null;
 
-        if (isset($_GET['user'])) {
+        if (isset($_GET['user'])) { 
             $selectedUser = User::with('lastSubscription')->find($_GET['user']);
             $subscription = $selectedUser->lastSubscription->first();
 
@@ -114,12 +132,10 @@ class PaymentController extends Controller
      */
     public function update(Request $request, $payment_id)
     {
-        //
         $payments = Payment::all();
-       $payment = Payment::findOrFail($payment_id);
+        $payment = Payment::findOrFail($payment_id);
         $payment->price = $request->price;
         $payment->date = $request->date;
-       // $payment->user_subscription_id = UserSubscription::where('user_id', $request->userSelected)->where('subscription_id', $request->subscriptionSelected)->latest()->first()->id;
         $payment->save();
 
         return redirect()->route('payment.index')->with('payments', $payments)->withSuccess('Los cambios se guardaron con exito');
@@ -133,15 +149,13 @@ class PaymentController extends Controller
      */
     public function destroy($payment_id)
     {
-        //try{
-            
-        $payments = Payment::all();
+        try{      
+            $payments = Payment::all();
             $payment = Payment::findOrFail($payment_id);
-             $payment->delete();
+            $payment->delete();
 
-             return redirect()->route('payment.index')->with('payments', $payments)->withSuccess('Se elimino con exito el pago');
-             //}catch(Exception e){}
-       
+            return redirect()->route('payment.index')->with('payments', $payments)->withSuccess('Se elimino con exito el pago');
+        }catch(Exception $e){}
     }
 
     public function userSelected($payment_id){

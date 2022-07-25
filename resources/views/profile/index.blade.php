@@ -27,23 +27,22 @@
 
 
 
- <!-- Earnings (Monthly) Card Example -->
- <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" id="ganancia">Total</div>
-                            
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $users->count() }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-users fa-2x text-gray-300"></i>
-                        </div>
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" id="ganancia">Total</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $users->count() }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-users fa-2x text-gray-300"></i>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
 
     <!-- Average ages> -->
@@ -85,7 +84,7 @@
     <div class="row">
         <div class="col mb-4">
             <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex justify-content-between"">
+                <div class="card-header py-3 d-flex justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Lista de usuarios</h6>
                     <a href="{{route('profile.create')}}" type="button" class="btn btn-success" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>Agregar</a>
                 </div>

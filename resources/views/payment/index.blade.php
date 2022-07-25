@@ -3,12 +3,8 @@
 @section('main-content')
 
     <!-- Header -->
-    <div class="d-flex justify-content-between">
-        <h1 class="h3 mb-4 text-gray-800">{{ __('Pagos') }}</h1>
-        <div>
-            <a href="{{route('payment.users')}}" class="btn btn-success mr-1"><i class="fa fa-add mr-1"></i>Agregar</a>    
-        </div>        
-    </div>
+    <h1 class="h3 mb-4 text-gray-800">{{ __('Pagos') }}</h1>      
+    
 
     @if (session('success'))
         <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
@@ -30,17 +26,16 @@
         
         <div class="col mb-4">
             <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <div class="row d-flex justify-content-between">    
-                        <div class="col-md-4 my-2">
-                            <h6 class="m-0 font-weight-bold text-primary">Lista de pagos</h6>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <input type="text" id="myInput" onkeyup="tableSearch()" class="form-control" placeholder="Nombre de usuario&hellip;">
-                        </div>
-                    </div>
-                </div>                      
+                <div class="card-header py-3 d-flex justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Lista de pagos</h6>
+                    <a href="{{route('payment.create')}}" type="button" class="btn btn-success" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>Agregar</a>    
+                </div> 
 
+
+                <div class="card-header py-3 col-lg-4">
+                    <input type="text" id="myInput" onkeyup="tableSearch()" class="form-control" placeholder="Nombre de usuario&hellip;">
+                </div>
+                                     
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover text-center" id="myTable">    
                         <thead>
@@ -63,14 +58,15 @@
                                     <td>{{ $payment->date->format('d-m-Y') }}</td>
                                     <td>{{ $payment->date->format('H:i:s') }}</td>                                
                                     <td>{{ $payment->userSubscription->subscription->name }}</td>
-                                    <td>                                    
+                                    <td class="text-center d-flex justify-content-center">                                    
                                         <a href="{{ route('payment.edit', ['payment_id' => $payment->id]) }}" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
-                                        
-                                        <form action="{{ route('payment.destroy', ['payment_id' => $payment->id]) }}" method="POST"> 
-                                            @csrf 
-                                            @method("DELETE") 
-                                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Desea borrar pago seleccionado?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button> 
-                                        </form>                            
+                                        <div class="mx-1">
+                                            <form action="{{ route('payment.destroy', ['payment_id' => $payment->id]) }}" method="POST"> 
+                                                @csrf 
+                                                @method("DELETE") 
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Desea borrar pago seleccionado?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button> 
+                                            </form>  
+                                        </div>                          
                                     </td>
                                 </tr>
                             @endforeach

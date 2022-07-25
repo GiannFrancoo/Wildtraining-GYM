@@ -56,11 +56,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/assistance/{assistance_id}', [AssistanceController::class, 'destroy'])->name('assistance.destroy');
     
     //Routes for payments
-    Route::post('/payment/{payment_id}', [PaymentController::class, 'store'])->name('payment.store');
-    Route::get('/payment/{payment_id}', [PaymentController::class, 'userSelected'])->name('payment.userSelected');
-    Route::get('/paymentUsers', [PaymentController::class, 'users'])->name('payment.users');
-    Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
     Route::get('/payment/create', [PaymentController::class, 'create'])->name('payment.create');
+    Route::post('/payment/{payment_id}', [PaymentController::class, 'store'])->name('payment.store');
+    Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
     Route::get('/payment/{payment_id}/edit', [PaymentController::class, 'edit'])->name('payment.edit');
     Route::delete('/payment/{payment_id}', [PaymentController::class, 'destroy'])->name('payment.destroy');
     Route::put('/payment/{payment_id}', [PaymentController::class, 'update'])->name('payment.update');
