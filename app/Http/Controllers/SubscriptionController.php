@@ -131,7 +131,7 @@ class SubscriptionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SubscriptionUpdateRequest $request, $id)
     {
         try{
             $subscription = Subscription::findOrFail($id);
