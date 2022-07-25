@@ -95,7 +95,8 @@ class User extends Authenticatable
             ->where([
                 ['user_subscriptions.deleted_at', '=', NULL],
                 ['user_subscriptions.user_subscription_status_id', '=', 1]
-            ]);
+            ])
+            ->first();
     }
 
     public function subscriptions()
