@@ -18,7 +18,10 @@ class SocialWorkSeeder extends Seeder
             ['id' => 1, 'name' => 'IOMA'],
             ['id' => 2, 'name' => 'PAMI'],
             ['id' => 3, 'name' => 'OSECAC'],
-            ['id' => 4, 'name' => 'SWISS MEDICAL'],
+            ['id' => 4, 'name' => 'SOSUNS'],
+            ['id' => 5, 'name' => 'SWISS MEDICAL'],
+            ['id' => 6, 'name' => 'DOSEM'],
+            ['id' => 7, 'name' => 'NO POSEE'],
         ];
 
         foreach ($socialWorks as $socialWork) {
