@@ -46,9 +46,8 @@ class ProfileController extends Controller
 
     public function index()
     {
-
+        $subscriptions = Subscription::all();
         $users = User::latest()->get();
-        // $users = User::orderBy('last_name')->get();
         $monthlyRevenue = 0;
         $usersWithoutSubscription = 0;
         $ages = 0;
@@ -67,165 +66,114 @@ class ProfileController extends Controller
                 $usersWithoutSubscription++;
             }        
         }
-        return view('profile.index')->with([
-            'users' => $users,
-            'monthlyRevenue' => $monthlyRevenue,
+
+        return view('profile.index',)->with([
+            'users' => $users, 
+            'monthlyRevenue' => $monthlyRevenue, 
             'usersWithoutSubscription' => $usersWithoutSubscription,
             'averageAges' => (floor($ages/($users->count() - $usersWithoutBirthday))),
+            'subscriptions' => $subscriptions,
         ]);
     }
+
+    public function updateSubscription($profile_id)
+    {
+        if(UserSubscription::where('user_id', $profile_id)->latest()->first() != null){
+            $user_subscriptionOld = UserSubscription::where('user_id', $profile_id)->latest()->first();
+            $user_subscriptionOld->user_subscription_status_id = 2;
+            $user_subscriptionOld->user_subscription_status_updated_at = now();
+            $user_subscriptionOld->save();
+
+            $user_subscription = new UserSubscription();
+            $user_subscription->user_id = $profile_id;
+            $user_subscription->subscription_id = $_GET['newSubscription_id'];
+            $user_subscription->start_date = now();
+            $user_subscription->user_subscription_status_updated_at = now();
+            $user_subscription->user_subscription_status_id = 1;
+            $user_subscription->save();
+        }
+        return redirect()->route('profile.index')->withSuccess('Se guardo la nueva suscripcion');
+    }
+
+
 
     public function store(Request $request)
     {
         $request->validate([
-        'password' => 'nullable|min:8|required_with:password_confirmation',
-        'password_confirmation' => 'nullable|min:8|required_with:new_password|same:password',
-        'primary_phone' => 'required|string|min:9|unique:users',
-        'email' => 'required|string|email|max:255|unique:users,email,' . Auth::user()->email,
-
-        ]);
-
-        $user = new User();
-        $user->name = $request->name;
-        $user->last_name = $request->last_name;
-        $user->email = $request->email;
-        $user->primary_phone = $request->primary_phone;
-       
-        //if($user->secundary_phone != NULL){
-            $user->secundary_phone = $request->secundary_phone;
-        //}
-
-        //if($user->secundary_phone != NULL){
-            $user->address = $request->address;
-        //}
-        $user->birthday = $request->birthday;
-        $user->start_date = $request->start_date;
-        $user->personal_information = $request->personal_information;
-        $user->social_work_id = $request->social_work_id;
-
-        //Verifico que las contraseñas ingresadas tengan el formato correcto
-        if($request->password != NULL  && $request->password === $request->password_confirmation){
-            $user->password = $request->password;
-        }
-
-        $user->role_id = $request->role_id;
-
-        $user->save();
-
-        //Creo la user subscription asociada
-        if($request->subscription != null){
-            $user_subscription = new UserSubscription();
-            $user_subscription->user_id = $user->id;
-            $user_subscription->subscription_id = $request->subscription;
-            $user_subscription->start_date = now();
-            $user_subscription->save();
-        }
-        
-        //
-        return redirect()->route('profile.index')->with('success','Se creo con exito el nuevo usuario');
-    }
-
-    public function update(Request $request, $profile_id)
-    {
-        $request->validate([
             'name' => 'required|string|max:255',
             'last_name' => 'required|nullable|string|max:255',
-            //'email'         => 'required|string|email|max:255', ARREGLAR
-            //                Rule::unique('users')->ignore(Auth::user()->id),
-            //'email' => 'required|string|email|max:255|unique:users,email,' . Auth::user()->id, //. Auth::user()->email,
-            //'current_password' => 'nullable|required_with:new_password',
             'new_password' => 'nullable|min:8|required_with:current_password',
             'password_confirmation' => 'nullable|min:8|required_with:new_password|same:new_password',
             'primary_phone' => 'required|string|min:9'
         ]);
-
-        //Creo la nueva userSubscription
-        /*$user_subscription = UserSubscription::findOrFail($id);
-        $user_subscription->subscription_id = $request->subscriptionIdSelected;
-        $user_subscription->save();
-        */
-       
-
+    
         $user = User::findOrFail($profile_id);        
             //Creo la nueva userSubscription si es que cambio la subscripcion
-            if(UserSubscription::where('user_id', $profile_id)->latest()->first() != null){
+            $user_subscriptionOld = UserSubscription::where('user_id', $profile_id)->latest()->first();
+            if($user_subscriptionOld != null){
                 if($request->subscriptionIdSelected != UserSubscription::where('user_id', $profile_id)->latest()->first()->subscription_id){
-                $user_subscription = new UserSubscription();
-                $user_subscription->user_id = $user->id;
-                $user_subscription->subscription_id = $request->subscriptionIdSelected;
-                $user_subscription->start_date = now();
-                $user_subscription->save();
-            }
-        }
-        //Actualizo los atributos del usuario
-        $user->name = $request->name;
-        $user->last_name = $request->last_name;
-        $user->email = $request->email;
-        $user->primary_phone = $request->primary_phone;
-        
-        if($request->secundary_phone != NULL){
-            $user->secundary_phone = $request->secundary_phone;
-        }
-
-        if($request->address != NULL){
-            $user->address = $request->address;
-        }
-
-        if($request->birthday != NULL){
-            $user->birthday = $request->birthday;
-        }
-
-        if($request->start_date != NULL){
-            $user->start_date = $request->start_date;
-        }
-
-        if($request->personal_information != NULL){
-            $user->personal_information = $request->personal_information;
-        }
-
-        if($request->social_work_id != $user->social_work_id){
-            $user->social_work_id = $request->social_work_id;
-        }
-        
-        if($request->role_id != $user->role_id){
-            $user->role_id = $request->role_id;
-        }
-    
-        /*if ($request->input('new_password') != NULL) {
-
-            if (Hash::check($request->input('current_password'), $user->password)) {
-                if($request->new_password != NULL  && $request->new_password === $request->password_confirmation){
-                    $user->password = $request->input('new_password');
+                    $user_subscriptionOld->user_subscription_status_id = 2;
+                    $user_subscriptionOld->user_subscription_status_updated_at = now();
+                    $user_subscriptionOld->save();
+                
+                    $user_subscription = new UserSubscription();
+                    $user_subscription->user_id = $user->id;
+                    $user_subscription->subscription_id = $request->subscriptionIdSelected;
+                    $user_subscription->start_date = now();
+                    $user_subscription->user_subscription_status_id = 1;
+                    $user_subscription->user_subscription_status_updated_at = now();
+                    $user_subscription->save();
                 }
-            } else {
-                return redirect()->back()->withInput();
-            }
-        }*/
-
-        if ($request->input('new_password') != NULL) {
-
-            if (!Hash::check($user->password , $request->new_password)) {
-                if($request->new_password != NULL  && $request->new_password === $request->password_confirmation){
-                    $user->password = $request->new_password;
+            
+                //Actualizo los atributos del usuario
+                $user->name = $request->name;
+                $user->last_name = $request->last_name;
+                $user->email = $request->email;
+                $user->primary_phone = $request->primary_phone;
+                
+                if($request->secundary_phone != NULL){
+                    $user->secundary_phone = $request->secundary_phone;
                 }
-            } else {
-                return redirect()->back()->withInput();
-            }
-        }
 
-        /*if ($request->input('new_password') != NULL) { //VER ESTO DE LAS CONTRASEÑAS
-            if ($request->input('new_password') === $request->input('password_confirmation')) {
-                    bcrypt($request->password_confirmation);
-                    $user->password = $request->password_confirmation;
-            } else {
-                return redirect()->back()->withError('Las contraseñas no coinciden');
-            }
-        }*/
+                if($request->address != NULL){
+                    $user->address = $request->address;
+                }
+
+                if($request->birthday != NULL){
+                    $user->birthday = $request->birthday;
+                }
+
+                if($request->start_date != NULL){
+                    $user->start_date = $request->start_date;
+                }
+
+                if($request->personal_information != NULL){
+                    $user->personal_information = $request->personal_information;
+                }
+
+                if($request->social_work_id != $user->social_work_id){
+                    $user->social_work_id = $request->social_work_id;
+                }
+                
+                if($request->role_id != $user->role_id){
+                    $user->role_id = $request->role_id;
+                }
+        
+                if ($request->input('new_password') != NULL) {
+                    if (!Hash::check($user->password , $request->new_password)) {
+                        if($request->new_password != NULL  && $request->new_password === $request->password_confirmation){
+                            $user->password = $request->new_password;
+                        }
+                    } else {
+                        return redirect()->back()->withInput();
+                    }
+                }
 
         $user->save();
+        }
 
         return redirect()->route('profile.index')->withSuccess('Se guardaron con exito los cambios.');
-    }
+   }
 
     public function edit($profile_id)
     {

@@ -87,21 +87,10 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-6 col-md-6">
+                            <div class="col-lg-12">
                                 <div class="form-group">
                                     <label class="form-control-label" for="email">Email<span class="small text-danger">*</span></label>
                                     <input type="email" id="email" class="form-control" name="email" placeholder="example@example.com" value="{{ old('email', $user->email) }}">
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6 col-md-6">
-                                <div class="form-group">
-                                    <label class="form-control-label" for="new_password">Roles</label>
-                                    <select class="custom-select" name="role_id" value="{{old('role_id', $user->role->name)}}">                                           
-                                        @foreach($roles as $role)
-                                            <option value="{{$role->id}}" {{($user->role->id ===$role->id) ? 'Selected' : ''}}>{{$role->name}}</option>
-                                        @endforeach
-                                    </select>
                                 </div>
                             </div>
 
@@ -126,7 +115,7 @@
                                 </div>
                             </div>
                             
-                            <div class="col-lg-6 col-md-6">
+                            <div class="col-lg-12">
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="address">Direccion</label>
                                     <input type="text" id="address" class="form-control" name="address" value="{{old('address', $user->address)}}">
@@ -188,24 +177,6 @@
                                     <textarea rows="4" id="new_password" class="form-control" name="personal_information" value="{{old('personal_information', $user->personal_information)}}">{{old('personal_information', $user->personal_information)}}</textarea>
                                 </div>
                             </div>
-
-                            <div class="col-lg-6 col-md-6">
-                                <div class="form-group focused">
-                                    <label class="form-control-label" for="new_password">Contraseña nueva</label>
-                                    <input type="password" id="new_password" class="form-control" name="new_password" placeholder="Contraseña nueva...">
-                                    <small id="passwordHelpBlock" class="form-text text-muted">
-                                        La contraseña debe tener un minimo de 8 caracteres
-                                    </small>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6 col-md-6">
-                                <div class="form-group focused">
-                                    <label class="form-control-label" for="confirm_password">Confirmar contraseña</label>
-                                    <input type="password" id="confirm_password" class="form-control" name="password_confirmation" placeholder="Confirmar contraseña...">
-                                </div>
-                            </div>
-
                             <hr class="my-8">
                         </div>
 

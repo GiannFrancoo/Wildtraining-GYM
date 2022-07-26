@@ -54,18 +54,7 @@
                                 <input type="email" id="email" class="form-control" required name="email" placeholder="ejemplo@gmail.com" value="{{old('email')}}">
                             </div>
                         </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group focused">
-                                <label class="form-control-label" for="new_password">Rol</label>
-                                <select  class="custom-select" required name="role_id" value="{{old('role_id')}}">                                           
-                                    @foreach($roles as $role)
-                                        <option required value="{{$role->id}}">{{$role->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
+                        
                         <div class="col-md-6">
                             <div class="form-group focused">
                                 <label class="form-control-label" for="new_password">Celular<span class="small text-danger">*</span></label>
@@ -134,22 +123,7 @@
                                 <label class="form-control-label" for="personal_information">Informacion personal</label>
                                 <textarea rows="4" id="new_password" class="form-control" name="personal_information" placeholder="Información que considere importante mencionar... (operaciones, lesiones, etc)" value="{{old('personal_information')}}"></textarea>
                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group focused">
-                                <label class="form-control-label" required for="current_password">Contraseña (8 caracteres min)<span class="small text-danger">*</span></label>
-                                <input type="password" required id="confirm_password" class="form-control" name="password" placeholder="Contraseña..." value="{{old('password')}}">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group focused">
-                                <label class="form-control-label" for="confirm_password">Confirmar contraseña<span class="small text-danger">*</span></label>
-                                <input type="password" required data-toggle="tooltip" data-placement="top" title="8 caracteres minimo" data-tip="8 caracteres minimo" id="confirm_password" class="form-control" name="password_confirmation" placeholder="Confirmar contraseña..." value="{{old('password_confirmation')}}">
-                            </div>
-                        </div>
-                        
+                        </div>                        
                     </div>
 
                     <hr class="my-3"> 

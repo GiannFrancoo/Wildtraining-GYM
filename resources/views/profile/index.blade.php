@@ -96,6 +96,7 @@
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Apellido</th>
                                     <th scope="col">Telefono</th>
+                                    <th scope="col">Suscripcion</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
@@ -105,17 +106,26 @@
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->last_name }}</td>
                                         <td>{{ $user->primary_phone }}</td>
+                                        <td>{{ $user->lastSubscription()->first()->name }}</td>
                                         <td class="text-center d-flex justify-content-center">
                                             <a href="{{route('profile', ['profile_id' => $user->id])}}" type="button" class="btn btn-primary mx-1"><i class="fa fa-eye"></i></a>
                                             <a href="{{route('profile.edit', ['profile_id' => $user->id])}}" type="button" class="btn btn-secondary mx-1" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
                                             <div>
-                                                <form action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" method="POST">
+                                                <form action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" method="POST" >
                                                     @csrf
                                                     @method("DELETE")
                                                     <button class="btn btn-danger" onclick="return confirm('¿Desea borrar al usuario {{$user->name}}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button>
                                                 </form>
+                                            </div>    
+                                            <div class="col-lg-3">
+                                                <form action="{{ route('profile.updateSubscription', ['profile_id' => $user->id]) }}" method="GET" >
+                                                    <select class="custom-select" onChange="this.form.submit()" name="newSubscription_id" value="">                                           
+                                                    @foreach($subscriptions as $subscription)    
+                                                        <option value="{{ $subscription->id }}"  {{($user->lastSubscription()->first()->id ===$subscription->id) ? 'Selected' : ''}}>{{ $subscription->name }}</option>
+                                                    @endforeach
+                                                    </select>
+                                                </form> 
                                             </div>
-
                                         </td>
                                     </tr>
                                 @endforeach

@@ -92,30 +92,6 @@ class PaymentController extends Controller
         //
     }
 
-    public function users()
-    {
-        $users = User::all();
-        $selectedUser = null;
-        $subscription = null;
-
-        if (isset($_GET['user'])) { 
-            $selectedUser = User::with('lastSubscription')->find($_GET['user']);
-            $subscription = $selectedUser->lastSubscription->first();
-
-            if (is_null($subscription)) {
-                return redirect()
-                    ->back()
-                    ->with('error', 'El usuario no tiene suscripción');
-            }
-        }
-
-        return view('payment.users')->with([
-            'users' => $users,
-            'selectedUser' => $selectedUser,
-            'subscription' => $subscription,
-        ]);
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
