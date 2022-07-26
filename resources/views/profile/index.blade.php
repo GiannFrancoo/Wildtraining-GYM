@@ -93,20 +93,23 @@
                     <table class="table table-bordered table-hover text-center" id="myTable">    
                             <thead>
                                 <tr>
-                                    <th scope="col">Nombre</th>
-                                    <th scope="col">Apellido</th>
-                                    <th scope="col">Telefono</th>
-                                    <th scope="col">Suscripcion</th>
-                                    <th scope="col">Acciones</th>
+                                    <th scope="col" class="col-lg-2">Nombre y apellido</th>
+                                    <th scope="col" class="col-lg-1">Telefono</th>
+                                    <th scope="col" class="col-lg-1">Suscripcion</th>
+                                    <th scope="col" class="col-lg-1">Acciones</th>
+                                    <th scope="col" class="col-lg-1">Cambiar suscripcion</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($users as $user)
                                     <tr>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->last_name }}</td>
+                                        <td>{{ $user->getFullNameAttribute() }}</td>
                                         <td>{{ $user->primary_phone }}</td>
-                                        <td>{{ $user->lastSubscription()->first()->name }}</td>
+                                        @if($user->lastSubscription()->first() != null)
+                                            <td>{{ $user->lastSubscription()->first()->name}}</td>
+                                        @else
+                                            <td>{{ __('No tiene') }}</td>
+                                        @endif
                                         <td class="text-center d-flex justify-content-center">
                                             <a href="{{route('profile', ['profile_id' => $user->id])}}" type="button" class="btn btn-primary mx-1"><i class="fa fa-eye"></i></a>
                                             <a href="{{route('profile.edit', ['profile_id' => $user->id])}}" type="button" class="btn btn-secondary mx-1" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
@@ -116,17 +119,21 @@
                                                     @method("DELETE")
                                                     <button class="btn btn-danger" onclick="return confirm('¿Desea borrar al usuario {{$user->name}}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button>
                                                 </form>
-                                            </div>    
-                                            <div class="col-lg-3">
+                                            </div>  
+                                        </td>  
+                                        <td>
+                                            @if($user->lastSubscription()->first() != null)
                                                 <form action="{{ route('profile.updateSubscription', ['profile_id' => $user->id]) }}" method="GET" >
                                                     <select class="custom-select" onChange="this.form.submit()" name="newSubscription_id" value="">                                           
                                                     @foreach($subscriptions as $subscription)    
-                                                        <option value="{{ $subscription->id }}"  {{($user->lastSubscription()->first()->id ===$subscription->id) ? 'Selected' : ''}}>{{ $subscription->name }}</option>
+                                                        <option value="{{ $subscription->id }}"  {{($user->lastSubscription()->first()->id === $subscription->id) ? 'Selected' : ''}}>{{ $subscription->name }}</option>
                                                     @endforeach
                                                     </select>
-                                                </form> 
-                                            </div>
-                                        </td>
+                                                </form>       
+                                            @else                                           
+                                                {{ __('No tiene') }}
+                                            @endif
+                                        </td> 
                                     </tr>
                                 @endforeach
                             </tbody>
