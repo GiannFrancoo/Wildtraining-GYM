@@ -18,36 +18,20 @@ class AssistanceController extends Controller
      */
     public function index()
     {
-        // dd(Carbon::now());
         $assistances = Assistance::orderByDesc('date')->get();
 
-        // $bussiestHours = $assistances
-        //     ->groupBy(function ($assistance) {
-        //         return $assistance->date->format('H');
-        //     })
-        //     ->map(function ($assistance, $hour) {
-        //         return [
-        //             "hour" => $hour,
-        //             "count" => $assistance->count()
-        //         ];
-        //     })
-        //     ->sortByDesc('count')
-        //     ->first();
-
-        $busiestHourArray = array(); 
-        $busiestHour = 0;       
-
-        //Traigo todas las [assistance->id => hora]
-        foreach($assistances as $assistance){
-            $busiestHourArray = Arr::add($busiestHourArray, $assistance->id, $assistance->date->format('H'));
-        }
-
-        [$keys, $busiestHourArray] = Arr::divide($busiestHourArray);
-    
-        $busiestHourArray = array_count_values($busiestHourArray);
-        if ($busiestHourArray != []) {   
-            $busiestHour = array_search(max($busiestHourArray), $busiestHourArray);
-        }
+        $bussiestHours = $assistances
+            ->groupBy(function ($assistance) {
+                return $assistance->date->format('H');
+            })
+            ->map(function ($assistance, $hour) {
+                return [
+                    "hour" => $hour,
+                    "count" => $assistance->count()
+                ];
+            })
+            ->sortByDesc('count')
+            ->first();
 
         $todayAssists = $assistances
             ->filter(function ($assist) {
@@ -57,7 +41,7 @@ class AssistanceController extends Controller
         
         return view('assistance.assistance')->with([
             'assistances' => $assistances,
-            'busiestHour' => $busiestHour,
+            'bussiestHours' => $bussiestHours['hour'],
             'todayAssists' => $todayAssists
         ]);
     }
@@ -81,10 +65,7 @@ class AssistanceController extends Controller
      */
     public function store(Request $request)
     {
-        try{
-
-            
-
+        try{       
             $assistance = new Assistance();
             $assistance->user_id = User::findOrFail($request->user_id)->id;
             $assistance->date = $request->date;
@@ -94,7 +75,6 @@ class AssistanceController extends Controller
             return redirect()->route('assistance.index')->withSuccess('Asistencia registrada correctamente');
         }
         catch(Exception $e){
-            dd($e->getMessage());
             return redirect()->back()->withErrors('Error al registrar la asistencia');
         }
     }
@@ -119,7 +99,7 @@ class AssistanceController extends Controller
     public function edit($id)
     {
         try{
-            $assistance = Assistance::find($id);
+            $assistance = Assistance::findOrFail($id);
             $users = User::all();
             return view('assistance.edit')->with(['assistance' => $assistance, 'users' => $users]);
         }

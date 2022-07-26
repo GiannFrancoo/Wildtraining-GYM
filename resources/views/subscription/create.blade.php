@@ -23,12 +23,13 @@
         </div>
     @endif
 
-    <div class="card shadow mb-4">
-        <div class="card-body">
-            <h6 class="heading-small text-muted mb-4"> {{ __('Información') }}</h6>
-            
-            <form action="{{ route('subscription.store')}}" method="POST">
-            @csrf
+    <form action="{{ route('subscription.store')}}" method="POST">
+    @csrf
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="heading-small text-muted mb-4"> {{ __('Información') }}</h6>
+            </div>
+            <div class="card-body">    
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
                         <div class="form-group focused">
@@ -51,16 +52,14 @@
                         </div>
                     </div>
                 </div>
-                
-                <hr class="my-3">
+            </div>
 
-                <div class="col text-center">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-disk mr-1"></i> Crear nueva subscripción</button>
-                </div>               
+            <div class="card-footer text-center">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-disk mr-1"></i> Crear nueva subscripción</button>
+            </div>               
 
-            </form>            
         </div>
-    </div>
+    </form>            
 
 
 @endsection

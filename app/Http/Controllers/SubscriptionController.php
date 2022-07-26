@@ -75,7 +75,7 @@ class SubscriptionController extends Controller
             return redirect()->route('subscription.index')->withSuccess('Subscripción agregada correctamente');
         }
         catch(Exception $e){
-            return redirect()->back->withErrors('Error al guardar la nueva subscripción');
+            return redirect()->back()->withErrors('Error al guardar la nueva subscripción');
         }
     }
 

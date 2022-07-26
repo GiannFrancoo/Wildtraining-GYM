@@ -3,7 +3,8 @@
 @section('main-content')
 
     <!-- Header -->
-    <h1 class="h3 mb-4 text-gray-800">{{ __('Pagos') }}</h1>      
+    <h1 class="h3 mb-4 text-gray-800">{{ __('Pagos pendientes') }}</h1>      
+    
 
     @if (session('success'))
         <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
@@ -20,15 +21,30 @@
         </div>
     @endif
 
-    <!-- Cards -->
     <div class="row">
+        <div class="col-xl-4 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total de pagos pendientes</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"> 00 </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-clock fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-danger shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">{{ __('Espacio') }}</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Espacio</div>
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Nose</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">nose</div>
                         </div>
                         <div class="col-auto">
                             <i class="fa fa-clipboard-list fa-2x text-gray-300"></i>
@@ -40,12 +56,13 @@
     </div>
 
     <!-- Payments table -->
-    <div class="row">        
+    <div class="row">
+        
         <div class="col mb-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Lista de pagos</h6>
-                    <a href="{{route('payment.create')}}" type="button" class="btn btn-success" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>Generar nuevo pago</a>    
+                    <h6 class="m-0 font-weight-bold text-primary">{{ __('Lista de pagos pendientes') }}</h6>
+                    <a href="{{route('payment.create')}}" type="button" class="btn btn-success" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>{{ __('Generar nuevo pago') }}</a>    
                 </div> 
                 <div class="card-body table-responsive">
                     <table class="table table-borderedless table-hover text-center" id="myTable">    
@@ -60,7 +77,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($payments as $payment)
+                            @foreach ($pendantPayments as $payment)
                                 <tr>
                                     @if($payment->userSubscription->user != NULL)
                                         <td>{{ $payment->userSubscription->user->name }}</td>
@@ -86,6 +103,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
 @endsection

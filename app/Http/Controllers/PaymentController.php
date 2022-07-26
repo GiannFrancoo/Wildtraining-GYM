@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Exception;
 use Illuminate\Http\Request;
 use App\Models\Payment;
+use App\Models\PaymentStatus;
 use App\Models\User;
 use App\Models\Subscription;
 use App\Models\UserSubscription;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class PaymentController extends Controller
 {
@@ -29,6 +31,7 @@ class PaymentController extends Controller
      */
     public function create()
     {
+        $paymentStatuses = PaymentStatus::all();
         $users = User::all();
         $selectedUser = null;
         $subscription = null;
@@ -46,6 +49,7 @@ class PaymentController extends Controller
 
         return view('payment.create')->with([
             'users' => $users,
+            'paymentStatuses' => $paymentStatuses,
             'selectedUser' => $selectedUser,
             'subscription' => $subscription,
         ]);
@@ -65,9 +69,11 @@ class PaymentController extends Controller
             $userSubscription = $user->lastSubscription->first()->pivot;
 
             $userSubscription->payments()->create([
-                "user_subscription_id" => $userSubscription->id,
-                "price" => $request->price,
-                "date" => $request->date,
+                'user_subscription_id' => $userSubscription->id,
+                'price' => $request->price,
+                'date' => $request->date,
+                'payment_status_id' => $request->paymentStatus,
+                'payment_status_updated_at' => now(),
             ]);
 
             return redirect()
@@ -100,10 +106,23 @@ class PaymentController extends Controller
      */
     public function edit($payment_id)
     {
+        try{
+        $paymentsStatuses = PaymentStatus::all();
         $payment = Payment::findOrFail($payment_id);
         $users = User::all();
         $subscriptions = Subscription::all();
-        return view('payment.edit')->with('payment', $payment)->with('users', $users)->with('subscriptions', $subscriptions);
+
+        return view('payment.edit')
+            ->with([
+                'payment' => $payment,
+                'users' => $users,
+                'subscriptions' => $subscriptions,
+                'paymentsStatuses' => $paymentsStatuses,
+            ]);
+        }
+        catch(Exception $e){
+            return redirect()->back()->withErrors('Error al editar una pago');
+        }
     }
 
     /**
@@ -115,13 +134,21 @@ class PaymentController extends Controller
      */
     public function update(Request $request, $payment_id)
     {
-        $payments = Payment::all();
-        $payment = Payment::findOrFail($payment_id);
-        $payment->price = $request->price;
-        $payment->date = $request->date;
-        $payment->save();
+        try{
+            $payment = Payment::findOrFail($payment_id);
+            $payment->price = $request->price;
+            $payment->date = $request->date;
+            $payment->payment_status_id = $request->paymentStatus;
+            $payment->payment_status_updated_at = now();
+            $payment->save();
 
-        return redirect()->route('payment.index')->with('payments', $payments)->withSuccess('Los cambios se guardaron con exito');
+            return redirect()
+                ->route('payment.index')
+                ->withSuccess('Los cambios se guardaron con exito');
+        }
+        catch(Exception $e){
+            return redirect()->back()->withErrors('Error al editar un pago');
+        }
     }
 
     /**
@@ -138,10 +165,14 @@ class PaymentController extends Controller
             $payment->delete();
 
             return redirect()->route('payment.index')->with('payments', $payments)->withSuccess('Se elimino con exito el pago');
-        }catch(Exception $e){}
+        }
+        catch(Exception $e){
+            return redirect()->back()->withErrors('Erro al eliminar el pago');
+        }
     }
 
-    public function userSelected($payment_id){
+    public function userSelected($payment_id)
+    {
         $user = User::findOrFail($payment_id);
         $subscription = UserSubscription::where('user_id', $user->id)->latest()->first()->subscription()->first();
         $timePayment = now();
@@ -150,4 +181,21 @@ class PaymentController extends Controller
 
         return view('payment.userSelected')->with('user', $user)->with('timePayment', $timePayment)->with('priceSubscription', $priceSubscription)->with('subscription', $subscription)->with('dayHour', $fecha_hora);
     }
+
+
+    /**
+     * List of pendant payments
+     */
+    public function pendant()
+    {
+        $pendantPayments = Payment::whereHas('PaymentStatus', function (Builder $query) {
+            $query->where('name','Pendiente');
+        })->get();
+        // dd($pendantPayments);
+
+        return view('payment.pendant')->with(['pendantPayments' => $pendantPayments]);
+
+    }
+
+
 }

@@ -24,7 +24,7 @@ class SubscriptionUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:250|unique:subscriptions,name',
+            'name' => 'required|string|max:250',
             'times_a_week' => 'required|numeric|min:0',
             'month_price' => 'required|numeric|min:0',
         ]; 

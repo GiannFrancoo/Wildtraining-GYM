@@ -3,12 +3,7 @@
 @section('main-content')
 
     <!-- Page Heading -->
-    <div class="d-flex justify-content-between">
-        <h1 class="h3 mb-4 text-gray-800">{{ __('Asistencias') }}</h1>
-        <div>
-            <a href="{{route('assistance.create')}}" class="btn btn-success mr-1"><i class="fa fa-add mr-1"></i>Marcar nueva asistencia</a>    
-        </div>        
-    </div>
+    <h1 class="h3 mb-4 text-gray-800">{{ __('Asistencias') }}</h1>
 
     @if (session('success'))
         <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
@@ -37,7 +32,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Hora pico de asistencias</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ ($busiestHour == 0) ? 0 : $busiestHour }}:00</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ ($bussiestHours == 0) ? 0 : $bussiestHours }}:00</div>
                         </div>
                         <div class="col-auto">
                             <i class="fa fa-clock fa-2x text-gray-300"></i>
@@ -68,52 +63,50 @@
     <div class="row">
         <div class="col mb-4">
             <div class="card shadow mb-4">
-
-                <div class="card-header py-3">
-                    <div class="row">
-                        <div class="col-lg-8 col-md-6 my-2">
-                            <h6 class="m-0 font-weight-bold text-primary">Lista de asistencias</h6>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <input type="text" id="myInput" onkeyup="tableSearch()" class="form-control" placeholder="Fecha de la asistencia&hellip;">
-                        </div>
-                    </div>
+                <div class="card-header py-3 d-flex justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">{{ __('Lista de asistencias') }}</h6>
+                    <a href="{{route('assistance.create')}}" class="btn btn-success mr-1"><i class="fa fa-add mr-1"></i>{{ __('Marcar nueva asistencia') }}</a>
                 </div>
-
-                <div class="card-body">
-                    <table class="table-reponsive">
-                        <table class="table table-bordered table-hover text-center" id="myTable">    
-                            <thead>
+                <div class="card-body table-responsive">
+                    <table class="table table-bordered table-hover text-center" id="myTable">    
+                        <thead>
+                            <tr>
+                                <th scope="col">{{ __('Usuario') }}</th>
+                                <th scope="col">{{ __('Fecha') }}</th>
+                                <th scope="col">{{ __('Hora') }}</th>
+                                <th scope="col">{{ __('Acciones') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($assistances as $assistance)
                                 <tr>
-                                    <th scope="col">Usuario<i class="fa fa-user ml-1"></i></th>
-                                    <th scope="col">Fecha<i class="fa fa-calendar ml-1"></i></th>
-                                    <th scope="col">Hora<i class="fa fa-clock-o ml-1"></i></th>
-                                    <th scope="col">Acciones<i class="fa fa-server ml-1"></i></th>
+                                    <td>{{ $assistance->user->getFullNameAttribute() }}</td>
+                                    <td>{{ $assistance->date->format('d/m/Y') }}</td>
+                                    <td>{{ $assistance->date->format('H:i') }}</td>
+                                    <td>
+                                        <a href="{{ route('assistance.edit', ['assistance_id' => $assistance->id]) }}" type="button" class="btn btn-primary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
+                                        
+                                        <form method="POST" action="{{ route('assistance.destroy', ['assistance_id' => $assistance->id]) }}" class="d-inline">  
+                                            @csrf    
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Desea borrar la assistencia de: {{ $assistance->user->getFullNameAttribute() }}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button>
+                                        </form>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($assistances as $assistance)
-                                    <tr>
-                                        <td>{{ $assistance->user->getFullNameAttribute() }}</td>
-                                        <td>{{ $assistance->date->format('d-m-Y') }}</td>
-                                        <td>{{ $assistance->date->format('H:i:s') }}</td>
-                                        <td>
-                                            <a href="{{ route('assistance.edit', ['assistance_id' => $assistance->id]) }}" type="button" class="btn btn-primary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
-                                            
-                                            <form method="POST" action="{{ route('assistance.destroy', ['assistance_id' => $assistance->id]) }}" class="d-inline">  
-                                                @csrf    
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Desea borrar la assistencia de: {{ $assistance->user->getFullNameAttribute() }}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
    
+@endsection
+
+@section('custom_js')
+<script>
+    $(document).ready(function () {
+        $('table').DataTable()
+    })
+</script>
 @endsection

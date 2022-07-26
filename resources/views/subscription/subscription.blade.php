@@ -54,7 +54,7 @@
     <div class="row">
         @foreach ($subscriptions as $subscription) 
         <div class="col-xl-4 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card border-left-danger shadow h-100 py-2">
                 <div class="card-header d-flex justify-content-between">
                     <h5 class="font-weight-bold">{{ $subscription->name }}</h5>
                     <div class="row">                        

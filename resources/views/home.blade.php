@@ -28,14 +28,9 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="d-flex justify-content-between">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" id="ganancia">Ganancia estimada (Mensual)</div>
-                                <a data-toggle="collapse" data-target="#collapseMonthlyRevenue" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-eye"></i></a>
-                            </div>
-                            <div class="row collapse" id="collapseMonthlyRevenue">    
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">${{ number_format($monthlyRevenue, 2, '.',',') }}</div>
-                            </div>
-                        </div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" id="ganancia">Ganancia estimada (Mensual)</div>                            
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">${{ number_format($monthlyRevenue, 2, '.',',') }}</div>
+                        </div> 
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                         </div>
