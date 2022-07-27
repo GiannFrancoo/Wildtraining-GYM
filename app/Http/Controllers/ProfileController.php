@@ -238,22 +238,6 @@ class ProfileController extends Controller
         return redirect()->route('profile.index')->withSuccess('Se guardo la nueva suscripcion');
     }
 
-    public function changeSubscription()
-    {
-        if(isset($_GET['user'])){
-                dd($_GET['user']);
-        }
-        
-        //if (isset($_GET['user'])) { 
-            //$suscriptionId = UserSubscription::where 
-        //}
-
-        return view('profile.changeSubscription')->with([
-            'subscriptions' => Subscription::all(),
-            'users' => User::all()
-        ]);
-    }
-
     public function usersWhoLeft()
     {
         try{

@@ -166,7 +166,7 @@
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">{{ __('Historial de suscripciones de') }}: {{ $user->getFullNameAttribute() }}</h6>
-                    <a href="{{ route('profile.changeSubscription', ['user_id' => $user->id]) }}" type="button" class="btn btn-success" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>{{ __('Cambiar suscripción') }}</a>
+                    <a href="{{ route('profile.changeSubscription', ['profile_id' => $user->id]) }}" type="button" class="btn btn-success" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>{{ __('Cambiar suscripción') }}</a>
                 </div>
                 <div class="card-body table-responsive">
                     <table class="table table-bordered table-hover text-center" id="myTable">    
