@@ -105,7 +105,7 @@
                                     <label class="form-control-label" for="social_work_id">Obra social</label>
                                     <select class="custom-select" required name="social_work_id" value="{{ old('social_work_id') }}">                                 
                                         @foreach($social_works as $social_work)
-                                            <option value="{{$social_work->id}}" {{($social_work->name === 'NO POSEE') ? 'Selected' : ''}}>{{$social_work->name}}</option>
+                                            <option value="{{$social_work->id}}" {{($social_work->name === 'No posee') ? 'Selected' : ''}}>{{$social_work->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>

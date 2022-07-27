@@ -15,7 +15,7 @@ class SubscriptionSeeder extends Seeder
     public function run()
     {
         $subscriptions = [
-            ['name' => 'NO POSEE', 'times_a_week' => '5', 'month_price' => '3000.00', 'modification_date' => now()],
+            ['name' => 'No posee', 'times_a_week' => '5', 'month_price' => '3000.00', 'modification_date' => now()],
             ['name' => 'Principiante', 'times_a_week' => '2', 'month_price' => '2500.00', 'modification_date'=>now()],
             ['name' => 'Libre', 'times_a_week' => '3', 'month_price' => '2700.00', 'modification_date' => now()],
             ['name' => 'Pro', 'times_a_week' => '5', 'month_price' => '3000.00', 'modification_date' => now()]

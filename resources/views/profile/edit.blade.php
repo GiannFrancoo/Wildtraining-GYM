@@ -179,7 +179,7 @@
                         </thead>
                         <tbody>
                             @foreach ($userSubscriptions as $userSubscription)
-                                @if ($userSubscription->subscription->name != "NO POSEE")
+                                @if ($userSubscription->subscription->name != "No posee")
                                     <tr>                               
                                         <td>{{ $userSubscription->subscription->name }}</td>
                                         <td>{{ $userSubscription->user_subscription_status_updated_at->format('d/m/Y') }}</td>

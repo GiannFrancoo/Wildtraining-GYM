@@ -20,8 +20,13 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments = Payment::all();
-        return view('payment.index')->with('payments', $payments);
+        try{
+            $payments = Payment::all();
+            return view('payment.index')->with('payments', $payments);
+        }
+        catch(Exception $e){
+            return redirect()->back()->withErrors('Error al mostrar los pagos');
+        }
     }
 
     /**
@@ -31,29 +36,33 @@ class PaymentController extends Controller
      */
     public function create()
     {
-        $paymentStatuses = PaymentStatus::all();
-        $users = User::all();
-        $selectedUser = null;
-        $subscription = null;
+        try{
+            $paymentStatuses = PaymentStatus::all();
+            $users = User::all();
+            $selectedUser = null;
+            $subscription = null;
 
-        if (isset($_GET['user'])) { 
-            $selectedUser = User::with('lastSubscription')->find($_GET['user']);
-            $subscription = $selectedUser->lastSubscription->first();
+            if (isset($_GET['user'])) { 
+                $selectedUser = User::with('lastSubscription')->find($_GET['user']);
+                $subscription = $selectedUser->lastSubscription->first();
 
-            if (is_null($subscription)) {
-                return redirect()
-                    ->back()
-                    ->with('error', 'El usuario no tiene suscripción');
+                if (is_null($subscription)) {
+                    return redirect()
+                        ->back()
+                        ->with('error', 'El usuario no tiene suscripción');
+                }
             }
-        }
 
-        return view('payment.create')->with([
-            'users' => $users,
-            'paymentStatuses' => $paymentStatuses,
-            'selectedUser' => $selectedUser,
-            'subscription' => $subscription,
-        ]);
-       
+            return view('payment.create')->with([
+                'users' => $users,
+                'paymentStatuses' => $paymentStatuses,
+                'selectedUser' => $selectedUser,
+                'subscription' => $subscription,
+            ]);
+        }
+        catch(Exception $e){
+            return redirect()->back()->withErrors('Error al crear el pago');
+        } 
     }
 
     /**
@@ -147,7 +156,7 @@ class PaymentController extends Controller
                 ->withSuccess('Los cambios se guardaron con exito');
         }
         catch(Exception $e){
-            return redirect()->back()->withErrors('Error al editar un pago');
+            return redirect()->back()->withErrors('Error al guardar los cambios del pago nuevo');
         }
     }
 
@@ -167,19 +176,24 @@ class PaymentController extends Controller
             return redirect()->route('payment.index')->with('payments', $payments)->withSuccess('Se elimino con exito el pago');
         }
         catch(Exception $e){
-            return redirect()->back()->withErrors('Erro al eliminar el pago');
+            return redirect()->back()->withErrors('Error al eliminar el pago');
         }
     }
 
     public function userSelected($payment_id)
     {
-        $user = User::findOrFail($payment_id);
-        $subscription = UserSubscription::where('user_id', $user->id)->latest()->first()->subscription()->first();
-        $timePayment = now();
-        $priceSubscription = UserSubscription::where('user_id', $user->id)->latest()->first()->subscription()->first()->month_price;
-        $fecha_hora = now();     
-
-        return view('payment.userSelected')->with('user', $user)->with('timePayment', $timePayment)->with('priceSubscription', $priceSubscription)->with('subscription', $subscription)->with('dayHour', $fecha_hora);
+        try{
+            $user = User::findOrFail($payment_id);
+            $subscription = UserSubscription::where('user_id', $user->id)->latest()->first()->subscription()->first();
+            $timePayment = now();
+            $priceSubscription = UserSubscription::where('user_id', $user->id)->latest()->first()->subscription()->first()->month_price;
+            $fecha_hora = now();     
+    
+            return view('payment.userSelected')->with('user', $user)->with('timePayment', $timePayment)->with('priceSubscription', $priceSubscription)->with('subscription', $subscription)->with('dayHour', $fecha_hora);
+        }
+        catch(Exception $e){
+            return redirect()->back()->withErrors('Error al seleccionar el pago');
+        }
     }
 
 
@@ -188,12 +202,18 @@ class PaymentController extends Controller
      */
     public function pendant()
     {
-        $pendantPayments = Payment::whereHas('PaymentStatus', function (Builder $query) {
-            $query->where('name','Pendiente');
-        })->get();
-        // dd($pendantPayments);
-
-        return view('payment.pendant')->with(['pendantPayments' => $pendantPayments]);
+        try{
+            $pendantPayments = Payment::whereHas('PaymentStatus', function (Builder $query) {
+                $query->where('name','Pendiente');
+            })->get();
+            // dd($pendantPayments);
+    
+            return view('payment.pendant')->with(['pendantPayments' => $pendantPayments]);
+        }
+        catch(Exception $e){
+            return redirect()->back()->withErrors('Error al mostrar los pagos pendientes');
+        }
+        
 
     }
 
