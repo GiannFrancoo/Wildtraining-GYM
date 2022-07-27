@@ -31,7 +31,8 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 //Routes for profile
 Route::middleware('auth')->group(function () {
-    Route::get('/profile/changeSubscription', [ProfileController::class, 'changeSubscription'])->name('profile.changeSubscription');
+    Route::put('/profile/changeSubscriptionStore/{profile_id}', [ProfileController::class, 'changeSubscriptionStore'])->name('profile.changeSubscriptionStore');
+    Route::get('/profile/changeSubscription/{profile_id?}', [ProfileController::class, 'changeSubscription'])->name('profile.changeSubscription');
     Route::put('/profile/{profile_id}', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profileSubscription/{profile_id}', [ProfileController::class, 'updateSubscription'])->name('profile.updateSubscription');
     Route::get('/profile/create', [ProfileController::class, 'create'])->name('profile.create');
