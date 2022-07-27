@@ -74,27 +74,6 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function updateSubscription($profile_id)
-    {
-        if(UserSubscription::where('user_id', $profile_id)->latest()->first() != null){
-            $user_subscriptionOld = UserSubscription::where('user_id', $profile_id)->latest()->first();
-            $user_subscriptionOld->user_subscription_status_id = 2;
-            $user_subscriptionOld->user_subscription_status_updated_at = now();
-            $user_subscriptionOld->save();
-
-            $user_subscription = new UserSubscription();
-            $user_subscription->user_id = $profile_id;
-            $user_subscription->subscription_id = $_GET['newSubscription_id'];
-            $user_subscription->start_date = now();
-            $user_subscription->user_subscription_status_updated_at = now();
-            $user_subscription->user_subscription_status_id = 1;
-            $user_subscription->save();
-        }
-        return redirect()->route('profile.index')->withSuccess('Se guardo la nueva suscripcion');
-    }
-
-
-
     public function update(request $request, $profile_id){
         try{
             $request->validate([
@@ -102,7 +81,6 @@ class ProfileController extends Controller
                 'last_name' => 'required|nullable|string|max:255',
                 'primary_phone' => 'required|string|min:9'
             ]);
-
 
             $user = User::findOrFail($profile_id);
             $user->name = $request->name;
@@ -126,10 +104,11 @@ class ProfileController extends Controller
             }
 
             $user->save();
-
+            
+            //Change the active subscription to inactive
             if($user->lastSubscription()->first() != null){
                 $user_subscriptionOld = UserSubscription::where('user_id', $profile_id)->latest()->first();
-                $user_subscriptionOld->user_subscription_status_id = 2;
+                $user_subscriptionOld->user_subscription_status_id = UserSubscriptionStatus::where('name','Inactiva')->first()->id;
                 $user_subscriptionOld->user_subscription_status_updated_at = now();
                 $user_subscriptionOld->save();
             }
@@ -139,12 +118,16 @@ class ProfileController extends Controller
             $user_subscription->subscription_id = $request->subscriptionIdSelected;
             $user_subscription->start_date = now();
             $user_subscription->user_subscription_status_updated_at = now();
-            $user_subscription->user_subscription_status_id = 1;
+            $user_subscription->user_subscription_status_id = UserSubscriptionStatus::where('name','Activa')->first()->id;
             $user_subscription->save();
             
 
             return redirect()->route('profile.index')->withSuccess('Se guardaron los cambios con exito');
-        }catch(Exception $e){}
+        }
+        catch(Exception $e){
+            dd($e->getMessage());
+            return redirect()->back()->withErrors('Error al editar el usuario');     
+        }
     }
 
     public function store(Request $request)
@@ -193,26 +176,36 @@ class ProfileController extends Controller
             $user_subscription->save();
 
         return redirect()->route('profile.index')->withSuccess('Se guardaron con exito los cambios.');
-   }
+    }
 
     public function edit($profile_id)
     {
-        $user = User::findOrFail($profile_id);
-        $social_works = SocialWork::all();
-        $roles = Role::all();
-        $age = 0;
-        if($user->birthday != null){
-            $age = $this->getAge($user);
-        }
-        $subscriptions = Subscription::all();
-        $user_subscription = UserSubscription::where('user_id', $profile_id)->latest()->first();//Me traigo el ultimo userSubscription
+        try{
+            $userSubscriptions = UserSubscription::with('user')->where('user_id', $profile_id)->get(); //check null?
+            $user = $userSubscriptions->first()->user; 
+            $activeSubscription = $user->lastSubscription->first->get();
+            $socialWorks = SocialWork::all();
+            $subscriptions = Subscription::all();
 
-        if($user_subscription != null){
-            $subscriptionAdded = Subscription::findOrFail($user_subscription->subscription_id);
-        }else{//Este usuario no tiene una subscripcion
-            $subscriptionAdded = null;
+            return view('profile.edit')->with([
+                'user' => $user,
+                'userSubscriptions' => $userSubscriptions,
+                'activeSubscription' => $activeSubscription,
+                'socialWorks' => $socialWorks,
+                'subscriptions' => $subscriptions,
+            ]);
         }
-        return view('profile.edit')->with('user', $user)->with('social_works', $social_works)->with('roles', $roles)->with('age', $age)->with('subscriptions', $subscriptions)->with('my_subscription', $subscriptionAdded);
+        catch (Exception $e){
+            return redirect()->back()->withErrors('Error al editar el usuario');   
+        }         
+    }
+
+    public function destroy($profile_id)
+    {
+        $user = User::findOrFail($profile_id);
+        $user->delete();
+
+        return redirect()->route('profile.index')->withSuccess('Se elimino con éxito al usuario');
     }
 
     public function getAge($user)
@@ -226,14 +219,53 @@ class ProfileController extends Controller
         return $edad;
     }
 
-    public function destroy($profile_id)
+    public function updateSubscription($profile_id)
     {
-        $user = User::findOrFail($profile_id);
-        $user->delete();
+        if(UserSubscription::where('user_id', $profile_id)->latest()->first() != null){
+            $user_subscriptionOld = UserSubscription::where('user_id', $profile_id)->latest()->first();
+            $user_subscriptionOld->user_subscription_status_id = 2;
+            $user_subscriptionOld->user_subscription_status_updated_at = now();
+            $user_subscriptionOld->save();
 
-        return redirect()->route('profile.index')->withSuccess('Se elimino con éxito al usuario');
+            $user_subscription = new UserSubscription();
+            $user_subscription->user_id = $profile_id;
+            $user_subscription->subscription_id = $_GET['newSubscription_id'];
+            $user_subscription->start_date = now();
+            $user_subscription->user_subscription_status_updated_at = now();
+            $user_subscription->user_subscription_status_id = 1;
+            $user_subscription->save();
+        }
+        return redirect()->route('profile.index')->withSuccess('Se guardo la nueva suscripcion');
     }
 
+    public function changeSubscription()
+    {
+        if(isset($_GET['user'])){
+                dd($_GET['user']);
+        }
+        
+        //if (isset($_GET['user'])) { 
+            //$suscriptionId = UserSubscription::where 
+        //}
+
+        return view('profile.changeSubscription')->with([
+            'subscriptions' => Subscription::all(),
+            'users' => User::all()
+        ]);
+    }
+
+    public function usersWhoLeft()
+    {
+        try{
+            $users = User::all();
+            //toDo
+
+        }
+        catch(Exception $e){
+            return redirect()->back()->withErrors('Error al mostrar los usuarios que dejaron');
+        }
+
+    }
 
     public function changeSubscriptionStore(Request $request, $profile_id)
     {
@@ -293,6 +325,5 @@ class ProfileController extends Controller
             return redirect()->back()->withErrors('Error al seleccionar usuario');
         }
     }    
-
 
 }

@@ -5,7 +5,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SubscriptionController;
-use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +32,11 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::middleware('auth')->group(function () {
     Route::put('/profile/changeSubscriptionStore/{profile_id}', [ProfileController::class, 'changeSubscriptionStore'])->name('profile.changeSubscriptionStore');
     Route::get('/profile/changeSubscription/{profile_id?}', [ProfileController::class, 'changeSubscription'])->name('profile.changeSubscription');
+    
+    Route::get('/profile/changeSubscription', [ProfileController::class, 'changeSubscription'])->name('profile.changeSubscription');
+    Route::get('/profile/userWhoLeft', [ProfileController::class, 'usersWhoLeft'])->name('profile.usersWhoLeft');
+
+    //Routes for profile
     Route::put('/profile/{profile_id}', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profileSubscription/{profile_id}', [ProfileController::class, 'updateSubscription'])->name('profile.updateSubscription');
     Route::get('/profile/create', [ProfileController::class, 'create'])->name('profile.create');
