@@ -84,6 +84,13 @@
                     <span>{{ __('Usuarios que dejaron') }}</span>
                 </a>
             </li>
+            <!-- change user subscription  -->
+            <li class="nav-item {{ Nav::isRoute('profile.changeSubscription') }}">
+                <a class="nav-link" href="{{ route('profile.changeSubscription') }}">
+                    <i class="fa-solid fa-edit"></i>
+                    <span>{{ __('Cambiar suscripcion') }}</span>
+                </a>
+            </li>
             <!-- List of users -->
             <li class="nav-item {{ Nav::isRoute('profile.index') }}">
                 <a class="nav-link" href="{{ route('profile.index') }}">

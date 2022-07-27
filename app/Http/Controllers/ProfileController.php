@@ -129,22 +129,21 @@ class ProfileController extends Controller
 
             $user->save();
 
-            if($request->subscriptionIdSelected != null){
-                if($user->lastSubscription()->first() != null){
-                    $user_subscriptionOld = UserSubscription::where('user_id', $profile_id)->latest()->first();
-                    $user_subscriptionOld->user_subscription_status_id = 2;
-                    $user_subscriptionOld->user_subscription_status_updated_at = now();
-                    $user_subscriptionOld->save();
-                }
-                
-                $user_subscription = new UserSubscription();
-                $user_subscription->user_id = $profile_id;
-                $user_subscription->subscription_id = $request->subscriptionIdSelected;
-                $user_subscription->start_date = now();
-                $user_subscription->user_subscription_status_updated_at = now();
-                $user_subscription->user_subscription_status_id = 1;
-                $user_subscription->save();
+            if($user->lastSubscription()->first() != null){
+                $user_subscriptionOld = UserSubscription::where('user_id', $profile_id)->latest()->first();
+                $user_subscriptionOld->user_subscription_status_id = 2;
+                $user_subscriptionOld->user_subscription_status_updated_at = now();
+                $user_subscriptionOld->save();
             }
+            
+            $user_subscription = new UserSubscription();
+            $user_subscription->user_id = $profile_id;
+            $user_subscription->subscription_id = $request->subscriptionIdSelected;
+            $user_subscription->start_date = now();
+            $user_subscription->user_subscription_status_updated_at = now();
+            $user_subscription->user_subscription_status_id = 1;
+            $user_subscription->save();
+            
 
             return redirect()->route('profile.index')->withSuccess('Se guardaron los cambios con exito');
         }catch(Exception $e){}
@@ -187,7 +186,6 @@ class ProfileController extends Controller
 
         $user->save();      
         //Creo la nueva userSubscription si es que cambio la subscripcion
-        if($request->subscriptionIdSelected != null){
             $user_subscription = new UserSubscription();
             $user_subscription->user_id = $user->id;
             $user_subscription->subscription_id = $request->subscriptionIdSelected;
@@ -195,7 +193,6 @@ class ProfileController extends Controller
             $user_subscription->user_subscription_status_id = 1;
             $user_subscription->user_subscription_status_updated_at = now();
             $user_subscription->save();
-        }
 
         return redirect()->route('profile.index')->withSuccess('Se guardaron con exito los cambios.');
    }
@@ -239,7 +236,21 @@ class ProfileController extends Controller
         return redirect()->route('profile.index')->withSuccess('Se elimino con éxito al usuario');
     }
 
-   
+   public function changeSubscription()
+   {
+       if(isset($_GET['user'])){
+            dd($_GET['user']);
+       }
+       
+    //if (isset($_GET['user'])) { 
+        //$suscriptionId = UserSubscription::where 
+    //}
+
+    return view('profile.changeSubscription')->with([
+        'subscriptions' => Subscription::all(),
+        'users' => User::all()
+    ]);
+   }
 
 
 }

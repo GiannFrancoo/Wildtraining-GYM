@@ -25,8 +25,7 @@
                     </div>
                     <div class="card-body">
                         <div class="col-lg-12">
-                            <select class="custom-select" required name="subscriptionIdSelected" value="old('subscriptionIdSelected')">
-                                <option disabled selected>Subscripciones</option>                                          
+                            <select class="custom-select" required name="subscriptionIdSelected" value="old('subscriptionIdSelected')">                                  
                                 @foreach($subscriptions as $subscription)
                                     <option value="{{$subscription->id}}">{{$subscription->name}}</option>
                                 @endforeach

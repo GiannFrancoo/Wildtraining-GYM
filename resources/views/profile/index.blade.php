@@ -124,14 +124,12 @@
                                         <td>
                                             @if($user->lastSubscription()->first() != null)
                                                 <form action="{{ route('profile.updateSubscription', ['profile_id' => $user->id]) }}" method="GET" >
-                                                    <select class="custom-select" onChange="this.form.submit()" name="newSubscription_id" value="">                                           
+                                                    <select class="custom-select" style="text-align:center;" onChange="this.form.submit()" name="newSubscription_id" value="">                                           
                                                     @foreach($subscriptions as $subscription)    
                                                         <option value="{{ $subscription->id }}"  {{($user->lastSubscription()->first()->id === $subscription->id) ? 'Selected' : ''}}>{{ $subscription->name }}</option>
                                                     @endforeach
                                                     </select>
                                                 </form>       
-                                            @else                                           
-                                                {{ __('No tiene') }}
                                             @endif
                                         </td> 
                                     </tr>

@@ -52,47 +52,49 @@
 
     <!-- Card with subscriptions -->
     <div class="row">
-        @foreach ($subscriptions as $subscription) 
-        <div class="col-xl-4 col-md-6 mb-4">
-            <div class="card border-left-danger shadow h-100 py-2">
-                <div class="card-header d-flex justify-content-between">
-                    <h5 class="font-weight-bold">{{ $subscription->name }}</h5>
-                    <div class="row">                        
-                        <a href="{{ route('subscription.edit', ['subscription_id' => $subscription->id]) }}" class="btn btn-primary mr-1"><i class="fa fa-pencil mr-1"></i>Editar</a>
-                        <form action="{{ route('subscription.destroy', ['subscription_id' => $subscription->id]) }}" method="POST">
-                            @csrf
-                            @method("DELETE")
-                            <button class="btn btn-danger mr-1" type="submit" onclick="return confirm('Desea eliminar esta subscripción y con ella todos los alumnos subscriptos?')"><i class="fa fa-trash mr-1"></i>Eliminar</button>
-                        </form>
+        @foreach ($subscriptions as $subscription)
+            @if($subscription->name != 'NO POSEE')
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="card border-left-danger shadow h-100 py-2">
+                        <div class="card-header d-flex justify-content-between">
+                            <h5 class="font-weight-bold">{{ $subscription->name }}</h5>
+                            <div class="row">                        
+                                <a href="{{ route('subscription.edit', ['subscription_id' => $subscription->id]) }}" class="btn btn-primary mr-1"><i class="fa fa-pencil mr-1"></i>Editar</a>
+                                <form action="{{ route('subscription.destroy', ['subscription_id' => $subscription->id]) }}" method="POST">
+                                    @csrf
+                                    @method("DELETE")
+                                    <button class="btn btn-danger mr-1" type="submit" onclick="return confirm('Desea eliminar esta subscripción y con ella todos los alumnos subscriptos?')"><i class="fa fa-trash mr-1"></i>Eliminar</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card-body p-1">
+                            <table class="table table-borderless">
+                                <tbody>
+                                    <tr>
+                                        <td>Veces por semana:</td>
+                                        <td class="text-right">{{ $subscription->times_a_week }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Precio mensual:</td>
+                                        <td class="text-right">${{ $subscription->month_price }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fecha de modificación:</td>
+                                        <td class="text-right">{{ $subscription->modification_date->format('d/m/Y') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cantidad inscriptos:</td>
+                                        <td class="text-right">{{ $subscriptionArray[$subscription->id] }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{{ route('subscription.show', ['subscription_id' => $subscription->id]) }}" class="btn btn-success"><i class="fa fa-users mr-1"></i>Ver inscriptos</a>
+                        </div>
                     </div>
                 </div>
-                <div class="card-body p-1">
-                    <table class="table table-borderless">
-                        <tbody>
-                            <tr>
-                                <td>Veces por semana:</td>
-                                <td class="text-right">{{ $subscription->times_a_week }}</td>
-                            </tr>
-                            <tr>
-                                <td>Precio mensual:</td>
-                                <td class="text-right">${{ $subscription->month_price }}</td>
-                            </tr>
-                            <tr>
-                                <td>Fecha de modificación:</td>
-                                <td class="text-right">{{ $subscription->modification_date->format('d/m/Y') }}</td>
-                            </tr>
-                            <tr>
-                                <td>Cantidad inscriptos:</td>
-                                <td class="text-right">{{ $subscriptionArray[$subscription->id] }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card-footer text-center">
-                    <a href="{{ route('subscription.show', ['subscription_id' => $subscription->id]) }}" class="btn btn-success"><i class="fa fa-users mr-1"></i>Ver inscriptos</a>
-                </div>
-            </div>
-        </div>
+            @endif
         @endforeach
     </div>
         
