@@ -77,17 +77,17 @@
                     <span>{{ __('Agregar nuevo usuario') }}</span>
                 </a>
             </li>
-            <!-- List of users -->
-            <li class="nav-item {{ Nav::isRoute('profile.index') }}">
-                <a class="nav-link" href="{{ route('profile.index') }}">
-                    <i class="fa-solid fa-list"></i>
+            <!-- List of users who left -->
+            <li class="nav-item {{ Nav::isRoute('profile.usersWhoLeft') }}">
+                <a class="nav-link" href="{{ route('profile.usersWhoLeft') }}">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     <span>{{ __('Usuarios que dejaron') }}</span>
                 </a>
             </li>
             <!-- change user subscription  -->
             <li class="nav-item {{ Nav::isRoute('profile.changeSubscription') }}">
                 <a class="nav-link" href="{{ route('profile.changeSubscription') }}">
-                    <i class="fa-solid fa-edit"></i>
+                    <i class="fa-solid fa-arrow-right-arrow-left"></i>
                     <span>{{ __('Cambiar suscripcion') }}</span>
                 </a>
             </li>

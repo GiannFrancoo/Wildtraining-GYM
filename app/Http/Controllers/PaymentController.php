@@ -107,18 +107,18 @@ class PaymentController extends Controller
     public function edit($payment_id)
     {
         try{
-        $paymentsStatuses = PaymentStatus::all();
-        $payment = Payment::findOrFail($payment_id);
-        $users = User::all();
-        $subscriptions = Subscription::all();
+            $paymentsStatuses = PaymentStatus::all();
+            $payment = Payment::findOrFail($payment_id);
+            $users = User::all();
+            $subscriptions = Subscription::all();
 
-        return view('payment.edit')
-            ->with([
-                'payment' => $payment,
-                'users' => $users,
-                'subscriptions' => $subscriptions,
-                'paymentsStatuses' => $paymentsStatuses,
-            ]);
+            return view('payment.edit')
+                ->with([
+                    'payment' => $payment,
+                    'users' => $users,
+                    'subscriptions' => $subscriptions,
+                    'paymentsStatuses' => $paymentsStatuses,
+                ]);
         }
         catch(Exception $e){
             return redirect()->back()->withErrors('Error al editar una pago');
