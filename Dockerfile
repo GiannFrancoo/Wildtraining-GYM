@@ -13,12 +13,11 @@ RUN docker-php-ext-install \
     intl \
     opcache \
     pdo \
-    pdo_mysql \
-    mysql
+    pdo_mysql
 
 RUN a2enmod rewrite
 
-WORKDIR /var/www/tdt-commons-v2
+WORKDIR /var/www/wildtraining
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
