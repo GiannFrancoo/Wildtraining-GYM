@@ -85,6 +85,14 @@ class User extends Authenticatable
         return $this->hasMany(Assistance::class);
     }
 
+    public function lastAssistance()
+    {
+        return $this
+            ->hasMany(Assistance::class)
+            ->orderBy('date','desc')
+            ->get();
+    }
+
     public function lastSubscription()
     {
         return $this

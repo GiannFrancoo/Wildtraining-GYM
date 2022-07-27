@@ -19,26 +19,34 @@ class AssistanceController extends Controller
     public function index()
     {
         $assistances = Assistance::orderByDesc('date')->get();
+        $bussiestHours = ["hour" => 0, "count" => 0];
+        $todayAssists = 0;
 
-        $bussiestHours = $assistances
-            ->groupBy(function ($assistance) {
-                return $assistance->date->format('H');
-            })
-            ->map(function ($assistance, $hour) {
-                return [
-                    "hour" => $hour,
-                    "count" => $assistance->count()
-                ];
-            })
-            ->sortByDesc('count')
-            ->first();
+        if ($assistances->isEmpty()){
+            $bussiestHours = ["hour" => 0, "count" => 0];
+            $todayAssists = 0;        
+        }
+        else{
+            $bussiestHours = $assistances
+                ->groupBy(function ($assistance) {
+                    return $assistance->date->format('H');
+                })
+                ->map(function ($assistance, $hour) {
+                    return [
+                        "hour" => $hour,
+                        "count" => $assistance->count()
+                    ];
+                })
+                ->sortByDesc('count')
+                ->first();
 
-        $todayAssists = $assistances
-            ->filter(function ($assist) {
-                return $assist->date->isToday();
-            })
-            ->count();
-        
+            $todayAssists = $assistances
+                ->filter(function ($assist) {
+                    return $assist->date->isToday();
+                })
+                ->count();
+        }
+                    
         return view('assistance.assistance')->with([
             'assistances' => $assistances,
             'bussiestHours' => $bussiestHours['hour'],

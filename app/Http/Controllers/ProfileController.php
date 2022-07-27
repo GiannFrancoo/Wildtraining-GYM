@@ -10,6 +10,7 @@ use App\Models\Subscription;
 use App\Models\UserSubscriptionStatus;
 use Exception;
 use Illuminate\Http\Request;
+use League\CommonMark\Extension\CommonMark\Renderer\Block\ThematicBreakRenderer;
 
 class ProfileController extends Controller
 {
@@ -265,8 +266,22 @@ class ProfileController extends Controller
     public function usersWhoLeft()
     {
         try{
-            $users = User::all();
-            //toDo
+            $users = User::with('assistances')->get();
+            $usersLeft = collect([]);
+
+            foreach ($users as $user) {
+                if ($user->assistances->isNotEmpty()){
+                    $dateLastAssistance = $user->lastAssistance()->first()->date;
+                    $interval = $dateLastAssistance->diffInDays(now());
+                    if ($interval >= 30){
+                        $usersLeft->push($user);
+                    }
+                }
+            }            
+
+            return view('profile.usersWhoLeft')->with([
+                'usersLeft' => $usersLeft,                
+            ]);
 
         }
         catch(Exception $e){
