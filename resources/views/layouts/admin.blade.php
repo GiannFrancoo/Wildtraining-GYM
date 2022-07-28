@@ -25,6 +25,9 @@
     <!-- Icons -->
     <script src="https://kit.fontawesome.com/d8957ec940.js" crossorigin="anonymous"></script>
 
+    <!-- DataTables -->
+    <link href="{{ asset('vendor/datatables/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+
 </head>
 <body id="page-top">
 
@@ -261,8 +264,8 @@
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                <span>Copyright &copy; | Bentivegna Gian Franco - Cervelli Haderne Lucas | {{ now()->year }}</span>                </div>
-
+                    <span>Copyright &copy; | Bentivegna Gian Franco - Cervelli Haderne Lucas | {{ now()->year }}</span>
+                </div>
             </div>
         </footer>
         <!-- End of Footer -->
@@ -332,6 +335,7 @@
     $.extend(true, $.fn.dataTable.defaults, {
         order: false,
         bInfo: false,
+        order: [[0, 'desc']],
         language: {
             url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
         },

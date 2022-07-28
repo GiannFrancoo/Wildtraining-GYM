@@ -89,8 +89,7 @@ class User extends Authenticatable
     {
         return $this
             ->hasMany(Assistance::class)
-            ->orderBy('date','desc')
-            ->get();
+            ->orderBy('date','desc');
     }
 
     public function lastSubscription()

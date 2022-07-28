@@ -9,7 +9,6 @@ use App\Models\PaymentStatus;
 use App\Models\User;
 use App\Models\Subscription;
 use App\Models\UserSubscription;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class PaymentController extends Controller
 {
@@ -203,11 +202,10 @@ class PaymentController extends Controller
     public function pendant()
     {
         try{
-            $pendantPayments = Payment::whereHas('PaymentStatus', function (Builder $query) {
+            $pendantPayments = Payment::whereHas('PaymentStatus', function ($query) {
                 $query->where('name','Pendiente');
             })->get();
-            // dd($pendantPayments);
-    
+
             return view('payment.pendant')->with(['pendantPayments' => $pendantPayments]);
         }
         catch(Exception $e){
