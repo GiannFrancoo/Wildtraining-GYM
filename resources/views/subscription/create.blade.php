@@ -55,7 +55,7 @@
             </div>
 
             <div class="card-footer text-center">
-                <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-disk mr-1"></i> Crear nueva subscripción</button>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-disk mr-1"></i> Crear nueva suscripción</button>
             </div>               
 
         </div>

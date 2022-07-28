@@ -342,26 +342,25 @@ class ProfileController extends Controller
 
     public function changeSubscriptionStore(Request $request, $profile_id)
     {
-        try{
-            $userSubscriptionOld = UserSubscription::where('user_id', $profile_id)->latest()->first();
-            $userSubscriptionOld->user_subscription_status_id = UserSubscriptionStatus::where('name','Inactiva')->first()->id;
-            $userSubscriptionOld->user_subscription_status_updated_at = now();
-            $userSubscriptionOld->save();
-            
-            $userSubscription = new UserSubscription();
-            $userSubscription->user_id = $profile_id;
-            $userSubscription->subscription_id = $request->subscriptionIdSelected;
-            $userSubscription->start_date = now();
-            $userSubscription->user_subscription_status_updated_at = now();
-            $userSubscription->user_subscription_status_id = UserSubscriptionStatus::where('name','Activa')->first()->id;
-            $userSubscription->save();
+        try{   
+            if(UserSubscription::where('user_id', $profile_id)->latest()->get()->isNotEmpty()){
+                $userSubscriptionOld = UserSubscription::where('user_id', $profile_id)->latest()->first();
+                $userSubscriptionOld->user_subscription_status_id = UserSubscriptionStatus::where('name','Inactiva')->first()->id;
+                $userSubscriptionOld->user_subscription_status_updated_at = now();
+                $userSubscriptionOld->save();
+            }  
 
-            return view('profile.changeSubscription')->with([
-                'subscriptions' => Subscription::all(),
-                'users' => User::all(),
-                'userSelected' => null,
-                'userSubscription' => null
-            ])->with('success', 'Exito al guardar los cambios de suscripcion');
+            if($request->subscriptionIdSelected != 'sinSubscripcion'){
+                $userSubscription = new UserSubscription();
+                $userSubscription->user_id = $profile_id;
+                $userSubscription->subscription_id = $request->subscriptionIdSelected;
+                $userSubscription->start_date = now();
+                $userSubscription->user_subscription_status_updated_at = now();
+                $userSubscription->user_subscription_status_id = UserSubscriptionStatus::where('name','Activa')->first()->id;
+                $userSubscription->save();  
+            }
+
+            return redirect()->route('profile.changeSubscription')->withSuccess('Se guardaron los cambios de suscripción');
         }
         catch(Exception $e){
             return redirect()->back()->withErrors('Error al guardar el cambio de suscripcion');
@@ -380,9 +379,14 @@ class ProfileController extends Controller
                 $userSubscription = UserSubscription::where('user_id', $userSelected->id)->latest()->first();
             }
             else{
-                if(isset($_GET['user'])){
+                if(isset($_GET['user']) && $_GET['user'] != 'withoutUser'){
                     $userSelected = User::findOrFail($_GET['user']);
-                    $userSubscription = UserSubscription::where('user_id', $userSelected->id)->latest()->first();
+                    if($userSelected->lastSubscription()->get()->isNotEmpty()){
+                        $userSubscription = UserSubscription::where('user_id', $userSelected->id)->latest()->first();
+                    }
+                    else{
+                        $userSubscription = 'sinSubscripcion';
+                    }
                 }
             }
 
@@ -390,7 +394,7 @@ class ProfileController extends Controller
                 'subscriptions' => Subscription::all(),
                 'users' => User::all(),
                 'userSelected' => $userSelected,
-                'userSubscription' => $userSubscription
+                'userSubscription' => $userSubscription,
             ]);
         }
         catch(Exception $e){
