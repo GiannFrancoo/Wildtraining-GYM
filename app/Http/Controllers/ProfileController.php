@@ -129,15 +129,15 @@ class ProfileController extends Controller
             }
 
             $user->save();        
-            
-            if($request->subscriptionIdSelected != 'sinSubscripcion'){
-                if($user->lastSubscription()->first() != null){
-                    $user_subscriptionOld = UserSubscription::where('user_id', $profile_id)->latest()->first();
-                    $user_subscriptionOld->user_subscription_status_id = UserSubscriptionStatus::where('name','Inactiva')->first()->id;
-                    $user_subscriptionOld->user_subscription_status_updated_at = now();
-                    $user_subscriptionOld->save();
-                }
+     
+            if(UserSubscription::where('user_id', $profile_id)->latest()->get()->isNotEmpty()){
+                $user_subscriptionOld = UserSubscription::where('user_id', $profile_id)->latest()->first();
+                $user_subscriptionOld->user_subscription_status_id = UserSubscriptionStatus::where('name','Inactiva')->first()->id;
+                $user_subscriptionOld->user_subscription_status_updated_at = now();
+                $user_subscriptionOld->save();
+            }
 
+            if($request->subscriptionIdSelected != 'sinSubscripcion'){
                 $user_subscription = new UserSubscription();
                 $user_subscription->user_id = $profile_id;
                 $user_subscription->subscription_id = $request->subscriptionIdSelected;
@@ -145,15 +145,8 @@ class ProfileController extends Controller
                 $user_subscription->user_subscription_status_updated_at = now();
                 $user_subscription->user_subscription_status_id = UserSubscriptionStatus::where('name','Activa')->first()->id;
                 $user_subscription->save();
-            }
-            else{
-                if($user->lastSubscription()->first() != null){
-                    $user_subscriptionOld = UserSubscription::where('user_id', $profile_id)->latest()->first();
-                    $user_subscriptionOld->user_subscription_status_id = UserSubscriptionStatus::where('name','Inactiva')->first()->id;
-                    $user_subscriptionOld->user_subscription_status_updated_at = now();
-                    $user_subscriptionOld->save();
                 }
-            }
+          
             
             return redirect()->route('profile.index')->withSuccess('Se guardaron los cambios con exito');
         }
