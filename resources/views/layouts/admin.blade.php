@@ -66,45 +66,47 @@
         </div>
 
         <!-- Nav Item - Users -->
-        <li class="nav-item">
+        <li class="nav-item {{ Nav::isRoute('profile.*') }}">
             <a class="nav-link" data-toggle="collapse" href="#collapseUsers" role="button" aria-expanded="false" aria-controls="collapseUsers">
                 <i class="fa-solid fa-users"></i>
                 <span>{{ __('Usuarios') }}</span>
             </a>
         </li>
         <div class="collapse ml-2" id="collapseUsers">
-            <!-- Add new user -->
-            <li class="nav-item {{ Nav::isRoute('profile.create') }}">
-                <a class="nav-link" href="{{ route('profile.create') }}">
-                    <i class="fa-solid fa-add"></i>
-                    <span>{{ __('Agregar nuevo usuario') }}</span>
-                </a>
-            </li>
-            <!-- List of users who left -->
-            <li class="nav-item {{ Nav::isRoute('profile.usersWhoLeft') }}">
-                <a class="nav-link" href="{{ route('profile.usersWhoLeft') }}">
-                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                    <span>{{ __('Usuarios que dejaron') }}</span>
-                </a>
-            </li>
-            <!-- change user subscription  -->
-            <li class="nav-item {{ Nav::isRoute('profile.changeSubscription') }}">
-                <a class="nav-link" href="{{ route('profile.changeSubscription') }}">
-                    <i class="fa-solid fa-arrow-right-arrow-left"></i>
-                    <span>{{ __('Cambiar suscripcion') }}</span>
-                </a>
-            </li>
-            <!-- List of users -->
-            <li class="nav-item {{ Nav::isRoute('profile.index') }}">
-                <a class="nav-link" href="{{ route('profile.index') }}">
-                    <i class="fa-solid fa-list"></i>
-                    <span>{{ __('Lista de usuarios') }}</span>
-                </a>
-            </li>
+            <div class="border-left-light collapse-inner">
+                <!-- Add new user -->
+                <li class="nav-item {{ Nav::isRoute('profile.create') }}">
+                    <a class="nav-link" href="{{ route('profile.create') }}">
+                        <i class="fa-solid fa-add"></i>
+                        <span>{{ __('Agregar nuevo usuario') }}</span>
+                    </a>
+                </li>
+                <!-- List of users who left -->
+                <li class="nav-item {{ Nav::isRoute('profile.usersWhoLeft') }}">
+                    <a class="nav-link" href="{{ route('profile.usersWhoLeft') }}">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        <span>{{ __('Usuarios que dejaron') }}</span>
+                    </a>
+                </li>
+                <!-- change user subscription  -->
+                <li class="nav-item {{ Nav::isRoute('profile.changeSubscription') }}">
+                    <a class="nav-link" href="{{ route('profile.changeSubscription') }}">
+                        <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                        <span>{{ __('Cambiar suscripcion') }}</span>
+                    </a>
+                </li>
+                <!-- List of users -->
+                <li class="nav-item {{ Nav::isRoute('profile.index') }}">
+                    <a class="nav-link" href="{{ route('profile.index') }}">
+                        <i class="fa-solid fa-list"></i>
+                        <span>{{ __('Lista de usuarios') }}</span>
+                    </a>
+                </li>
+            </div>
         </div>
 
         <!-- Nav Item - Subscriptions -->
-        <li class="nav-item">
+        <li class="nav-item {{ Nav::isRoute('subscription.*') }}">
             <a class="nav-link" data-toggle="collapse" href="#collapseSubscriptions" role="button" aria-expanded="false" aria-controls="collapseSubscriptions">
                 <i class="fa-solid fa-calendar"></i>
                 <span>{{ __('Suscripciones') }}</span>
@@ -128,7 +130,7 @@
         </div>
 
         <!-- Nav Item - Assistances -->
-        <li class="nav-item">
+        <li class="nav-item {{ Nav::isRoute('assistance.*') }}">
             <a class="nav-link" data-toggle="collapse" href="#collapseAssistances" role="button" aria-expanded="false" aria-controls="collapseAssistances">
                 <i class="fa-solid fa-clipboard-list"></i>
                 <span>{{ __('Asistencias') }}</span>
@@ -152,7 +154,7 @@
         </div>
 
         <!-- Nav Item - Payments -->
-        <li class="nav-item">
+        <li class="nav-item {{ Nav::isRoute('payment.*') }}">
             <a class="nav-link" data-toggle="collapse" href="#collapsePayments" role="button" aria-expanded="false" aria-controls="collapsePayments">
                 <i class="fa-solid fa-fw fa fa-money"></i>
                 <span>{{ __('Pagos') }}</span>
@@ -345,6 +347,21 @@
             $(this).remove();
         });
     }, 5000);
+</script>
+
+{{-- script para cerrar barra por default en mobile --}}
+<script>
+    $(document).ready(function () {
+        var $window = $(window);
+        var $panel = $('#pane1');
+        function checkWidth() {
+            var windowsize = $window.width();
+            if (windowsize < 768) {
+                $('#accordionSidebar').addClass('toggled');
+            }
+        }
+        checkWidth();
+    });
 </script>
 
 @yield('custom_js')

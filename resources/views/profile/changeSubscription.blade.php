@@ -98,7 +98,7 @@
     <div class="row">
         <div class="col mb-4">
             <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex justify-content-between">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
                     <h6 class="m-0 font-weight-bold text-primary">{{ __('Lista de suscripciones') }}</h6>
                     <a href="{{route('subscription.create')}}" class="btn btn-danger mr-1"><i class="fa fa-add mr-1"></i>{{ __('Crear nueva suscripción') }}</a>
                 </div>
@@ -106,19 +106,19 @@
                     <table class="table table-bordered table-hover text-center" id="dataTable">    
                         <thead>
                             <tr>
-                                <th scope="col">{{ __('Nombre') }}</th>
-                                <th scope="col">{{ __('Veces por semana') }}</th>
-                                <th scope="col">{{ __('Precio') }}</th>
-                                <th scope="col">{{ __('Acciones') }}</th>
+                                <th>{{ __('Nombre') }}</th>
+                                <th>{{ __('Veces por semana') }}</th>
+                                <th>{{ __('Precio') }}</th>
+                                <th>{{ __('Acciones') }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($subscriptions as $subscription)
                                 <tr>
-                                    <td>{{ $subscription->name }}</td>
-                                    <td>{{ $subscription->times_a_week }} </td>
-                                    <td>$ {{ $subscription->month_price }}</td>
-                                    <td>
+                                    <td width="25%">{{ $subscription->name }}</td>
+                                    <td width="25%">{{ $subscription->times_a_week }} </td>
+                                    <td width="25%">${{ $subscription->month_price }}</td>
+                                    <td width="25%">
                                         <a href="{{ route('subscription.show', ['subscription_id' => $subscription->id]) }}" type="button" class="btn btn-secondary" title="Show" data-toggle="tooltip"><i class="fa fa-users mr-1"></i>Ver inscriptos</a>
                                     </td>
                                 </tr>
