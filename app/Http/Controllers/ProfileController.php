@@ -282,36 +282,18 @@ class ProfileController extends Controller
                 $user_subscriptionOld->user_subscription_status_id = 2;
                 $user_subscriptionOld->user_subscription_status_updated_at = now();
                 $user_subscriptionOld->save();
+            }
 
-             
-                if($_GET['newSubscription_id'] != 'sinSubscripcion'){
-                    $user_subscription = new UserSubscription();
-                    $user_subscription->user_id = $profile_id;
-                    $user_subscription->subscription_id = $_GET['newSubscription_id'];
-                    $user_subscription->start_date = now();
-                    $user_subscription->user_subscription_status_updated_at = now();
-                    $user_subscription->user_subscription_status_id = 1;
-                    $user_subscription->save();           
-                }
-                else{
-                    $user_subscriptionOld = UserSubscription::where('user_id', $profile_id)->latest()->first();
-                    $user_subscriptionOld->user_subscription_status_id = 2;
-                    $user_subscriptionOld->user_subscription_status_updated_at = now();
-                    $user_subscriptionOld->save();
-                }
+            if($_GET['newSubscription_id'] != 'sinSubscripcion'){
+                $user_subscription = new UserSubscription();
+                $user_subscription->user_id = $profile_id;
+                $user_subscription->subscription_id = $_GET['newSubscription_id'];
+                $user_subscription->start_date = now();
+                $user_subscription->user_subscription_status_updated_at = now();
+                $user_subscription->user_subscription_status_id = 1;
+                $user_subscription->save();
             }
-            else{
-                if($_GET['newSubscription_id'] != 'sinSubscripcion'){
-                    $user_subscription = new UserSubscription();
-                    $user_subscription->user_id = $profile_id;
-                    $user_subscription->subscription_id = $_GET['newSubscription_id'];
-                    $user_subscription->start_date = now();
-                    $user_subscription->user_subscription_status_updated_at = now();
-                    $user_subscription->user_subscription_status_id = 1;
-                    $user_subscription->save();
-                }
-            }
-            
+                  
             return redirect()->route('profile.index')->withSuccess('Se guardo la nueva suscripcion');
         }
         catch(Exception $e){
