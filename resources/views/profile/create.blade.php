@@ -59,7 +59,7 @@
 
                             <div class="col-lg-6">
                                 <div class="form-group focused">
-                                    <label class="form-control-label" for="gender_id">{{ __('Sexo') }}</label>
+                                    <label class="form-control-label" for="gender_id">{{ __('Sexo') }}<span class="small text-danger">*</span></label>
                                     <select class="custom-select" required id="gender_id" name="gender_id" value="{{ old('gender_id') }}">                                 
                                         @foreach($genders as $gender)
                                             <option value="{{ $gender->id }}" {{ ($gender->name === 'No posee') ? 'Selected' : '' }}>{{ $gender->name }}</option>
