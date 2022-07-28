@@ -45,7 +45,7 @@
                                 </select>
                             @else
                                 <select  class="custom-select" name="subscriptionIdSelected" value="old('subscriptionIdSelected')">
-                                    <option selected>Subscripciones</option>                                          
+                                    <option selected>Suscripciones</option>                                          
                                     @foreach($subscriptions as $subscription)
                                         <option value="{{ $subscription->id }}">{{ $subscription->name }}</option>
                                     @endforeach

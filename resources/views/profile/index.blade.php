@@ -103,8 +103,7 @@
                                             <td>{{ __('No tiene') }}</td>
                                         @endif
                                         <td class="text-center d-flex justify-content-center">
-                                            <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-primary mx-1"><i class="fa fa-pencil"></i></a>
-                                            <!-- <a href="{{route('profile.edit', ['profile_id' => $user->id])}}" type="button" class="btn btn-secondary mx-1" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a> -->
+                                            <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-secondary mx-1"><i class="fa fa-pencil"></i></a>
                                             <div>
                                                 <form action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" method="POST" >
                                                     @csrf
@@ -118,7 +117,7 @@
                                                 <form action="{{ route('profile.updateSubscription', ['profile_id' => $user->id]) }}" method="GET" >
                                                     <select class="custom-select" style="text-align:center;" onChange="this.form.submit()" name="newSubscription_id" value="">                                           
                                                     @foreach($subscriptions as $subscription)    
-                                                        <option value="{{ $subscription->id }}"  {{($user->lastSubscription()->first()->id === $subscription->id) ? 'Selected' : ''}}>{{ $subscription->name }}</option>
+                                                        <option value="{{ $subscription->id }}"   {{($user->lastSubscription()->first()->id === $subscription->id) ? 'Selected' : ''}}>{{ $subscription->name }}</option>
                                                     @endforeach
                                                     </select>
                                                 </form>       

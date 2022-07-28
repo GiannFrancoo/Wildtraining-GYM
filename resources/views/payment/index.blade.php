@@ -70,7 +70,7 @@
                                     <td>{{ $payment->userSubscription->subscription->name }}</td>
                                     <td>{{ $payment->paymentStatus->name }}</td>
                                     <td class="text-center d-flex justify-content-center">                                    
-                                        <a href="{{ route('payment.edit', ['payment_id' => $payment->id]) }}" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
+                                        <a href="{{ route('payment.edit', ['payment_id' => $payment->id]) }}" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
                                         <div class="mx-1">
                                             <form action="{{ route('payment.destroy', ['payment_id' => $payment->id]) }}" method="POST"> 
                                                 @csrf 

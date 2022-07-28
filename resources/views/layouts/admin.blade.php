@@ -104,7 +104,7 @@
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#collapseSubscriptions" role="button" aria-expanded="false" aria-controls="collapseSubscriptions">
                 <i class="fa-solid fa-calendar"></i>
-                <span>{{ __('Subscripciones') }}</span>
+                <span>{{ __('Suscripciones') }}</span>
             </a>
         </li>
         <div class="collapse ml-2" id="collapseSubscriptions">

@@ -4,7 +4,7 @@
 
     <!-- Page Heading -->
     <div class="d-flex justify-content-between">
-        <h1 class="h3 mb-4 text-gray-800">{{ __('Subscripciones') }}</h1>
+        <h1 class="h3 mb-4 text-gray-800">{{ __('Suscripciones') }}</h1>
         <div>
             <a href="{{route('subscription.create')}}" class="btn btn-success mr-1"><i class="fa fa-add mr-1"></i>Agregar</a>    
         </div>        
@@ -59,7 +59,7 @@
                         <div class="card-header d-flex justify-content-between">
                             <h5 class="font-weight-bold">{{ $subscription->name }}</h5>
                             <div class="row">                        
-                                <a href="{{ route('subscription.edit', ['subscription_id' => $subscription->id]) }}" class="btn btn-primary mr-1"><i class="fa fa-pencil mr-1"></i>Editar</a>
+                                <a href="{{ route('subscription.edit', ['subscription_id' => $subscription->id]) }}" class="btn btn-secondary mr-1"><i class="fa fa-pencil mr-1"></i>Editar</a>
                                 <form action="{{ route('subscription.destroy', ['subscription_id' => $subscription->id]) }}" method="POST">
                                     @csrf
                                     @method("DELETE")

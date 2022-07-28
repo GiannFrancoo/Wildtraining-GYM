@@ -32,7 +32,6 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::middleware('auth')->group(function () {
     Route::put('/profile/changeSubscriptionStore/{profile_id}', [ProfileController::class, 'changeSubscriptionStore'])->name('profile.changeSubscriptionStore');
     Route::get('/profile/changeSubscription/{profile_id?}', [ProfileController::class, 'changeSubscription'])->name('profile.changeSubscription');
-    
     Route::get('/profile/userWhoLeft', [ProfileController::class, 'usersWhoLeft'])->name('profile.usersWhoLeft');
 
     //Routes for profile

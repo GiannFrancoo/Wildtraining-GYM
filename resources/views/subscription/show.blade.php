@@ -4,7 +4,7 @@
 
     <!-- Page Heading -->
     <div class="d-flex justify-content-between">
-        <h1 class="h3 mb-4 text-gray-800">Subscripciones: {{ $subscription->name }}</h1>
+        <h1 class="h3 mb-4 text-gray-800">Suscripciones: {{ $subscription->name }}</h1>
         <div>
             <!-- <a href="{{route('subscription.create')}}" class="btn btn-success mr-1"><i class="fa fa-add mr-1"></i>Agregar</a>     -->
         </div>        
