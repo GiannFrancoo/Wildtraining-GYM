@@ -76,7 +76,7 @@
                             </select>
                         </div>
                         <div class="col-lg-6">
-                        <label class="form-control-label">{{ _('Suscripcion actual') }}</label>
+                        <label class="form-control-label">{{ __('Suscripcion actual') }}</label>
                         @if($userSubscription != 'sinSubscripcion')
                             <input type="text" class="form-control" readonly value="{{ $userSubscription->subscription->name }}">
                         @else
