@@ -35,13 +35,13 @@
                         <label class="form-control-label">Nombre</label>
                             <select class="custom-select" onChange="this.form.submit()" name="user">
                                 <option selected>Seleccione el usuario</option>                                  
-                            @foreach($users as $user)
-                                @if($userSelected != null)
-                                    <option value="{{ $user->id }}" {{ ($userSelected->id === $user->id) ? 'Selected' : ''}}>{{ $user->getFullNameAttribute() }}</option>
-                                    @else
-                                    <option value="{{ $user->id }}">{{ $user->getFullNameAttribute() }}</option>
-                                @endif
-                            @endforeach
+                                @foreach($users as $user)
+                                    @if($userSelected != null)
+                                        <option value="{{ $user->id }}" {{ ($userSelected->id === $user->id) ? 'Selected' : ''}}>{{ $user->getFullNameAttribute() }}</option>
+                                        @else
+                                        <option value="{{ $user->id }}">{{ $user->getFullNameAttribute() }}</option>
+                                    @endif
+                                @endforeach
                         </select>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                             </select>
                         </div>
                         <div class="col-lg-6">
-                            <label class="form-control-label">Suscripcion actual</label>
+                            <label class="form-control-label">{{ _('Suscripcion actual') }}</label>
                             <input type="text" class="form-control" readonly value="{{ $userSubscription->subscription->name }}">
                         </div>       
                     </div>

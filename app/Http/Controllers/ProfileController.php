@@ -10,7 +10,6 @@ use App\Models\Subscription;
 use App\Models\UserSubscriptionStatus;
 use Exception;
 use Illuminate\Http\Request;
-use League\CommonMark\Extension\CommonMark\Renderer\Block\ThematicBreakRenderer;
 
 class ProfileController extends Controller
 {
@@ -266,8 +265,7 @@ class ProfileController extends Controller
     public function usersWhoLeft()
     {
         try{
-            $users = User::has('lastAssistance')->with('lastAssistance')->get();
-            $usersLeft = collect([]);   
+            $users = User::has('lastAssistance')->with('lastAssistance')->get(); 
             
             $usersLeft = $users
                 ->filter(function($user){
@@ -293,7 +291,6 @@ class ProfileController extends Controller
             $userSubscriptionOld->user_subscription_status_updated_at = now();
             $userSubscriptionOld->save();
             
-
             $userSubscription = new UserSubscription();
             $userSubscription->user_id = $profile_id;
             $userSubscription->subscription_id = $request->subscriptionIdSelected;
@@ -340,6 +337,7 @@ class ProfileController extends Controller
             ]);
         }
         catch(Exception $e){
+            dd($e->getMessage());
             return redirect()->back()->withErrors('Error al seleccionar usuario');
         }
     }    

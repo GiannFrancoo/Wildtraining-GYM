@@ -333,7 +333,6 @@
 
 <script>
     $.extend(true, $.fn.dataTable.defaults, {
-        order: false,
         bInfo: false,
         order: [[0, 'desc']],
         language: {

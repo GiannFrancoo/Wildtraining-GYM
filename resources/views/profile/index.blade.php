@@ -82,7 +82,7 @@
                 </div>
 
                 <div class="card-body">
-                    <table class="table table-bordered table-hover text-center" id="dataTable">    
+                    <table class="table table-responsive table-bordered table-hover text-center" id="dataTable">    
                         <thead>
                             <tr>
                                 <th scope="col" class="col-lg-2">Nombre y apellido</th>
@@ -125,30 +125,10 @@
                                                 </select>
                                             </form>       
                                         @endif
-                                        <td class="text-center d-flex justify-content-center">
-                                            <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-secondary mx-1"><i class="fa fa-pencil"></i></a>
-                                            <div>
-                                                <form action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" method="POST" >
-                                                    @csrf
-                                                    @method("DELETE")
-                                                    <button class="btn btn-danger" onclick="return confirm('¿Desea borrar al usuario {{$user->name}}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
-                                                </form>
-                                            </div>  
-                                        </td>  
-                                        <td>
-                                            @if($user->lastSubscription()->first() != null)
-                                                <form action="{{ route('profile.updateSubscription', ['profile_id' => $user->id]) }}" method="GET" >
-                                                    <select class="custom-select" style="text-align:center;" onChange="this.form.submit()" name="newSubscription_id" value="">                                           
-                                                    @foreach($subscriptions as $subscription)    
-                                                        <option value="{{ $subscription->id }}"   {{($user->lastSubscription()->first()->id === $subscription->id) ? 'Selected' : ''}}>{{ $subscription->name }}</option>
-                                                    @endforeach
-                                                    </select>
-                                                </form>       
-                                            @endif
-                                        </td> 
-                                    </tr>
-                                @endforeach
-                            </tbody>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>

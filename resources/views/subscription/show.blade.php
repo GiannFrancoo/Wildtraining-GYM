@@ -82,32 +82,23 @@
                             <a href="{{ route('profile.create') }}" type="button" class="btn btn-success float-right" title="Add" data-toggle="tooltip"><i class="fa fa-plus mr-1"></i>Agregar</a>                        
                         </div>
                     </div>
-                    <hr>  
-                    <div class="row">                  
-                        <div class="col-6">
-                            <input type="text" id="myInput" onkeyup="tableSearch()" class="form-control" placeholder="Nombre de subscripcion&hellip;">
-                        </div>
-                    </div>
                 </div>
 
                 <div class="card-body table-responsive">
-                    <table class="table table-bordered table-hover text-center" id="myTable">    
+                    <table class="table table-bordered table-hover text-center" id="dataTable">    
                         <thead>
                             <tr>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Apellido</th>
+                                <th scope="col">Nombre y apellido</th>
+                                <th scope="col">Telefono</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($subscriptionArray as $user)
                                 <tr>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->last_name }}</td>
-                                    <!-- <td>{{ $subscription->modification_date->format('d/m/Y') }}</td> -->
+                                    <td>{{ $user->getFullNameAttribute() }}</td>
+                                    <td>{{ $user->primary_phone }}</td>
                                     <td>
-                                        <!-- Hay que poner profile.show -->
-                                        <a href="{{ route('profile', ['profile_id' => $user->id]) }}" type="button" class="btn btn-secondary" title="Show" data-toggle="tooltip"><i class="fa fa-eye mx-1"></i></a>
                                         <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-primary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
 
                                         <form method="POST" action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" class="d-inline">
@@ -125,6 +116,15 @@
         </div>
     </div>
 
+@endsection
 
+@section('custom_js')
+<script>
+    $(document).ready(function () {
+        $('#dataTable').DataTable( {
+            order: [[0, 'desc']],
+        })
+    })
+</script>
 @endsection
 
