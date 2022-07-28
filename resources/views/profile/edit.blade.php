@@ -42,10 +42,11 @@
                                     @foreach($subscriptions as $subscription)
                                         <option value="{{ $subscription->id }}" {{ ($activeSubscription->id === $subscription->id) ? 'Selected' : '' }}>{{ $subscription->name }}</option>
                                     @endforeach
+                                    <option value="sinSubscripcion">Sin suscripcion</option>                                          
                                 </select>
                             @else
                                 <select  class="custom-select" name="subscriptionIdSelected" value="old('subscriptionIdSelected')">
-                                    <option selected>Suscripciones</option>                                          
+                                    <option selected value="sinSubscripcion">Sin suscripcion</option>                                          
                                     @foreach($subscriptions as $subscription)
                                         <option value="{{ $subscription->id }}">{{ $subscription->name }}</option>
                                     @endforeach
@@ -178,15 +179,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($userSubscriptions as $userSubscription)
-                                @if ($userSubscription->subscription->name != "No posee")
+                        @if ($userSubscriptions != null)
+                            @foreach ($userSubscriptions as $userSubscription)  
                                     <tr>                               
                                         <td>{{ $userSubscription->subscription->name }}</td>
                                         <td>{{ $userSubscription->user_subscription_status_updated_at->format('d/m/Y') }}</td>
                                         <td>{{ $userSubscription->status->name }}</td>                                
                                     </tr>
-                                @endif
                             @endforeach
+                        @endif
                         </tbody>
                     </table>
                 </div>

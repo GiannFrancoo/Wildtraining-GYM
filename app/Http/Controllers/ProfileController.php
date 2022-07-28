@@ -115,26 +115,37 @@ class ProfileController extends Controller
 
             $user->save();
             
-            //Change the active subscription to inactive
-            if($user->lastSubscription()->first() != null){
-                $user_subscriptionOld = UserSubscription::where('user_id', $profile_id)->latest()->first();
-                $user_subscriptionOld->user_subscription_status_id = UserSubscriptionStatus::where('name','Inactiva')->first()->id;
-                $user_subscriptionOld->user_subscription_status_updated_at = now();
-                $user_subscriptionOld->save();
+
+            
+            if($request->subscriptionIdSelected != 'sinSubscripcion'){
+                if($user->lastSubscription()->first() != null){
+                    $user_subscriptionOld = UserSubscription::where('user_id', $profile_id)->latest()->first();
+                    $user_subscriptionOld->user_subscription_status_id = UserSubscriptionStatus::where('name','Inactiva')->first()->id;
+                    $user_subscriptionOld->user_subscription_status_updated_at = now();
+                    $user_subscriptionOld->save();
+                }
+
+                $user_subscription = new UserSubscription();
+                $user_subscription->user_id = $profile_id;
+                $user_subscription->subscription_id = $request->subscriptionIdSelected;
+                $user_subscription->start_date = now();
+                $user_subscription->user_subscription_status_updated_at = now();
+                $user_subscription->user_subscription_status_id = UserSubscriptionStatus::where('name','Activa')->first()->id;
+                $user_subscription->save();
+            }
+            else{
+                if($user->lastSubscription()->first() != null){
+                    $user_subscriptionOld = UserSubscription::where('user_id', $profile_id)->latest()->first();
+                    $user_subscriptionOld->user_subscription_status_id = UserSubscriptionStatus::where('name','Inactiva')->first()->id;
+                    $user_subscriptionOld->user_subscription_status_updated_at = now();
+                    $user_subscriptionOld->save();
+                }
             }
             
-            $user_subscription = new UserSubscription();
-            $user_subscription->user_id = $profile_id;
-            $user_subscription->subscription_id = $request->subscriptionIdSelected;
-            $user_subscription->start_date = now();
-            $user_subscription->user_subscription_status_updated_at = now();
-            $user_subscription->user_subscription_status_id = UserSubscriptionStatus::where('name','Activa')->first()->id;
-            $user_subscription->save();
-            
-
             return redirect()->route('profile.index')->withSuccess('Se guardaron los cambios con exito');
         }
         catch(Exception $e){
+            dd($e->getMessage());
             return redirect()->back()->withErrors('Error al editar el usuario');     
         }
     }
@@ -175,8 +186,9 @@ class ProfileController extends Controller
                 $user->personal_information = $request->personal_information;
             }
 
-            $user->save();      
-            //Creo la nueva userSubscription si es que cambio la subscripcion
+            $user->save();
+
+            if($request->subscriptionIdSelected != 'sinSubscripcion'){
                 $user_subscription = new UserSubscription();
                 $user_subscription->user_id = $user->id;
                 $user_subscription->subscription_id = $request->subscriptionIdSelected;
@@ -184,7 +196,8 @@ class ProfileController extends Controller
                 $user_subscription->user_subscription_status_id = 1;
                 $user_subscription->user_subscription_status_updated_at = now();
                 $user_subscription->save();
-
+            }   
+            
             return redirect()->route('profile.index')->withSuccess('Se guardaron con exito los cambios.');
         }
         catch(Exception $e){
@@ -195,21 +208,29 @@ class ProfileController extends Controller
     public function edit($profile_id)
     {
         try{
-            $userSubscriptions = UserSubscription::with('user')->where('user_id', $profile_id)->get(); //check null?
-            $user = $userSubscriptions->first()->user; 
-            $activeSubscription = $user->lastSubscription->first->get();
+            
+            $userSubscriptions = null;
+            $user = User::findOrFail($profile_id);
             $socialWorks = SocialWork::all();
             $subscriptions = Subscription::all();
+            $activeSubscription = null;
 
-            return view('profile.edit')->with([
-                'user' => $user,
-                'userSubscriptions' => $userSubscriptions,
-                'activeSubscription' => $activeSubscription,
-                'socialWorks' => $socialWorks,
-                'subscriptions' => $subscriptions,
-            ]);
+            if(UserSubscription::with('user')->where('user_id', $profile_id)->get()->isNotEmpty()){
+                $userSubscriptions = UserSubscription::with('user')->where('user_id', $profile_id)->get();
+                $user = $userSubscriptions->first()->user; 
+                $activeSubscription = $user->lastSubscription->first->get(); 
+            }
+
+                return view('profile.edit')->with([
+                    'user' => $user,
+                    'userSubscriptions' => $userSubscriptions,
+                    'activeSubscription' => $activeSubscription,
+                    'socialWorks' => $socialWorks,
+                    'subscriptions' => $subscriptions,
+                ]);
         }
         catch (Exception $e){
+            dd($e->getMessage());
             return redirect()->back()->withErrors('Error al editar el usuario');   
         }         
     }
@@ -241,23 +262,46 @@ class ProfileController extends Controller
     public function updateSubscription($profile_id)
     {
         try{
-            if(UserSubscription::where('user_id', $profile_id)->latest()->first() != null){
+            
+            if(UserSubscription::where('user_id', $profile_id)->latest()->get()->isNotEmpty()){
                 $user_subscriptionOld = UserSubscription::where('user_id', $profile_id)->latest()->first();
                 $user_subscriptionOld->user_subscription_status_id = 2;
                 $user_subscriptionOld->user_subscription_status_updated_at = now();
                 $user_subscriptionOld->save();
 
-                $user_subscription = new UserSubscription();
-                $user_subscription->user_id = $profile_id;
-                $user_subscription->subscription_id = $_GET['newSubscription_id'];
-                $user_subscription->start_date = now();
-                $user_subscription->user_subscription_status_updated_at = now();
-                $user_subscription->user_subscription_status_id = 1;
-                $user_subscription->save();
+             
+                if($_GET['newSubscription_id'] != 'sinSubscripcion'){
+                    $user_subscription = new UserSubscription();
+                    $user_subscription->user_id = $profile_id;
+                    $user_subscription->subscription_id = $_GET['newSubscription_id'];
+                    $user_subscription->start_date = now();
+                    $user_subscription->user_subscription_status_updated_at = now();
+                    $user_subscription->user_subscription_status_id = 1;
+                    $user_subscription->save();           
+                }
+                else{
+                    $user_subscriptionOld = UserSubscription::where('user_id', $profile_id)->latest()->first();
+                    $user_subscriptionOld->user_subscription_status_id = 2;
+                    $user_subscriptionOld->user_subscription_status_updated_at = now();
+                    $user_subscriptionOld->save();
+                }
             }
+            else{
+                if($_GET['newSubscription_id'] != 'sinSubscripcion'){
+                    $user_subscription = new UserSubscription();
+                    $user_subscription->user_id = $profile_id;
+                    $user_subscription->subscription_id = $_GET['newSubscription_id'];
+                    $user_subscription->start_date = now();
+                    $user_subscription->user_subscription_status_updated_at = now();
+                    $user_subscription->user_subscription_status_id = 1;
+                    $user_subscription->save();
+                }
+            }
+            
             return redirect()->route('profile.index')->withSuccess('Se guardo la nueva suscripcion');
         }
         catch(Exception $e){
+            dd($e->getMessage());
             return redirect()->back()->withErrors('Error al guardar la nueva suscripcion del usuario');   
         }
     }

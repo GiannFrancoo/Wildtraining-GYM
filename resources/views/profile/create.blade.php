@@ -25,9 +25,10 @@
                     </div>
                     <div class="card-body">
                         <div class="col-lg-12">
-                            <select class="custom-select" required name="subscriptionIdSelected" value="old('subscriptionIdSelected')">                                  
+                            <select class="custom-select" required name="subscriptionIdSelected" value="old('subscriptionIdSelected')">
+                                <option selected value="sinSubscripcion"> Sin suscripcion </option>                                  
                                 @foreach($subscriptions as $subscription)
-                                    <option value="{{$subscription->id}}">{{$subscription->name}}</option>
+                                    <option value="{{$subscription->id}}">{{ $subscription->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -105,7 +106,7 @@
                                     <label class="form-control-label" for="social_work_id">Obra social</label>
                                     <select class="custom-select" required name="social_work_id" value="{{ old('social_work_id') }}">                                 
                                         @foreach($social_works as $social_work)
-                                            <option value="{{$social_work->id}}" {{($social_work->name === 'No posee') ? 'Selected' : ''}}>{{$social_work->name}}</option>
+                                            <option value="{{$social_work->id}}">{{ $social_work->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
