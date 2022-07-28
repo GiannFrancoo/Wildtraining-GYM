@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gender;
 use App\Models\User;
 use App\Models\SocialWork;
 use App\Models\UserSubscription;
@@ -22,9 +23,15 @@ class ProfileController extends Controller
     {
         try{
             $social_works = SocialWork::all();
+            $genders = Gender::all();
             $roles = Role::all();
             $subscriptions = Subscription::all();
-            return view('profile.create')->with('social_works', $social_works)->with('roles', $roles)->with('subscriptions', $subscriptions);
+            return view('profile.create')->with([
+                'social_works' => $social_works,
+                'genders' => $genders,
+                'roles' => $roles,
+                'subscriptions' => $subscriptions
+            ]);
         }
         catch(Exception $e){
             return redirect()->back()->withErrors('Error al mostrar el formulario de creacion de usuario');
@@ -59,7 +66,8 @@ class ProfileController extends Controller
             foreach ($users as $user) {
                 if($this->getAge($user) != 0){
                     $ages += $this->getAge($user); 
-                }else{
+                }
+                else{
                     $usersWithoutBirthday++;
                 }
 
@@ -71,8 +79,13 @@ class ProfileController extends Controller
                 }        
             }
 
+            $menUsers = $users->filter(function($user){
+                return $user->gender->id === 1;
+            })->count();
+
             return view('profile.index',)->with([
                 'users' => $users, 
+                'menUsers' => $menUsers,
                 'monthlyRevenue' => $monthlyRevenue, 
                 'usersWithoutSubscription' => $usersWithoutSubscription,
                 'averageAges' => (floor($ages/($users->count() - $usersWithoutBirthday))),
@@ -89,12 +102,14 @@ class ProfileController extends Controller
             $request->validate([
                 'name' => 'required|string|max:255',
                 'last_name' => 'required|nullable|string|max:255',
-                'primary_phone' => 'required|string|min:9'
+                'primary_phone' => 'required|string|min:9',
+                // 'gender_id' => 'required',
             ]);
 
             $user = User::findOrFail($profile_id);
             $user->name = $request->name;
             $user->last_name = $request->last_name;
+            $user->gender_id = Gender::findOrFail($request->gender_id)->id;
             $user->email = $request->email;
             $user->social_work_id = $request->social_work_id;
             $user->start_date = $request->start_date;
@@ -113,9 +128,7 @@ class ProfileController extends Controller
                 $user->personal_information = $request->personal_information;
             }
 
-            $user->save();
-            
-
+            $user->save();        
             
             if($request->subscriptionIdSelected != 'sinSubscripcion'){
                 if($user->lastSubscription()->first() != null){
@@ -156,13 +169,14 @@ class ProfileController extends Controller
             $request->validate([
                 'name' => 'required|string|max:255',
                 'last_name' => 'required|nullable|string|max:255',
-                'primary_phone' => 'required|string|min:9'
+                'primary_phone' => 'required|string|min:9',
+                'gender_id' => 'required',
             ]);
         
             $user = new User();
-            //Actualizo los atributos del usuario
             $user->name = $request->name;
             $user->last_name = $request->last_name;
+            $user->gender_id = Gender::findOrFail($request->gender_id)->id;
             $user->email = $request->email;
             $user->primary_phone = $request->primary_phone;
             $user->start_date = $request->start_date;
@@ -208,9 +222,9 @@ class ProfileController extends Controller
     public function edit($profile_id)
     {
         try{
-            
             $userSubscriptions = null;
             $user = User::findOrFail($profile_id);
+            $genders = Gender::all();
             $socialWorks = SocialWork::all();
             $subscriptions = Subscription::all();
             $activeSubscription = null;
@@ -221,16 +235,16 @@ class ProfileController extends Controller
                 $activeSubscription = $user->lastSubscription->first->get(); 
             }
 
-                return view('profile.edit')->with([
-                    'user' => $user,
-                    'userSubscriptions' => $userSubscriptions,
-                    'activeSubscription' => $activeSubscription,
-                    'socialWorks' => $socialWorks,
-                    'subscriptions' => $subscriptions,
-                ]);
+            return view('profile.edit')->with([
+                'user' => $user,
+                'genders' => $genders,
+                'userSubscriptions' => $userSubscriptions,
+                'activeSubscription' => $activeSubscription,
+                'socialWorks' => $socialWorks,
+                'subscriptions' => $subscriptions,
+            ]);
         }
         catch (Exception $e){
-            dd($e->getMessage());
             return redirect()->back()->withErrors('Error al editar el usuario');   
         }         
     }
@@ -301,7 +315,6 @@ class ProfileController extends Controller
             return redirect()->route('profile.index')->withSuccess('Se guardo la nueva suscripcion');
         }
         catch(Exception $e){
-            dd($e->getMessage());
             return redirect()->back()->withErrors('Error al guardar la nueva suscripcion del usuario');   
         }
     }
@@ -381,7 +394,6 @@ class ProfileController extends Controller
             ]);
         }
         catch(Exception $e){
-            dd($e->getMessage());
             return redirect()->back()->withErrors('Error al seleccionar usuario');
         }
     }    

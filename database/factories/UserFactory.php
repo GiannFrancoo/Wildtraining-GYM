@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Gender;
 use App\Models\Role;
 use App\Models\SocialWork;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -20,6 +21,7 @@ class UserFactory extends Factory
         return [
             'name'                  => $this->faker->name(),
             'last_name'             => $this->faker->name(),
+            'gender_id'             => Gender::inRandomOrder()->first()->id,
             'email'                 => $this->faker->unique()->safeEmail(),
             'email_verified_at'     => now(),
             'password'              => 'password',

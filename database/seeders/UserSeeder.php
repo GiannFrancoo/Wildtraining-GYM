@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Gender;
 use App\Models\Role;
 use App\Models\SocialWork;
 use App\Models\User;
@@ -24,11 +25,12 @@ class UserSeeder extends Seeder
                 'name'                  => 'Lucas',
                 'last_name'             => 'Cervelli Haderne',
                 'email'                 => 'lucasch98.lch@gmail.com',
+                'gender_id'             => Gender::find('1')->id,
                 'email_verified_at'     => now(),
                 'password'              => 'password',
                 'remember_token'        => Str::random(10),     
-                'primary_phone'         => '123456',
-                'secundary_phone'       => '1234567',
+                'primary_phone'         => '123456789',
+                'secundary_phone'       => '123456799',
                 'address'               => 'avenida siempre viva 123',
                 'birthday'              => Carbon::now()->subYears(rand(1, 55)),
                 'start_date'            => Carbon::now()->subYears(rand(1, 55)),
@@ -39,11 +41,12 @@ class UserSeeder extends Seeder
                 'name'                  => 'Gian Franco',
                 'last_name'             => 'Bentivegna',
                 'email'                 => 'GiannFrancoo1@hotmail.com',
+                'gender_id'             => Gender::find('1')->id,
                 'email_verified_at'     => now(),
                 'password'              => 'password',
                 'remember_token'        => Str::random(10),     
-                'primary_phone'         => '12345678',
-                'secundary_phone'       => '123456789',
+                'primary_phone'         => '12345678999',
+                'secundary_phone'       => '123456789999',
                 'address'               => 'avenida siempre viva 123',
                 'birthday'              => Carbon::now()->subYears(rand(1, 55)),
                 'start_date'            => Carbon::now()->subYears(rand(1, 55)),

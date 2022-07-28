@@ -80,7 +80,18 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
+                                <div class="form-group focused">
+                                    <label class="form-control-label" for="gender">{{ __('Sexo') }}</label>
+                                    <select class="custom-select" required id="gender_id" name="gender_id" value="{{ old('gender_id'), $user->gender->id }}">                                 
+                                        @foreach($genders as $gender)
+                                            <option value="{{ $gender->id }}" {{ ($gender->name === $user->gender->name) ? 'Selected' : '' }}>{{ $gender->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-control-label" for="email">{{ __('Email') }}<span class="small text-danger">*</span></label>
                                     <input type="email" id="email" class="form-control" name="email" placeholder="ejemplo@ejemplo.com" value="{{ old('email', $user->email) }}">
@@ -136,7 +147,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="social_work_id">{{ __('Obra social') }}</label>
-                                    <select class="custom-select" name="social_work_id" value="{{ old('social_work_id'), $user->social_work->id }}">                                           
+                                    <select class="custom-select" id="social_work_id" name="social_work_id" value="{{ old('social_work_id'), $user->social_work->id }}">                                           
                                         @foreach($socialWorks as $socialWork)
                                             <option value="{{ $socialWork->id }}" {{ ($user->social_work->id === $socialWork->id) ? 'Selected' : '' }}>{{ $socialWork->name }}</option>
                                         @endforeach
