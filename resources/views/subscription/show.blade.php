@@ -3,12 +3,7 @@
 @section('main-content')
 
     <!-- Page Heading -->
-    <div class="d-flex justify-content-between">
-        <h1 class="h3 mb-4 text-gray-800">Suscripciones: {{ $subscription->name }}</h1>
-        <div>
-            <!-- <a href="{{route('subscription.create')}}" class="btn btn-success mr-1"><i class="fa fa-add mr-1"></i>Agregar</a>     -->
-        </div>        
-    </div>
+    <h1 class="h3 mb-4 text-gray-800">Suscripción: {{ $subscription->name }}</h1>
 
     @if (session('success'))
         <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
@@ -30,21 +25,21 @@
     @endif
 
     <!-- Card with subscriptions -->
-    <div class="row"> 
-        <div class="col-lg-6 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-header d-flex justify-content-between">
+    <div class="row">
+        <div class="col mb-2">
+            <div class="card border-left-secondary shadow h-100 py-2">
+                <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="font-weight-bold">{{ $subscription->name }}</h5>
                     <div class="row">                        
-                        <a href="{{ route('subscription.edit', ['subscription_id' => $subscription->id]) }}" class="btn btn-primary mr-1"><i class="fa fa-pencil mr-1"></i>Editar</a>
+                        <a href="{{ route('subscription.edit', ['subscription_id' => $subscription->id]) }}" class="btn btn-circle btn-secondary mr-1"><i class="fa fa-pencil"></i></a>
                         <form action="{{ route('subscription.destroy', ['subscription_id' => $subscription->id]) }}" method="POST">
                             @csrf
                             @method("DELETE")
-                            <button class="btn btn-danger mr-1" type="submit" onclick="return confirm('Desea eliminar esta subscripción y con ella todos los alumnos subscriptos?')"><i class="fa fa-trash mr-1"></i>Eliminar</button>
+                            <button class="btn btn-danger btn-circle mx-2" type="submit" onclick="return confirm('¿Desea eliminar esta subscripción y con ella todos los alumnos suscriptos?')"><i class="fa fa-trash"></i></button>
                         </form>
                     </div>
                 </div>
-                <div class="card-body p-1">
+                <div class="card-body table-responsive">
                     <table class="table table-borderless">
                         <tbody>
                             <tr>
@@ -66,7 +61,7 @@
         </div>
     </div>
     
-    <hr class="py-2">
+    <hr>
 
     <!-- Subscriptions table --> 
     <div class="row">
@@ -74,12 +69,12 @@
             <div class="card shadow mb-4">
 
                 <div class="card-header py-3">
-                    <div class="row d-flex justify-content-between">
+                    <div class="row d-flex justify-content-between align-items-center">
                         <div class="col-6 my-2">    
-                            <h6 class="m-0 font-weight-bold text-primary">{{ __('Lista de usuarios en la suscripción') }}</h6>
+                            <h6 class="m-0 font-weight-bold text-danger">{{ __('Lista de usuarios en la suscripción') }}</h6>
                         </div>
                         <div>
-                            <a href="{{ route('profile.create') }}" type="button" class="btn btn-success float-right" title="Add" data-toggle="tooltip"><i class="fa fa-plus mr-1"></i>Agregar</a>                        
+                            <a href="{{ route('profile.create') }}" type="button" class="btn btn-dark float-right" title="Add" data-toggle="tooltip"><i class="fa fa-plus mr-1"></i>Agregar</a>                        
                         </div>
                     </div>
                 </div>
@@ -88,9 +83,9 @@
                     <table class="table table-bordered table-hover text-center" id="dataTable">    
                         <thead>
                             <tr>
-                                <th scope="col">Usuario</th>
-                                <th scope="col">Telefono</th>
-                                <th scope="col">Acciones</th>
+                                <th scope="col">{{ __('Usuario') }}</th>
+                                <th scope="col">{{ __('Telefono') }}</th>
+                                <th scope="col">{{ __('Acciones') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -98,13 +93,13 @@
                                 <tr>
                                     <td>{{ $user->getFullNameAttribute() }}</td>
                                     <td>{{ $user->primary_phone }}</td>
-                                    <td>
-                                        <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-primary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
+                                    <td class="d-flex justify-content-center">
+                                        <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-circle btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
 
-                                        <form method="POST" action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" class="d-inline">
+                                        <form method="POST" action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}">
                                             @method('delete')
                                             @csrf
-                                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Desea borrar este usuario: {{ $user->getFullNameAttribute() }}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button>
+                                            <button type="submit" class="btn btn-circle btn-danger mx-2" onclick="return confirm('¿Desea borrar este usuario: {{ $user->getFullNameAttribute() }}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
                                         </form>
                                     </td>
                                 </tr>

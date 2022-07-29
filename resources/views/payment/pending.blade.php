@@ -88,12 +88,12 @@
                                     <td>{{ $payment->userSubscription->subscription->name }}</td>
                                     <td>{{ $payment->paymentStatus->name }}</td>
                                     <td class="text-center d-flex justify-content-center">                                    
-                                        <a href="{{ route('payment.edit', ['payment_id' => $payment->id]) }}" type="button" class="btn btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-eraser mx-1"></i></a>
-                                        <div class="mx-1">
+                                        <a href="{{ route('payment.edit', ['payment_id' => $payment->id]) }}" type="button" class="btn btn-circle btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
+                                        <div>
                                             <form action="{{ route('payment.destroy', ['payment_id' => $payment->id]) }}" method="POST"> 
                                                 @csrf 
                                                 @method("DELETE") 
-                                                <button type="submit" class="btn btn-danger" onclick="return confirm('¿Desea borrar pago seleccionado?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button> 
+                                                <button type="submit" class="btn btn-circle btn-danger ml-2" onclick="return confirm('¿Desea borrar pago seleccionado?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button> 
                                             </form>  
                                         </div>                          
                                     </td>
