@@ -18,25 +18,8 @@
     <form action="{{route('profile.store')}}" method="POST">
     @csrf
         <div class="row">
-            <div class="col-lg-4 order-lg-2">
-                <div class="card shadow mb-4">
-                    <div class="card-header text-center">
-                        <h6 class="m-0 font-weight-bold text-danger"> {{ __('Suscripcion') }} </h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="col-lg-12">
-                            <select class="custom-select" required name="subscriptionIdSelected" value="old('subscriptionIdSelected')">
-                                <option selected value="sinSubscripcion"> Sin suscripcion </option>                                  
-                                @foreach($subscriptions as $subscription)
-                                    <option value="{{$subscription->id}}">{{ $subscription->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
         
-            <div class="col-lg-8 order-lg-1">
+            <div class="col-12">
                 <div class="card shadow mb-4">
                     <div class="card-header">
                         <h6 class="font-weight-bold text-danger">{{ __('Información del nuevo usuario') }}</h6>
@@ -130,16 +113,33 @@
                                     <textarea rows="4" id="new_password" class="form-control" name="personal_information" placeholder="Información que considere importante mencionar... (operaciones, lesiones, etc)" value="{{ old('personal_information') }}">{{ old('personal_information') }}</textarea>
                                 </div>
                             </div>
-                        </div>       
-
-                        <div class="card footer ">
-                            <div class="text-center mb-4 mt-3">
-                                <button type="submit" class="btn btn-dark"><i class="fa fa-floppy-disk mr-1"></i>{{ __('Crear usuario') }}</button>
-                            </div>
-                        </div>
+                        </div> 
                     </div>
                 </div>
             </div>
+        
+            <div class="col-12">
+                <div class="card shadow mb-4">
+                    <div class="card-header text-center">
+                        <h6 class="m-0 font-weight-bold text-danger"> {{ __('Suscripcion') }} </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            <select class="custom-select" required name="subscriptionIdSelected" value="old('subscriptionIdSelected')">
+                                <option selected value="sinSubscripcion"> Sin suscripcion </option>                                  
+                                @foreach($subscriptions as $subscription)
+                                    <option value="{{$subscription->id}}">{{ $subscription->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>     
+
+                    <div class="card-footer text-center">
+                        <button type="submit" class="btn btn-dark"><i class="fa fa-floppy-disk mr-1"></i>{{ __('Crear usuario') }}</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </form>
 @endsection

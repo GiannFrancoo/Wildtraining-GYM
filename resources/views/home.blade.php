@@ -3,15 +3,15 @@
 @section('main-content')
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">Panel administrativo</h1>
+    <h1 class="h3 mb-4 text-gray-800">{{ __('Panel de administración') }}</h1>
 
     @if (session('success'))
-    <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+        <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     @endif
 
     @if (session('status'))
@@ -106,12 +106,12 @@
     <div class="row">
         <div class="col-12">
             <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ __('Ultimos pagos agregados') }}</h6>
-                    <a href="{{ route('payment.create') }}" type="button" class="btn btn-success" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>Generar nuevo pago</a>
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-danger">{{ __('Ultimos pagos registrados') }}</h6>
+                    <a href="{{ route('payment.create') }}" type="button" class="btn btn-dark" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>{{ __('Nuevo pago') }}</a>
                 </div>
                 <div class="card-body table-responsive">
-                    <table class="table table-bordered table-hover text-center" id="myTable">    
+                    <table class="table table-bordered table-hover text-center">    
                         <thead>
                             <tr>
                                 <th>Nombre y apellido</th>
@@ -130,11 +130,11 @@
                                     <td>{{ $payment->userSubscription->subscription->name }}</td>
                                     <td>
                                         <!-- deberia cambiar el estado del pago -->
-                                        <a href="#" type="button" class="btn btn-secondary mx-1" title="changeStatus" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
+                                        <a href="{{ route('payment.edit', ['payment_id' => $payment->id]) }}" type="button" class="btn btn-secondary btn-circle mx-1" title="changeStatus" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
                                         <form action="{{ route('payment.destroy', ['payment_id' => $payment->id]) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method("DELETE")
-                                            <button class="btn btn-danger" onclick="return confirm('¿Desea borrar el pago asociado a {{ $payment->userSubscription->user->getFullNameAttribute() }}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button>
+                                            <button class="btn btn-circle btn-danger ml-2" onclick="return confirm('¿Desea borrar el pago asociado a {{ $payment->userSubscription->user->getFullNameAttribute() }}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
                                         </form>                          
                                     </td>
                                 </tr>
@@ -152,12 +152,12 @@
     <div class="row">
         <div class="col-12">
             <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ __('Ultimos usuarios agregados') }}</h6>
-                    <a href="{{ route('profile.create') }}" type="button" class="btn btn-success" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>Agregar</a>
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-danger">{{ __('Ultimos usuarios registrados') }}</h6>
+                    <a href="{{ route('profile.create') }}" type="button" class="btn btn-dark" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>{{ __('Nuevo usuario') }}</a>
                 </div>
                 <div class="card-body table-responsive">
-                    <table class="table table-bordered table-hover text-center" id="myTable">    
+                    <table class="table table-bordered table-hover text-center">    
                         <thead>
                             <tr>
                                 <th>Nombre y apellido</th>
@@ -179,12 +179,11 @@
                                         @endif 
                                     </td>
                                     <td>
-                                        <a href="{{route('profile', ['profile_id' => $user->id])}}" type="button" class="btn btn-primary mx-1"><i class="fa fa-eye"></i></a>
-                                        <a href="{{route('profile.edit', ['profile_id' => $user->id])}}" type="button" class="btn btn-secondary mx-1" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil mx-1"></i></a>
+                                        <a href="{{route('profile.edit', ['profile_id' => $user->id])}}" type="button" class="btn btn-circle btn-secondary" title="Edit"><i class="fa fa-pencil"></i></a>
                                         <form action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method("DELETE")
-                                            <button class="btn btn-danger" onclick="return confirm('¿Desea borrar al usuario {{ $user->name }}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash mx-1"></i></button>
+                                            <button class="btn btn-circle btn-danger ml-3" onclick="return confirm('¿Desea borrar al usuario {{ $user->name }}?')" title="Delete"><i class="fa fa-trash"></i></button>
                                         </form>
                                     </td>
                                 </tr>

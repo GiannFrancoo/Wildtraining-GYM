@@ -28,40 +28,12 @@
         @csrf
         @method('PUT')
         <div class="row">
-        
-            <!-- Subscription change -->
-            <div class="col-lg-4 order-lg-2">
-                <div class="card shadow mb-4">
-                    <div class="card-header text-center mt-3">
-                        <h6 class="m-0 font-weight-bold text-primary"> {{ __('Suscripcion') }} </h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="col-lg-12">
-                            @if($activeSubscription != null)
-                                <select  class="custom-select" name="subscriptionIdSelected" value="{{ old('subscriptionIdSelected', $activeSubscription->name) }}">                                          
-                                    @foreach($subscriptions as $subscription)
-                                        <option value="{{ $subscription->id }}" {{ ($activeSubscription->id === $subscription->id) ? 'Selected' : '' }}>{{ $subscription->name }}</option>
-                                    @endforeach
-                                    <option value="sinSubscripcion">Sin suscripcion</option>                                          
-                                </select>
-                            @else
-                                <select  class="custom-select" name="subscriptionIdSelected" value="old('subscriptionIdSelected')">
-                                    <option selected value="sinSubscripcion">Sin suscripcion</option>                                          
-                                    @foreach($subscriptions as $subscription)
-                                        <option value="{{ $subscription->id }}">{{ $subscription->name }}</option>
-                                    @endforeach
-                                </select>
-                            @endif 
-                        </div> 
-                    </div>
-                </div>
-            </div>
-            
+                  
             <!-- Edit personal information -->
-            <div class="col-lg-8 order-lg-1">
+            <div class="col-12">
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('Editando cuenta') }}</h6>
+                        <h6 class="m-0 font-weight-bold text-danger">{{ __('Editando cuenta') }}</h6>
                     </div>
 
                     <div class="card-body">
@@ -175,26 +147,56 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="card-footer text-center">
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-disk mr-1"></i>Guardar cambios</button>
-                    </div>       
+                    </div>      
                 </div>
             </div>
+
+             <!-- Subscription change -->
+             <div class="col-12">
+                <div class="card shadow mb-2">
+                    <div class="card-header text-center mt-3">
+                        <h6 class="m-0 font-weight-bold text-danger"> {{ __('Suscripcion') }} </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="col-lg-12">
+                            @if($activeSubscription != null)
+                                <select  class="custom-select" name="subscriptionIdSelected" value="{{ old('subscriptionIdSelected', $activeSubscription->name) }}">                                          
+                                    @foreach($subscriptions as $subscription)
+                                        <option value="{{ $subscription->id }}" {{ ($activeSubscription->id === $subscription->id) ? 'Selected' : '' }}>{{ $subscription->name }}</option>
+                                    @endforeach
+                                    <option value="sinSubscripcion">Sin suscripcion</option>                                          
+                                </select>
+                            @else
+                                <select  class="custom-select" name="subscriptionIdSelected" value="old('subscriptionIdSelected')">
+                                    <option selected value="sinSubscripcion">Sin suscripcion</option>                                          
+                                    @foreach($subscriptions as $subscription)
+                                        <option value="{{ $subscription->id }}">{{ $subscription->name }}</option>
+                                    @endforeach
+                                </select>
+                            @endif 
+                        </div> 
+                    </div>               
+                    <div class="card-footer text-center">
+                        <button type="submit" class="btn btn-dark"><i class="fa fa-floppy-disk mr-1"></i>Guardar cambios</button>
+                    </div> 
+                </div>
+            </div> 
+
         </div>
     </form>
+
+    <hr>
 
      <!-- Subscription historial -->
      <div class="row">
         <div class="col mb-4">
             <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex justify-content-between">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
                     <h6 class="m-0 font-weight-bold text-primary">{{ __('Historial de suscripciones de') }}: {{ $user->getFullNameAttribute() }}</h6>
-                    <a href="{{ route('profile.changeSubscription', ['profile_id' => $user->id]) }}" type="button" class="btn btn-success" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>{{ __('Cambiar suscripción') }}</a>
+                    <a href="{{ route('profile.changeSubscription', ['profile_id' => $user->id]) }}" type="button" class="btn btn-dark" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>{{ __('Cambiar suscripción') }}</a>
                 </div>
                 <div class="card-body table-responsive">
-                    <table class="table table-bordered table-hover text-center" id="myTable">    
+                    <table class="table table-bordered table-hover text-center" id="dataTable">    
                         <thead>
                             <tr>
                                 <th>Suscripcion</th>
@@ -205,11 +207,11 @@
                         <tbody>
                         @if ($userSubscriptions != null)
                             @foreach ($userSubscriptions as $userSubscription)  
-                                    <tr>                               
-                                        <td>{{ $userSubscription->subscription->name }}</td>
-                                        <td>{{ $userSubscription->user_subscription_status_updated_at->format('d/m/Y') }}</td>
-                                        <td>{{ $userSubscription->status->name }}</td>                                
-                                    </tr>
+                                <tr>                               
+                                    <td>{{ $userSubscription->subscription->name }}</td>
+                                    <td>{{ $userSubscription->user_subscription_status_updated_at->format('d/m/Y') }}</td>
+                                    <td>{{ $userSubscription->status->name }}</td>                                
+                                </tr>
                             @endforeach
                         @endif
                         </tbody>
@@ -225,7 +227,7 @@
 @section('custom_js')
 <script>
     $(document).ready(function () {
-        $('table').DataTable()
+        $('#dataTable').DataTable()
     })
 </script>
 @endsection

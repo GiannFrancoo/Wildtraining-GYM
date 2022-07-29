@@ -96,7 +96,7 @@
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
                     <h6 class="m-0 font-weight-bold text-danger">{{ __('Lista de suscripciones') }}</h6>
-                    <a href="{{route('subscription.create')}}" class="btn btn-danger mr-1"><i class="fa fa-add mr-1"></i>{{ __('Crear nueva suscripción') }}</a>
+                    <a href="{{route('subscription.create')}}" class="btn btn-dark mr-1"><i class="fa fa-add mr-1"></i>{{ __('Nueva') }}</a>
                 </div>
                 <div class="card-body table-responsive">
                     <table class="table table-bordered table-hover text-center" id="dataTable">    

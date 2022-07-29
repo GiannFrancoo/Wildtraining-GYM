@@ -2,8 +2,7 @@
 
 @section('main-content')
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">{{ __('About') }}</h1>
-
+    
     <div class="row justify-content-center">
 
         <div class="col-lg-8">
@@ -19,20 +18,20 @@
                     <div class="row">
                         <div class="col-lg-12 mb-1">
                             <div class="text-center">
-                                <h5 class="font-weight-bold">Alejandro RH</h5>
+                                <h5 class="font-weight-bold">Bentivegna Gian Franco | Cervelli Haderne Lucas</h5>
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-4 mb-1 text-center">
-                            <a href="https://facebook.com/aleckrh" target="_blank" class="btn btn-facebook btn-circle btn-lg"><i class="fab fa-facebook-f fa-fw"></i></a>
+                            <a href="" target="_blank" class="btn btn-facebook btn-circle btn-lg"><i class="fab fa-facebook-f fa-fw"></i></a>
                         </div>
                         <div class="col-md-4 mb-1 text-center">
-                            <a href="https://github.com/aleckrh" target="_blank" class="btn btn-github btn-circle btn-lg"><i class="fab fa-github fa-fw"></i></a>
+                            <a href="" target="_blank" class="btn btn-github btn-circle btn-lg"><i class="fab fa-github fa-fw"></i></a>
                         </div>
                         <div class="col-md-4 mb-1 text-center">
-                            <a href="https://twitter.com/aleckrh" target="_blank" class="btn btn-twitter btn-circle btn-lg"><i class="fab fa-twitter fa-fw"></i></a>
+                            <a href="" target="_blank" class="btn btn-twitter btn-circle btn-lg"><i class="fab fa-twitter fa-fw"></i></a>
                         </div>
                     </div>
 
