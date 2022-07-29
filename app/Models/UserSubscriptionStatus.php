@@ -11,6 +11,9 @@ class UserSubscriptionStatus extends Model
     
     protected $table = 'user_subscription_statuses';
 
+    const ACTIVE = 1;
+    const INACTIVE = 2;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -24,5 +27,4 @@ class UserSubscriptionStatus extends Model
     {
         return $this->hasMany(UserSubscription::class, 'user_subscription_status_id');
     }
-    
 }

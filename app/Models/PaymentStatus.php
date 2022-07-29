@@ -11,6 +11,10 @@ class PaymentStatus extends Model
     
     protected $table = 'payment_statuses';
 
+    const PENDING = 1;
+    const PAID = 2;
+    const CANCELLED = 3;
+
     /**
      * The attributes that are mass assignable.
      *
