@@ -125,9 +125,11 @@
                                     <td>{{ $user->primary_phone }}</td>
                                     <td>{{ $user->start_date->format('d/m/Y') }}</td>
                                     @if($user->lastSubscription()->first() != null)
-                                        <td>{{ $user->lastSubscription()->first()->name}}</td>
+                                    
+
+                                        <td><h4><span class="badge badge-pill badge-dark">{{ $user->lastSubscription()->first()->name}}</span></h4></td>
                                     @else
-                                        <td>{{ __('Sin suscripcion') }}</td>
+                                        <td><h4><span class="badge badge-pill badge-dark">{{ __('Sin suscripcion') }}</span></h4></td>
                                     @endif
                                     <td class="d-flex justify-content-center">
                                         <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-circle btn-secondary"><i class="fa fa-pencil"></i></a>
