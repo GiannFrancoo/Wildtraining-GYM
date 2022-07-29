@@ -3,8 +3,7 @@
 @section('main-content')
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">Usuarios</h1>
-
+    <h1 class="h3 mb-4 text-gray-800">{{ __('Usuarios') }}</h1>
 
     @if (session('success'))
         <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
@@ -30,11 +29,11 @@
 
         <!-- Earnings (Monthly) Card Example -->
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card border-left-danger shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" id="ganancia">Total</div>
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1" id="ganancia">Total</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $users->count() }}</div>
                         </div>
                         <div class="col-auto">
@@ -47,11 +46,11 @@
 
         <!-- Average ages> -->
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
+            <div class="card border-left-secondary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Promedio de edad</div>
+                            <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Promedio de edad</div>
                             <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $averageAges }} Años</div>
                         </div>
                         <div class="col-auto">
@@ -64,11 +63,11 @@
 
         <!-- Womens -->
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-danger shadow h-100 py-2">
+            <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">{{ __('Mujeres') }}</div>
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">{{ __('Mujeres') }}</div>
                             <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $users->count() - $menUsers }}</div>
                         </div>
                         <div class="col-auto">
@@ -102,16 +101,16 @@
     <div class="row">
         <div class="col mb-4">
             <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ __('Lista de usuarios') }}</h6>
-                    <a href="{{route('profile.create')}}" type="button" class="btn btn-success" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>Agregar</a>
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-danger">{{ __('Lista de usuarios') }}</h6>
+                    <a href="{{route('profile.create')}}" type="button" class="btn btn-dark" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>Agregar</a>
                 </div>
 
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <table class="table table-bordered table-hover text-center" id="dataTable">    
                         <thead>
                             <tr>
-                                <th>Nombre y apellido</th>
+                                <th>Usuario</th>
                                 <th>Telefono</th>
                                 <th>Fecha de inicio</th>
                                 <th>Suscripcion</th>
@@ -131,12 +130,12 @@
                                         <td>{{ __('Sin suscripcion') }}</td>
                                     @endif
                                     <td class="d-flex justify-content-center">
-                                        <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                                        <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-circle btn-secondary"><i class="fa fa-pencil"></i></a>
                                         <div class="ml-3">
                                             <form action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" method="POST">
                                                 @csrf
                                                 @method("DELETE")
-                                                <button class="btn btn-danger" onclick="return confirm('¿Desea borrar al usuario {{$user->name}}?')"><i class="fa fa-trash"></i></button>
+                                                <button class="btn btn-circle btn-danger" onclick="return confirm('¿Desea borrar al usuario {{$user->name}}?')"><i class="fa fa-trash"></i></button>
                                             </form>
                                         </div>
                                     </td>  

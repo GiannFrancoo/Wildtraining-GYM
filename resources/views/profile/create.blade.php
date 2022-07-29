@@ -3,7 +3,7 @@
 @section('main-content')
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">{{ __('Perfil') }}</h1>
+    <h1 class="h3 mb-4 text-gray-800">{{ __('Creando nuevo usuario') }}</h1>
 
     @if ($errors->any())
         <div class="alert alert-danger border-left-danger" role="alert">
@@ -20,7 +20,7 @@
         <div class="row">
             <div class="col-lg-4 order-lg-2">
                 <div class="card shadow mb-4">
-                    <div class="card-header text-center mt-3">
+                    <div class="card-header text-center">
                         <h6 class="m-0 font-weight-bold text-primary"> {{ __('Suscripcion') }} </h6>
                     </div>
                     <div class="card-body">
@@ -38,8 +38,8 @@
         
             <div class="col-lg-8 order-lg-1">
                 <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">{{ __('Crear cuenta') }}</h6>
+                    <div class="card-header">
+                        <h6 class="font-weight-bold text-primary">{{ __('Información del nuevo usuario') }}</h6>
                     </div>
                     <div class="card header">
                         <div class="card-body row">
@@ -52,7 +52,7 @@
                             
                             <div class="col-lg-6">
                                 <div class="form-group focused">
-                                    <label class="form-control-label" for="last_name">{{ __('Apellido(s)') }})<span class="small text-danger">*</span></label>
+                                    <label class="form-control-label" for="last_name">{{ __('Apellidos(s)') }}<span class="small text-danger">*</span></label>
                                     <input type="text" id="last_name" required class="form-control" name="last_name" placeholder="Apellido(s)..." value="{{ old('last_name') }}">
                                 </div>
                             </div>

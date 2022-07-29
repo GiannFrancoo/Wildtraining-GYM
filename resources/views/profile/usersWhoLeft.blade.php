@@ -28,15 +28,15 @@
     <div class="row">
         <!-- Earnings (Monthly) Card Example -->
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card border-left-dark shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" id="ganancia">{{ __('Total') }}</div>
+                            <div class="text-xs font-weight-bold text-dark text-uppercase mb-1" id="ganancia">{{ __('Total') }}</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $usersLeft->count() }}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                            <i class="fa fa-users fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -49,12 +49,12 @@
         <div class="col mb-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ __('Lista de usuarios') }}</h6>
-                    <small class="sm text-muted">(Donde su ultima asistencia fue hace más de 30 dias)</small>
+                    <h6 class="m-0 font-weight-bold text-danger">{{ __('Lista de usuarios') }}</h6>
+                    <small class="sm text-muted">{{ __('Donde su ultima asistencia fue hace más de 30 dias') }}</small>
                 </div>
 
                 <div class="card-body table-responsive">
-                    <table class="table table-bordered table-hover text-center" id="myTable">    
+                    <table class="table table-bordered table-hover text-center" id="dataTable">    
                             <thead>
                                 <tr>
                                     <th scope="col">Nombre y apellido</th>
@@ -76,7 +76,7 @@
                                         @endif                                         
                                         <td>{{ $user->assistances->first->get()->date->format('m/d/Y') }}</td>
                                         <td class="text-center">
-                                            <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-primary mx-1"><i class="fa fa-pencil"></i></a> 
+                                            <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-secondary btn-circle mx-1"><i class="fa fa-pencil"></i></a> 
                                         </td> 
                                     </tr>
                                 @endforeach
@@ -92,7 +92,7 @@
 @section('custom_js')
 <script>
     $(document).ready(function () {
-        $('table').DataTable()
+        $('#dataTable').DataTable()
     })
 </script>
 @endsection

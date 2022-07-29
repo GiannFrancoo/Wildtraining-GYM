@@ -48,7 +48,7 @@
                     <a href="{{route('payment.create')}}" type="button" class="btn btn-success" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>Generar nuevo pago</a>    
                 </div> 
                 <div class="card-body table-responsive">
-                    <table class="table table-borderedless table-hover text-center" id="myTable">    
+                    <table class="table table-bordered table-hover text-center" id="dataTable">    
                         <thead>
                             <tr>
                                 <th scope="col">Usuario</th>
@@ -63,7 +63,7 @@
                             @foreach ($payments as $payment)
                                 <tr>
                                     @if($payment->userSubscription->user != NULL)
-                                        <td>{{ $payment->userSubscription->user->name }}</td>
+                                        <td>{{ $payment->userSubscription->user->getFullNameAttribute() }}</td>
                                     @endif
                                     <th scope="row">${{ $payment->price }}</th>
                                     <td>{{ $payment->date->format('d/m/Y') }} {{ $payment->date->format('H:i') }}</td>                           
@@ -93,7 +93,7 @@
 @section('custom_js')
 <script>
     $(document).ready(function () {
-        $('table').DataTable()
+        $('#dataTable').DataTable()
     })
 </script>
 @endsection

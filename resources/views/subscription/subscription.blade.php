@@ -67,7 +67,7 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="card-body p-1">
+                        <div class="card-body table-responsive">
                             <table class="table table-borderless">
                                 <tbody>
                                     <tr>

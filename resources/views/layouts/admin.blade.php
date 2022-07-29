@@ -4,13 +4,13 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Laravel SB Admin 2">
-    <meta name="author" content="Alejandro RH">
+    <meta name="description" content="Wildtraining app">
+    <meta name="author" content="Bentivegna Gian Franco - Cervelli Lucas Haderne">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Wildtraining') }}</title>
 
     <!-- Fonts -->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
@@ -34,14 +34,14 @@
 <!-- Page Wrapper -->
 <div id="wrapper">  
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fa fa-dumbbell"></i>
             </div>            
-            <div class="sidebar-brand-text mx-3">Wildtraining</div>
+            <div class="sidebar-brand-text mx-3 text-danger">Wildtraining</div>
         </a>
 
         <!-- Divider -->
@@ -54,7 +54,7 @@
         <!-- Nav Item - Panel -->
         <li class="nav-item {{ Nav::isRoute('home') }}">
             <a class="nav-link" href="{{ route('home') }}">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <i class="fa fa-gauge-high"></i>
                 <span>{{ __('Panel') }}</span></a>
         </li>
 
@@ -78,28 +78,28 @@
                 <li class="nav-item {{ Nav::isRoute('profile.create') }}">
                     <a class="nav-link" href="{{ route('profile.create') }}">
                         <i class="fa-solid fa-add"></i>
-                        <span>{{ __('Agregar nuevo usuario') }}</span>
+                        <span>{{ __('Nuevo') }}</span>
                     </a>
                 </li>
                 <!-- List of users who left -->
                 <li class="nav-item {{ Nav::isRoute('profile.usersWhoLeft') }}">
                     <a class="nav-link" href="{{ route('profile.usersWhoLeft') }}">
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                        <span>{{ __('Usuarios que dejaron') }}</span>
+                        <span>{{ __('Dejaron') }}</span>
                     </a>
                 </li>
                 <!-- change user subscription  -->
                 <li class="nav-item {{ Nav::isRoute('profile.changeSubscription') }}">
                     <a class="nav-link" href="{{ route('profile.changeSubscription') }}">
                         <i class="fa-solid fa-arrow-right-arrow-left"></i>
-                        <span>{{ __('Cambiar suscripcion') }}</span>
+                        <span>{{ __('Cambiar suscripción') }}</span>
                     </a>
                 </li>
                 <!-- List of users -->
                 <li class="nav-item {{ Nav::isRoute('profile.index') }}">
                     <a class="nav-link" href="{{ route('profile.index') }}">
                         <i class="fa-solid fa-list"></i>
-                        <span>{{ __('Lista de usuarios') }}</span>
+                        <span>{{ __('Listado') }}</span>
                     </a>
                 </li>
             </div>
@@ -113,20 +113,22 @@
             </a>
         </li>
         <div class="collapse ml-2" id="collapseSubscriptions">
-            <!-- Add new subscription -->
-            <li class="nav-item {{ Nav::isRoute('subscription.create') }}">
-                <a class="nav-link" href="{{ route('subscription.create') }}">
-                    <i class="fa-solid fa-add"></i>
-                    <span>{{ __('Agregar nueva suscripción') }}</span>
-                </a>
-            </li>
-            <!-- List of subscriptions -->
-            <li class="nav-item {{ Nav::isRoute('subscription.index') }}">
-                <a class="nav-link" href="{{ route('subscription.index') }}">
-                    <i class="fa-solid fa-list"></i>
-                    <span>{{ __('Lista de suscripciones') }}</span>
-                </a>
-            </li>        
+            <div class="border-left-light collapse-inner">
+                <!-- Add new subscription -->
+                <li class="nav-item {{ Nav::isRoute('subscription.create') }}">
+                    <a class="nav-link" href="{{ route('subscription.create') }}">
+                        <i class="fa-solid fa-add"></i>
+                        <span>{{ __('Nueva') }}</span>
+                    </a>
+                </li>
+                <!-- List of subscriptions -->
+                <li class="nav-item {{ Nav::isRoute('subscription.index') }}">
+                    <a class="nav-link" href="{{ route('subscription.index') }}">
+                        <i class="fa-solid fa-list"></i>
+                        <span>{{ __('Listado') }}</span>
+                    </a>
+                </li> 
+            </div>       
         </div>
 
         <!-- Nav Item - Assistances -->
@@ -137,20 +139,22 @@
             </a>
         </li>
         <div class="collapse ml-2" id="collapseAssistances">
-            <!-- Add new assistance -->
-            <li class="nav-item {{ Nav::isRoute('assistance.create') }}">
-                <a class="nav-link" href="{{ route('assistance.create') }}">
-                    <i class="fa-solid fa-add"></i>
-                    <span>{{ __('Marcar nueva asistencia') }}</span>
-                </a>
-            </li>
-            <!-- List of assistances -->
-            <li class="nav-item {{ Nav::isRoute('assistance.index') }}">
-                <a class="nav-link" href="{{ route('assistance.index') }}">
-                    <i class="fa-solid fa-list"></i>
-                    <span>{{ __('Lista de asistencias') }}</span>
-                </a>
-            </li>
+            <div class="border-left-light collapse-inner">
+                <!-- Add new assistance -->
+                <li class="nav-item {{ Nav::isRoute('assistance.create') }}">
+                    <a class="nav-link" href="{{ route('assistance.create') }}">
+                        <i class="fa-solid fa-add"></i>
+                        <span>{{ __('Nueva') }}</span>
+                    </a>
+                </li>
+                <!-- List of assistances -->
+                <li class="nav-item {{ Nav::isRoute('assistance.index') }}">
+                    <a class="nav-link" href="{{ route('assistance.index') }}">
+                        <i class="fa-solid fa-list"></i>
+                        <span>{{ __('Listado') }}</span>
+                    </a>
+                </li>
+            </div>
         </div>
 
         <!-- Nav Item - Payments -->
@@ -160,28 +164,30 @@
                 <span>{{ __('Pagos') }}</span>
             </a>
         </li>
-        <div class="collapse ml-2" id="collapsePayments">
-            <!-- Add new payment -->
-            <li class="nav-item {{ Nav::isRoute('payment.create') }}">
-                <a class="nav-link" href="{{ route('payment.create') }}">
-                    <i class="fa-solid fa-add"></i>
-                    <span>{{ __('Generar nuevo pago') }}</span>
-                </a>
-            </li>
-            <!-- List of pendant payments -->
-            <li class="nav-item {{ Nav::isRoute('payment.pendant') }}">
-                <a class="nav-link" href="{{ route('payment.pendant') }}">
-                    <i class="fa-solid fa-list"></i>
-                    <span>{{ __('Pendientes') }}</span>
-                </a>
-            </li>
-            <!-- List of payments -->
-            <li class="nav-item {{ Nav::isRoute('payment.index') }}">
-                <a class="nav-link" href="{{ route('payment.index') }}">
-                    <i class="fa-solid fa-list"></i>
-                    <span>{{ __('Lista todos los pagos') }}</span>
-                </a>
-            </li>
+        <div class="collapse ml-2" id="collapsePayments">            
+            <div class="border-left-light collapse-inner">
+                <!-- Add new payment -->
+                <li class="nav-item {{ Nav::isRoute('payment.create') }}">
+                    <a class="nav-link" href="{{ route('payment.create') }}">
+                        <i class="fa-solid fa-add"></i>
+                        <span>{{ __('Nuevo') }}</span>
+                    </a>
+                </li>
+                <!-- List of pending payments -->
+                <li class="nav-item {{ Nav::isRoute('payment.pending') }}">
+                    <a class="nav-link" href="{{ route('payment.pending') }}">
+                        <i class="fa-solid fa-clock"></i>
+                        <span>{{ __('Pendientes') }}</span>
+                    </a>
+                </li>
+                <!-- List of payments -->
+                <li class="nav-item {{ Nav::isRoute('payment.index') }}">
+                    <a class="nav-link" href="{{ route('payment.index') }}">
+                        <i class="fa-solid fa-list"></i>
+                        <span>{{ __('Listado') }}</span>
+                    </a>
+                </li>
+            </div>
         </div>
 
         <!-- Divider -->
@@ -204,7 +210,7 @@
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
         </div>
 
-        </ul>
+    </ul>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -230,18 +236,13 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-                            <figure class="img-profile rounded-circle avatar font-weight-bold" data-initial="{{ Auth::user()->name[0] }}"></figure>
+                            <figure class="img-profile rounded-circle avatar bg-danger font-weight-bold" data-initial="{{ Auth::user()->name[0] }}"></figure>
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="{{ route('profile', ['profile_id' => Auth::user()->id]) }}">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                {{ __('Perfil') }}
-                            </a>
-                            <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                {{ __('Cerrar sesion') }}
+                                <i class="fa-solid fa-arrow-right-from-bracket mr-1 text-gray-400"></i>
+                                {{ __('Cerrar sesión') }}
                             </a>
                         </div>
                     </li>
@@ -286,12 +287,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">{{ __('¿Desea cerrar sesion?') }}</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{{ __('¿Desea cerrar sesión?') }}</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Si desea cerrar la sesion presione el botónn cerrar sesión.</div>
+            <div class="modal-body">{{ __('Si desea cerrar la sesión presione el botón cerrar sesión') }}</div>
             <div class="modal-footer">
                 <button class="btn btn-link" type="button" data-dismiss="modal">{{ __('Cancelar') }}</button>
                 <a class="btn btn-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Cerrar sesion') }}</a>
@@ -349,7 +350,7 @@
     }, 5000);
 </script>
 
-{{-- script para cerrar barra por default en mobile --}}
+<!-- script para cerrar barra por default en mobile -->
 <script>
     $(document).ready(function () {
         var $window = $(window);
