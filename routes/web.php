@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SubscriptionController;
+use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -69,6 +70,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/payment/{payment_id}', [PaymentController::class, 'destroy'])->name('payment.destroy');
     Route::put('/payment/{payment_id}', [PaymentController::class, 'update'])->name('payment.update');
     Route::get('/payment/pending', [PaymentController::class, 'pending'])->name('payment.pending');
+    Route::get('/payment/changeStatus/{payment_id}', [PaymentController::class, 'changeStatus'])->name('payment.changeStatus');
     
     Route::get('/about', function () {
         return view('about');

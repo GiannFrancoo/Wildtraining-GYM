@@ -21,7 +21,11 @@ class PaymentController extends Controller
     {
         try{
             $payments = Payment::all();
-            return view('payment.index')->with('payments', $payments);
+            return view('payment.index')
+                ->with([
+                    'payments' => $payments,
+                    'paymentStatuses' => PaymentStatus::all(),
+                ]);
         }
         catch(Exception $e){
             return redirect()->back()->withErrors('Error al mostrar los pagos');
@@ -195,7 +199,6 @@ class PaymentController extends Controller
         }
     }
 
-
     /**
      * List of pending payments
      */
@@ -215,4 +218,23 @@ class PaymentController extends Controller
         
 
     }
+
+    /**
+     * Change the status to a payment
+     */
+
+    public function changeStatus(Request $request, $payment_id)
+    {
+        try{            
+            $payment = Payment::findOrFail($payment_id);
+            $payment->payment_status_id = $request->new_payment_status_id;
+            $payment->payment_status_updated_at = now();
+            $payment->save();           
+
+            return redirect()->route('payment.index')->withSuccess("Se cambio el estado del pago correctamente");
+        }
+        catch(Exception $e){
+            return redirect()->back()->withErrors('Error al seleccionar usuario');
+        }
+    }   
 }
