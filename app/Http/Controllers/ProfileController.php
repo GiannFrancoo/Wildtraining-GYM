@@ -111,10 +111,10 @@ class ProfileController extends Controller
             $user->last_name = $request->last_name;
             $user->gender_id = Gender::findOrFail($request->gender_id)->id;
             $user->email = $request->email;
-            $user->social_work_id = $request->social_work_id;
             $user->start_date = $request->start_date;
             $user->primary_phone = $request->primary_phone;
-
+            $user->social_work_id = $request->social_work_id; 
+            
             if($request->secundary_phone != null){
                 $user->secundary_phone = $request->secundary_phone;
             }
@@ -158,14 +158,15 @@ class ProfileController extends Controller
 
     public function store(Request $request)
     {
-        try{
+        
             $request->validate([
                 'name' => 'required|string|max:255',
                 'last_name' => 'required|nullable|string|max:255',
                 'primary_phone' => 'required|string|min:9',
                 'gender_id' => 'required',
             ]);
-        
+
+            //dd($request->social_work_id);
             $user = new User();
             $user->name = $request->name;
             $user->last_name = $request->last_name;
@@ -176,7 +177,7 @@ class ProfileController extends Controller
             $user->password = 'password';
             $user->role_id = Role::where('name', 'Usuario')->first()->id;
             $user->social_work_id = $request->social_work_id;
-        
+                   
             if($request->secundary_phone != NULL){
                 $user->secundary_phone = $request->secundary_phone;
             }
@@ -193,8 +194,8 @@ class ProfileController extends Controller
                 $user->personal_information = $request->personal_information;
             }
 
+          
             $user->save();
-
             if($request->subscriptionIdSelected != 'sinSubscripcion'){
                 $user_subscription = new UserSubscription();
                 $user_subscription->user_id = $user->id;
@@ -206,10 +207,8 @@ class ProfileController extends Controller
             }   
             
             return redirect()->route('profile.index')->withSuccess('Se guardaron con exito los cambios.');
-        }
-        catch(Exception $e){
-            return redirect()->back()->withErrors('Error al crear el usuario nuevo');            
-        }
+       
+       
     }
 
     public function edit($profile_id)
