@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gender;
+use App\Models\Payment;
 use App\Models\User;
 use App\Models\SocialWork;
 use App\Models\UserSubscription;
@@ -38,25 +39,46 @@ class ProfileController extends Controller
         }
     }
 
-    public function show($id)
+    public function show($profile_id)
     {
         try{
-            $userSubscriptions = UserSubscription::with('user')->where('user_id', $id)->get(); //check null?
-            $user = $userSubscriptions->first()->user; //recupero el usuario
-            
-            return view('profile.profile')->with([
+            // $user = User::with('subscriptions', function($query) use ($profile_id){
+            //     $query->where('user_id', $profile_id)
+            //     ->orderBy('user_subscription_status_id','asc');
+            // })
+            // ->get();
+            // $userSubscriptions = $user->subscriptions;
+
+
+            $user = User::findOrFail($profile_id);
+            $userSubscriptions = UserSubscription::where('user_id', $profile_id)
+                ->orderBy('user_subscription_status_id','asc')
+                ->get();
+
+
+
+
+
+            $userPayments = Payment::whereHas('userSubscription', function($query) use ($profile_id){
+                $query->where('user_id', $profile_id);
+            })
+            ->with(['userSubscription', 'userSubscription.subscription', 'paymentStatus'])
+            ->get();
+
+            return view('profile.show')->with([
                 'user' => $user,
                 'userSubscriptions' => $userSubscriptions,
+                'userPayments' => $userPayments,
             ]);
         }
         catch (Exception $e){
-            return redirect()->back()->withErrors('Error al mostrar el usuario');            
+            return redirect()->back()->withErrors($e->getMessage());   
         }
     }
 
     public function index()
     {
-        try{
+        try{      
             $subscriptions = Subscription::all();
             $users = User::latest()->get();
             $monthlyRevenue = 0;
@@ -102,8 +124,9 @@ class ProfileController extends Controller
             $request->validate([
                 'name' => 'required|string|max:255',
                 'last_name' => 'required|nullable|string|max:255',
+                'email' => 'required|email:rfc,dns',
                 'primary_phone' => 'required|string|min:9',
-                // 'gender_id' => 'required',
+                'gender_id' => 'required',
             ]);
 
             $user = User::findOrFail($profile_id);
@@ -145,28 +168,26 @@ class ProfileController extends Controller
                 $user_subscription->user_subscription_status_updated_at = now();
                 $user_subscription->user_subscription_status_id = UserSubscriptionStatus::where('name','Activa')->first()->id;
                 $user_subscription->save();
-                }
-          
+            }          
             
             return redirect()->route('profile.index')->withSuccess('Se guardaron los cambios con exito');
         }
         catch(Exception $e){
-            dd($e->getMessage());
-            return redirect()->back()->withErrors('Error al editar el usuario');     
+            return redirect()->back()->withErrors($e->getMessage());     
         }
     }
 
     public function store(Request $request)
     {
-        
+        try{
             $request->validate([
                 'name' => 'required|string|max:255',
                 'last_name' => 'required|nullable|string|max:255',
-                'primary_phone' => 'required|string|min:9',
+                'email' => 'required|unique:users,email|email:rfc,dns',
+                'primary_phone' => 'required|unique:users,primary_phone|string|min:9',
                 'gender_id' => 'required',
             ]);
 
-            //dd($request->social_work_id);
             $user = new User();
             $user->name = $request->name;
             $user->last_name = $request->last_name;
@@ -175,7 +196,7 @@ class ProfileController extends Controller
             $user->primary_phone = $request->primary_phone;
             $user->start_date = $request->start_date;
             $user->password = 'password';
-            $user->role_id = Role::where('name', 'Usuario')->first()->id;
+            $user->role_id = Role::USER;
             $user->social_work_id = $request->social_work_id;
                    
             if($request->secundary_phone != NULL){
@@ -193,7 +214,6 @@ class ProfileController extends Controller
             if($request->personal_information != NULL){
                 $user->personal_information = $request->personal_information;
             }
-
           
             $user->save();
             if($request->subscriptionIdSelected != 'sinSubscripcion'){
@@ -207,7 +227,10 @@ class ProfileController extends Controller
             }   
             
             return redirect()->route('profile.index')->withSuccess('Se guardaron con exito los cambios.');
-       
+        }
+        catch (Exception $e){
+            return redirect()->back()->withErrors($e->getMessage());
+        }      
        
     }
 

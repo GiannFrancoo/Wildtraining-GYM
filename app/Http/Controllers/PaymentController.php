@@ -20,7 +20,7 @@ class PaymentController extends Controller
     public function index()
     {
         try{
-            $payments = Payment::all();
+            $payments = Payment::orderBy('date','desc')->get();
             return view('payment.index')
                 ->with([
                     'payments' => $payments,
@@ -207,7 +207,7 @@ class PaymentController extends Controller
         try{
             $pendingPayments = Payment::whereHas('PaymentStatus', function ($query) {
                 $query->where('id', PaymentStatus::PENDING);
-            })->get();
+            })->orderBy('date','desc')->get();
 
             return view('payment.pending')
                 ->with(['pendingPayments' => $pendingPayments]);

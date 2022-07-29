@@ -81,7 +81,7 @@
                             @foreach ($assistances as $assistance)
                                 <tr>
                                     <td>{{ $assistance->user->getFullNameAttribute() }}</td>
-                                    <td>{{ $assistance->date->format('d/m/Y') }}</td>
+                                    <td data-sort="Ymd">{{ $assistance->date->format('d/m/Y') }}</td>
                                     <td>{{ $assistance->date->format('H:i') }}</td>
                                     <td class="d-flex justify-content-center">
                                         <a href="{{ route('assistance.edit', ['assistance_id' => $assistance->id]) }}" type="button" class="btn btn-circle btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
@@ -106,7 +106,9 @@
 @section('custom_js')
 <script>
     $(document).ready(function () {
-        $('#dataTable').DataTable()
+        $('#dataTable').DataTable({
+            order: [1, 'desc'],
+        })
     })
 </script>
 @endsection

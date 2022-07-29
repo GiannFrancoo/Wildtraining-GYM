@@ -134,7 +134,7 @@
 <script>
     $(document).ready(function () {
         $('#dataTable').DataTable( {
-            order: [[0, 'asc']],
+            order: [[1, 'asc']],
         })
     })
 </script>

@@ -23,17 +23,14 @@
         </div>
     @endif
 
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">{{ __('Editando subscripción') }}</h6>
-        </div>
-        <div class="card-body">
-            
-            <h6 class="heading-small text-muted mb-4">Informacion</h6>
-            
-            <form method="POST" action="{{ route('subscription.update', ['subscription_id' => $subscription->id]) }}">
-            @csrf
-            @method('PUT')
+    <form method="POST" action="{{ route('subscription.update', ['subscription_id' => $subscription->id]) }}">
+    @csrf
+    @method('PUT')
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-danger">{{ __('Editando subscripción') }}</h6>
+            </div>
+            <div class="card-body">                        
                 <div class="row">
                     <div class="col-lg-6 col-md-6">
                         <div class="form-group focused">
@@ -89,17 +86,12 @@
                         </div>
                     </div>
                 </div>
-
-                <hr class="my-3">
-
-                <div class="form-group text-center focused">
-                    <button class="btn btn-primary"><i class="fa fa-pencil mr-1"></i>Actualizar</button>
-                </div>
-
-                
-            </form>            
-        </div>
-    </div>
+            </div>
+            <div class="card-footer text-center">
+                <button class="btn btn-dark"><i class="fa fa-pencil mr-1"></i>Actualizar</button>
+            </div>
+        </div>        
+    </form>            
 
 
 @endsection

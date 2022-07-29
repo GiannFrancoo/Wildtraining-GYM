@@ -124,16 +124,15 @@
                                     <td>{{ $user->getFullNameAttribute() }}</td>
                                     <td>{{ $user->primary_phone }}</td>
                                     <td>{{ $user->start_date->format('d/m/Y') }}</td>
-                                    @if($user->lastSubscription()->first() != null)
-                                    
-
-                                        <td><h4><span class="badge badge-pill badge-dark">{{ $user->lastSubscription()->first()->name}}</span></h4></td>
+                                    @if($user->lastSubscription()->first() != null)                                 
+                                        <td><h5><span class="badge badge-pill badge-dark">{{ $user->lastSubscription()->first()->name}}</span></h5></td>
                                     @else
-                                        <td><h4><span class="badge badge-pill badge-dark">{{ __('Sin suscripcion') }}</span></h4></td>
+                                        <td><h5><span class="badge badge-pill badge-dark">{{ __('Sin suscripcion') }}</span></h5></td>
                                     @endif
                                     <td class="d-flex justify-content-center">
-                                        <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-circle btn-secondary"><i class="fa fa-pencil"></i></a>
-                                        <div class="ml-3">
+                                        <a href="{{ route('profile.show', ['profile_id' => $user->id]) }}" type="button" class="btn btn-circle btn-light mx-1"><i class="fa fa-eye"></i></a>
+                                        <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-circle btn-secondary mx-1"><i class="fa fa-pencil"></i></a>
+                                        <div class="mx-1">
                                             <form action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" method="POST">
                                                 @csrf
                                                 @method("DELETE")
@@ -175,7 +174,7 @@
 <script>
     $(document).ready(function () {
         $('#dataTable').DataTable( {
-            order: [[0, 'asc']],
+            order: [[2, 'desc']],
         })
     })
 </script>

@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile', [ProfileController::class, 'store'])->name('profile.store');
     Route::get('/profile/{profile_id}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/profiles', [ProfileController::class, 'index'])->name('profile.index');
-    Route::get('/profile/{profile_id}', [ProfileController::class, 'show'])->name('profile');
+    Route::get('/profile/{profile_id}', [ProfileController::class, 'show'])->name('profile.show');
     Route::delete('/profile/{profile_id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
     //Routes for subscriptions

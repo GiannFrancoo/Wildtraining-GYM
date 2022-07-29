@@ -11,6 +11,7 @@ class SocialWork extends Model
     use SoftDeletes;
 
     protected $table = 'social_works';
+    const NOSOCIALWORK = 1;
 
     protected $fillable = [
         'name',

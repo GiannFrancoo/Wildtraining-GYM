@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Gender extends Model
 {
     protected $table = "genders";
+
+    const MEN = 1;
+    const WOMEN = 2;
+    
     protected $fillable = [
         'name',
     ];

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -62,6 +63,13 @@ class User extends Authenticatable
         }
 
         return "{$this->name} {$this->last_name}";
+    }
+    
+    /**
+     * Get the age of the user
+     */
+    public function getAge(){
+        return Carbon::parse($this->attributes['birthday'])->age;
     }
 
     /**

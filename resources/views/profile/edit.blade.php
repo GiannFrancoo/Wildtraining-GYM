@@ -183,51 +183,5 @@
             </div> 
 
         </div>
-    </form>
-
-    <hr>
-
-     <!-- Subscription historial -->
-     <div class="row">
-        <div class="col mb-4">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ __('Historial de suscripciones de') }}: {{ $user->getFullNameAttribute() }}</h6>
-                    <a href="{{ route('profile.changeSubscription', ['profile_id' => $user->id]) }}" type="button" class="btn btn-dark" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>{{ __('Cambiar suscripción') }}</a>
-                </div>
-                <div class="card-body table-responsive">
-                    <table class="table table-bordered table-hover text-center" id="dataTable">    
-                        <thead>
-                            <tr>
-                                <th>Suscripcion</th>
-                                <th>Fecha de modificación</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @if ($userSubscriptions != null)
-                            @foreach ($userSubscriptions as $userSubscription)  
-                                <tr>                               
-                                    <td>{{ $userSubscription->subscription->name }}</td>
-                                    <td>{{ $userSubscription->user_subscription_status_updated_at->format('d/m/Y') }}</td>
-                                    <td>{{ $userSubscription->status->name }}</td>                                
-                                </tr>
-                            @endforeach
-                        @endif
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-@endsection
-
-
-@section('custom_js')
-<script>
-    $(document).ready(function () {
-        $('#dataTable').DataTable()
-    })
-</script>
+    </form>   
 @endsection

@@ -10,6 +10,8 @@ class Role extends Model
     use SoftDeletes;
     
     protected $table = 'roles';
+    const ADMIN = 1;
+    const USER = 2;
 
     /**
      * The attributes that are mass assignable.

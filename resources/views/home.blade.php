@@ -111,7 +111,7 @@
                     <a href="{{ route('payment.create') }}" type="button" class="btn btn-dark" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>{{ __('Nuevo pago') }}</a>
                 </div>
                 <div class="card-body table-responsive">
-                    <table class="table table-bordered table-hover text-center">    
+                    <table class="table table-bordered table-hover text-center" id="tableLastPayments">    
                         <thead>
                             <tr>
                                 <th>Nombre y apellido</th>
@@ -157,11 +157,12 @@
                     <a href="{{ route('profile.create') }}" type="button" class="btn btn-dark" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>{{ __('Nuevo usuario') }}</a>
                 </div>
                 <div class="card-body table-responsive">
-                    <table class="table table-bordered table-hover text-center">    
+                    <table class="table table-bordered table-hover text-center" id="tableLastUsers">    
                         <thead>
                             <tr>
                                 <th>Nombre y apellido</th>
                                 <th>Telefono</th>
+                                <th>Fecha inicio</th>
                                 <th>Suscripción</th>
                                 <th>Acciones</th>
                             </tr>
@@ -171,6 +172,7 @@
                                 <tr>
                                     <td>{{ $user->getFullNameAttribute() }}</td>
                                     <td>{{ $user->primary_phone }}</td>
+                                    <td>{{ $user->start_date->format('d/m/Y') }}</td>
                                     <td>
                                         @if ($user->lastSubscription->isEmpty())
                                             Sin suscripción
@@ -201,7 +203,12 @@
 @section('custom_js')
 <script>
     $(document).ready(function () {
-        $('table').DataTable()
+        $('#tableLastPayments').DataTable({
+            order: [[1, 'desc']],
+        })
+        $('#tableLastUsers').DataTable({
+            order: [[0, 'desc']],
+        })
     })
 </script>
 @endsection

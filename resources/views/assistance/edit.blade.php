@@ -22,20 +22,16 @@
             </ul>
         </div>
     @endif
-
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Editando asistencia</h6>
-        </div>
-        <div class="card-body">
-
-            <h6 class="heading-small text-muted mb-4">Informacion</h6>
-            
-            <form method="POST" action="{{ route('assistance.update', ['assistance_id' => $assistance->id]) }}">
-            @csrf
-            @method('PUT')
+    
+    <form method="POST" action="{{ route('assistance.update', ['assistance_id' => $assistance->id]) }}">
+    @csrf
+    @method('PUT')
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-danger">Editando asistencia</h6>
+            </div>
+            <div class="card-body">            
                 <div class="row">
-
                     <div class="col-6">                        
                         <div class="form-group focused">
                             <label class="form-control-label" for="user">Usuario</label>
@@ -55,18 +51,13 @@
                             <input type="datetime-local" id="date" class="form-control" placeholder="{{ date('d-m-Y H:i:s') }}" name="date" value="{{ old('date', $assistance->date->format('Y-m-d H:i:s')) }}">
                         </div>
                     </div>
-
                 </div>
-
-                <hr class="mt-2">
-                
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-disk mr-1"></i>Actualizar asistencia</button>
-                </div>
-                
-            </form>            
+            </div>               
+            <div class="card-footer text-center">
+                <button type="submit" class="btn btn-dark"><i class="fa fa-pencil mr-1"></i>Actualizar</button>
+            </div>  
         </div>
-    </div>
-
+    </form>            
+    
 
 @endsection

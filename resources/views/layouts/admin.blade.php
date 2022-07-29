@@ -72,7 +72,7 @@
                 <span>{{ __('Usuarios') }}</span>
             </a>
         </li>
-        <div class="collapse ml-2" id="collapseUsers">
+        <div class="collapse ml-1 {{ Nav::isRoute('profile.*', 'show') }}" id="collapseUsers">
             <div class="border-left-light collapse-inner">
                 <!-- Add new user -->
                 <li class="nav-item {{ Nav::isRoute('profile.create') }}">
@@ -112,7 +112,7 @@
                 <span>{{ __('Suscripciones') }}</span>
             </a>
         </li>
-        <div class="collapse ml-2" id="collapseSubscriptions">
+        <div class="collapse ml-1 {{ Nav::isRoute('subscription.*', 'show') }}" id="collapseSubscriptions">
             <div class="border-left-light collapse-inner">
                 <!-- Add new subscription -->
                 <li class="nav-item {{ Nav::isRoute('subscription.create') }}">
@@ -138,7 +138,7 @@
                 <span>{{ __('Asistencias') }}</span>
             </a>
         </li>
-        <div class="collapse ml-2" id="collapseAssistances">
+        <div class="collapse ml-1 {{ Nav::isRoute('assistance.*', 'show') }}" id="collapseAssistances">
             <div class="border-left-light collapse-inner">
                 <!-- Add new assistance -->
                 <li class="nav-item {{ Nav::isRoute('assistance.create') }}">
@@ -164,7 +164,7 @@
                 <span>{{ __('Pagos') }}</span>
             </a>
         </li>
-        <div class="collapse ml-2" id="collapsePayments">            
+        <div class="collapse ml-1 {{ Nav::isRoute('payment.*', 'show') }}" id="collapsePayments">            
             <div class="border-left-light collapse-inner">
                 <!-- Add new payment -->
                 <li class="nav-item {{ Nav::isRoute('payment.create') }}">
@@ -337,7 +337,7 @@
 <script>
     $.extend(true, $.fn.dataTable.defaults, {
         bInfo: false,
-        order: [[0, 'desc']],
+        order: false,
         language: {
             url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
         },

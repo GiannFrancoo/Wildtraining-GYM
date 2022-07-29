@@ -66,9 +66,9 @@
                                     @if($payment->userSubscription->user != NULL)
                                         <td>{{ $payment->userSubscription->user->getFullNameAttribute() }}</td>
                                     @endif
-                                    <th scope="row">${{ $payment->price }}</th>
-                                    <td>{{ $payment->date->format('d/m/Y') }}</td>                           
-                                    <td>{{ $payment->userSubscription->subscription->name }}</td>
+                                    <th>${{ $payment->price }}</th>
+                                    <td data-sort="Ymd">{{ $payment->date->format('d/m/Y') }}</td>   
+                                    <td><h5><span class="badge badge-pill badge-dark">{{ $payment->userSubscription->subscription->name }}</span></h5></td>                  
                                     <td>{{ $payment->paymentStatus->name }}</td>
                                     <td class="text-center d-flex justify-content-center">                                    
                                         <a href="{{ route('payment.edit', ['payment_id' => $payment->id]) }}" type="button" class="btn btn-circle btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
@@ -103,7 +103,9 @@
 @section('custom_js')
 <script>
     $(document).ready(function () {
-        $('#dataTable').DataTable()
+        $('#dataTable').DataTable({
+            order: [2, 'desc'],
+        })
     })
 </script>
 @endsection

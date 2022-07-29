@@ -7,8 +7,7 @@ use Illuminate\Database\Seeder;
 
 class SocialWorkSeeder extends Seeder
 {
-    const NOSOCIALWORK = 1;
-
+    
     /**
      * Run the database seeds.
      *

@@ -18,7 +18,7 @@ class AssistanceController extends Controller
      */
     public function index()
     {
-        $assistances = Assistance::orderByDesc('date')->get();
+        $assistances = Assistance::orderBy('date','DESC')->get();
         $bussiestHours = ["hour" => 0, "count" => 0];
         $todayAssists = 0;
 
