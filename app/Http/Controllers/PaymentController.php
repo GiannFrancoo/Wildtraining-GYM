@@ -33,17 +33,17 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create($profile_id = null)
+    {   
         try{
             $paymentStatuses = PaymentStatus::all();
             $users = User::all();
-            $selectedUser = null;
+            $userSelected = null;
             $subscription = null;
 
-            if (isset($_GET['user'])) { 
-                $selectedUser = User::with('lastSubscription')->find($_GET['user']);
-                $subscription = $selectedUser->lastSubscription->first();
+            if (isset($_GET['user']) && ($_GET['user'] != 'withoutUser')) { 
+                $userSelected = User::with('lastSubscription')->find($_GET['user']);
+                $subscription = $userSelected->lastSubscription->first();
 
                 if (is_null($subscription)) {
                     return redirect()
@@ -55,7 +55,7 @@ class PaymentController extends Controller
             return view('payment.create')->with([
                 'users' => $users,
                 'paymentStatuses' => $paymentStatuses,
-                'selectedUser' => $selectedUser,
+                'userSelected' => $userSelected,
                 'subscription' => $subscription,
             ]);
         }
@@ -197,16 +197,17 @@ class PaymentController extends Controller
 
 
     /**
-     * List of pendant payments
+     * List of pending payments
      */
-    public function pendant()
+    public function pending()
     {
         try{
-            $pendantPayments = Payment::whereHas('PaymentStatus', function ($query) {
-                $query->where('name','Pendiente');
+            $pendingPayments = Payment::whereHas('PaymentStatus', function ($query) {
+                $query->where('id', PaymentStatus::PENDING);
             })->get();
 
-            return view('payment.pendant')->with(['pendantPayments' => $pendantPayments]);
+            return view('payment.pending')
+                ->with(['pendingPayments' => $pendingPayments]);
         }
         catch(Exception $e){
             return redirect()->back()->withErrors('Error al mostrar los pagos pendientes');
@@ -214,6 +215,4 @@ class PaymentController extends Controller
         
 
     }
-
-
 }

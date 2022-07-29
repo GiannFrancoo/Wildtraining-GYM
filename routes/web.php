@@ -62,13 +62,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/assistance/{assistance_id}', [AssistanceController::class, 'destroy'])->name('assistance.destroy');
     
     //Routes for payments
-    Route::get('/payment/create', [PaymentController::class, 'create'])->name('payment.create');
-    Route::post('/payment/{payment_id}', [PaymentController::class, 'store'])->name('payment.store');
+    Route::get('/payment/create/{profile_id?}', [PaymentController::class, 'create'])->name('payment.create');
+    Route::post('/payment/{profile_id}', [PaymentController::class, 'store'])->name('payment.store');
     Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
     Route::get('/payment/{payment_id}/edit', [PaymentController::class, 'edit'])->name('payment.edit');
     Route::delete('/payment/{payment_id}', [PaymentController::class, 'destroy'])->name('payment.destroy');
     Route::put('/payment/{payment_id}', [PaymentController::class, 'update'])->name('payment.update');
-    Route::get('/payment/pendant', [PaymentController::class, 'pendant'])->name('payment.pendant');
+    Route::get('/payment/pending', [PaymentController::class, 'pending'])->name('payment.pending');
     
     Route::get('/about', function () {
         return view('about');
