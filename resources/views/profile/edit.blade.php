@@ -144,16 +144,29 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
-                                <div class="form-group focused">
-                                    <label class="form-control-label" for="social_work_id">{{ __('Obra social') }}</label>
-                                    <select class="custom-select" id="social_work_id" name="social_work_id" value="{{ old('social_work_id'), $user->social_work->id }}">                                           
-                                        @foreach($socialWorks as $socialWork)
-                                            <option value="{{ $socialWork->id }}" {{ ($user->social_work->id === $socialWork->id) ? 'Selected' : '' }}>{{ $socialWork->name }}</option>
-                                        @endforeach
-                                    </select>
+                            @if($user->social_work_id != null)
+                                <div class="col-lg-6">
+                                    <div class="form-group focused">
+                                        <label class="form-control-label" for="social_work_id">{{ __('Obra social') }}</label>
+                                        <select class="custom-select" id="social_work_id" name="social_work_id" value="{{ old('social_work_id'), $user->social_work_id }}">                                           
+                                            @foreach($socialWorks as $socialWork)
+                                                <option value="{{ $socialWork->id }}" {{ ($user->social_work_id === $socialWork->id) ? 'Selected' : '' }}>{{ $socialWork->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
+                            @else
+                            <div class="col-lg-6">
+                                    <div class="form-group focused">
+                                        <label class="form-control-label" for="social_work_id">{{ __('Obra social') }}</label>
+                                        <select class="custom-select" id="social_work_id" name="social_work_id" value="{{ old('social_work_id'), $user->social_work_id }}">                                           
+                                            @foreach($socialWorks as $socialWork)
+                                                <option value="{{ $socialWork->id }}">{{ $socialWork->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            @endif  
 
                             <div class="col-md-12">
                                 <div class="form-group focused">

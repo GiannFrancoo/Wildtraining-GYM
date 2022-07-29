@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->unsignedBigInteger('subscription_id');

@@ -21,7 +21,7 @@
             <div class="col-lg-4 order-lg-2">
                 <div class="card shadow mb-4">
                     <div class="card-header text-center">
-                        <h6 class="m-0 font-weight-bold text-primary"> {{ __('Suscripcion') }} </h6>
+                        <h6 class="m-0 font-weight-bold text-danger"> {{ __('Suscripcion') }} </h6>
                     </div>
                     <div class="card-body">
                         <div class="col-lg-12">
@@ -39,7 +39,7 @@
             <div class="col-lg-8 order-lg-1">
                 <div class="card shadow mb-4">
                     <div class="card-header">
-                        <h6 class="font-weight-bold text-primary">{{ __('Información del nuevo usuario') }}</h6>
+                        <h6 class="font-weight-bold text-danger">{{ __('Información del nuevo usuario') }}</h6>
                     </div>
                     <div class="card header">
                         <div class="card-body row">
@@ -134,7 +134,7 @@
 
                         <div class="card footer ">
                             <div class="text-center mb-4 mt-3">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-disk mr-1"></i>{{ __('Crear usuario') }}</button>
+                                <button type="submit" class="btn btn-dark"><i class="fa fa-floppy-disk mr-1"></i>{{ __('Crear usuario') }}</button>
                             </div>
                         </div>
                     </div>
