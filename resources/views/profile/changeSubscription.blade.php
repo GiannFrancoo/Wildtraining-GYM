@@ -81,7 +81,7 @@
                         </div>       
                     </div>
                     <div class="card-footer text-center">
-                        <button type="submit" class="btn btn-dark"><i class="fa fa-floppy-disk mr-1"></i>Guardar cambios</button>
+                        <button type="submit" class="btn btn-dark"><i class="fa fa-floppy-disk mr-1"></i>Actualizar</button>
                     </div>
                 </div>
             </div>

@@ -67,8 +67,15 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">$</span>
                   </div>
-                  <input type="number" required class="form-control" name="price" value="{{ $subscription->month_price }}">
+                  <input type="number" required class="form-control" min="1" name="price" value="{{ $subscription->month_price }}">
                 </div>
+                @error('price')
+                  <div class="alert alert-danger border-left-danger" role="alert">
+                    <ul class="pl-4 my-2">
+                        <li>{{$message}}</li>
+                    </ul>
+                  </div> 
+                @enderror
               </div>     
             </div>
 
@@ -76,6 +83,13 @@
               <div class="form-group focused">
                   <label class="form-control-label" for="payment">{{ __('Fecha') }}<span class="small text-danger">*</span></label>
                   <input type="datetime-local" id="payment" required class="form-control" name="date" placeholder="payment" value="{{ now() }}">
+                  @error('date')
+                    <div class="alert alert-danger border-left-danger" role="alert">
+                      <ul class="pl-4 my-2">
+                          <li>{{$message}}</li>
+                      </ul>
+                    </div> 
+                  @enderror
               </div>
             </div>
 

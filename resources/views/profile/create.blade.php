@@ -5,16 +5,7 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">{{ __('Creando nuevo usuario') }}</h1>
 
-    @if ($errors->any())
-        <div class="alert alert-danger border-left-danger" role="alert">
-            <ul class="pl-4 my-2">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
+   
     <form action="{{route('profile.store')}}" method="POST">
     @csrf
         <div class="row">
@@ -30,6 +21,13 @@
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="name">{{ __('Nombre') }}<span class="small text-danger">*</span></label>
                                     <input type="text" id="name" required class="form-control" name="name" placeholder="Nombre..." value="{{ old('name') }}">
+                                    @error('name')
+                                        <div class="alert alert-danger border-left-danger" role="alert">
+                                            <ul class="pl-4 my-2">
+                                                <li>{{$message}}</li>
+                                            </ul>
+                                        </div>                                    
+                                    @enderror
                                 </div>
                             </div>
                             
@@ -37,6 +35,13 @@
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="last_name">{{ __('Apellidos(s)') }}<span class="small text-danger">*</span></label>
                                     <input type="text" id="last_name" required class="form-control" name="last_name" placeholder="Apellido(s)..." value="{{ old('last_name') }}">
+                                    @error('last_name')
+                                        <div class="alert alert-danger border-left-danger" role="alert">
+                                            <ul class="pl-4 my-2">
+                                                <li>{{$message}}</li>
+                                            </ul>
+                                        </div>                                    
+                                    @enderror
                                 </div>
                             </div>
 
@@ -55,23 +60,66 @@
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="email">{{ __('Email') }}<span class="small text-danger">*</span></label>
                                     <input type="email" id="email" required class="form-control" name="email" placeholder="example@example.com" value="{{ old('email') }}">
+                                    @error('email')
+                                        <div class="alert alert-danger border-left-danger" role="alert">
+                                            <ul class="pl-4 my-2">
+                                                <li>{{$message}}</li>
+                                            </ul>
+                                        </div>                                    
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="new_password">{{ __('Celular') }}<span class="small text-danger">*</span></label>
-                                    <input type="text" id="new_password" required placeholder="2915678987" class="form-control" name="primary_phone" value="{{ old('primary_phone')}}">
+                                    <input type="numeric" id="new_password" required pattern=".{9,}" title="Tiene que ingresar como minimo 9 caracteres" placeholder="2915678987" class="form-control" name="primary_phone" value="{{ old('primary_phone')}}">
                                     <small id="passwordHelpBlock" class="form-text text-muted">
                                         El celular debe tener un minimo de 9 caracteres
                                     </small>
+                                    @error('primary_phone')
+                                        @if($message === "El valor del campo primary phone ya está en uso.")
+                                            <div class="alert alert-danger border-left-danger" role="alert">
+                                                <ul class="pl-4 my-2">
+                                                    <li>{{ __('El celular ingresado ya esta en uso.') }}</li>
+                                                </ul>
+                                            </div> 
+                                        @else
+                                            <div class="alert alert-danger border-left-danger" role="alert">
+                                                <ul class="pl-4 my-2">
+                                                    <li>{{ __('El celular ingresado debe ser solo numeros.') }}</li>
+                                                </ul>
+                                            </div> 
+                                        @endif
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="new_password">{{ __('Celular secundario') }}</label>
-                                    <input type="text" id="new_password" class="form-control" placeholder="2915678987" name="secundary_phone" value="{{ old('secundary_phone') }}">
+                                    <input type="text" id="new_password" pattern=".{9,}" title="Tiene que ingresar como minimo 9 caracteres" class="form-control" placeholder="2915678987" name="secundary_phone" value="{{ old('secundary_phone') }}">
+                                    @error('secundary_phone')
+                                    @if($message === "El valor del campo primary phone ya está en uso.")
+                                        <div class="alert alert-danger border-left-danger" role="alert">
+                                            <ul class="pl-4 my-2">
+                                                <li>{{ __('El celular ingresado ya esta en uso.') }}</li>
+                                            </ul>
+                                        </div> 
+                                    @elseif($message === "El campo secundary phone debe ser un número.")
+                                        <div class="alert alert-danger border-left-danger" role="alert">
+                                            <ul class="pl-4 my-2">
+                                                <li>{{ __('El celular ingresado debe ser solo numeros.') }}</li>
+                                            </ul>
+                                        </div> 
+                                    @else
+                                        <div class="alert alert-danger border-left-danger" role="alert">
+                                            <ul class="pl-4 my-2">
+                                                <li>{{$message}}</li>
+                                            </ul>
+                                        </div> 
+                                    @endif
+                                    @enderror
                                 </div>
                             </div>
                             
@@ -79,20 +127,41 @@
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="address">{{ __('Direccion') }}</label>
                                     <input type="text" id="address" class="form-control" placeholder="La Madrid 500" name="address" value="{{ old('address') }}">
+                                    @error('address')
+                                        <div class="alert alert-danger border-left-danger" role="alert">
+                                            <ul class="pl-4 my-2">
+                                                <li>{{$message}}</li>
+                                            </ul>
+                                        </div> 
+                                    @enderror
                                 </div>
                             </div>
                             
                             <div class="col-lg-6">
                                 <div class="form-group focused"><!-- AGREGAR VALIDACION con fecha minima y maxima-->
                                     <label class="form-control-label" for="birthday">{{ __('Fecha de nacimiento') }}</label>
-                                    <input type="date" max="2022-07-18" id="birthday" class="form-control" name="birthday" value="">
+                                    <input type="date"  id="birthday" class="form-control" name="birthday" value="">
+                                    @error('birthday')
+                                        <div class="alert alert-danger border-left-danger" role="alert">
+                                            <ul class="pl-4 my-2">
+                                                <li>{{$message}}</li>
+                                            </ul>
+                                        </div> 
+                                    @enderror
                                 </div>
                             </div>
                             
                             <div class="col-lg-6">
                                 <div class="form-group focused"><!-- AGREGAR VALIDACION con min="2017-07-18" y max-->
                                     <label class="form-control-label" for="start_date">{{ __('Fecha de inicio en el gimnasio') }}<span class="small text-danger">*</span></label>
-                                    <input type="date" id="new_password" required class="form-control" name="start_date" value="{{ old('start_date') }}">
+                                    <input type="date" id="new_password" required class="form-control"  name="start_date" value="{{ old('start_date') }}">
+                                    @error('start_date')
+                                        <div class="alert alert-danger border-left-danger" role="alert">
+                                            <ul class="pl-4 my-2">
+                                                <li>{{$message}}</li>
+                                            </ul>
+                                        </div> 
+                                    @enderror
                                 </div>
                             </div>
 
@@ -111,6 +180,13 @@
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="personal_information">{{ __('Información personal') }}</label>
                                     <textarea rows="4" id="new_password" class="form-control" name="personal_information" placeholder="Información que considere importante mencionar... (operaciones, lesiones, etc)" value="{{ old('personal_information') }}">{{ old('personal_information') }}</textarea>
+                                    @error('personal_information')
+                                        <div class="alert alert-danger border-left-danger" role="alert">
+                                            <ul class="pl-4 my-2">
+                                                <li>{{$message}}</li>
+                                            </ul>
+                                        </div> 
+                                    @enderror
                                 </div>
                             </div>
                         </div> 

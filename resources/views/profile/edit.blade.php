@@ -13,15 +13,6 @@
         </div>
     @endif
 
-    @if ($errors->any())
-        <div class="alert alert-danger border-left-danger" role="alert">
-            <ul class="pl-4 my-2">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
     <!-- Form to edit the user -->
     <form action="{{ route('profile.update', ['profile_id' => $user->id])}}" method="POST">
@@ -42,6 +33,13 @@
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="name">{{ __('Nombre') }}<span class="small text-danger">*</span></label>
                                     <input type="text" id="name" class="form-control" name="name" placeholder="Name" value="{{ old('name', $user->name) }}">
+                                    @error('name')
+                                        <div class="alert alert-danger border-left-danger" role="alert">
+                                            <ul class="pl-4 my-2">
+                                                <li>{{$message}}</li>
+                                            </ul>
+                                        </div>                                    
+                                    @enderror
                                 </div>
                             </div>
 
@@ -49,6 +47,13 @@
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="last_name">{{ __('Apellidos(s)') }}<span class="small text-danger">*</span></label>
                                     <input type="text" id="last_name" class="form-control" name="last_name" placeholder="Last name" value="{{ old('last_name', $user->last_name) }}">
+                                    @error('last_name')
+                                        <div class="alert alert-danger border-left-danger" role="alert">
+                                            <ul class="pl-4 my-2">
+                                                <li>{{$message}}</li>
+                                            </ul>
+                                        </div>                                    
+                                    @enderror
                                 </div>
                             </div>
 
@@ -67,16 +72,38 @@
                                 <div class="form-group">
                                     <label class="form-control-label" for="email">{{ __('Email') }}<span class="small text-danger">*</span></label>
                                     <input type="email" id="email" class="form-control" name="email" placeholder="ejemplo@ejemplo.com" value="{{ old('email', $user->email) }}">
+                                    @error('email')
+                                        <div class="alert alert-danger border-left-danger" role="alert">
+                                            <ul class="pl-4 my-2">
+                                                <li>{{ __('El email ingresado ya esta en uso.') }}</li>
+                                            </ul>
+                                        </div>                                    
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="form-group focused">
                                     <label class="form-control-label">{{ __('Celular') }}<span class="small text-danger">*</span></label>
-                                    <input type="text" id="primaryPhone" class="form-control" name="primary_phone" value="{{ old('primary_phone', $user->primary_phone) }}">
+                                    <input type="text" id="primaryPhone" pattern=".{9,}" title="Tiene que ingresar como minimo 9 caracteres" class="form-control" name="primary_phone" value="{{ old('primary_phone', $user->primary_phone) }}">
                                     <small class="form-text text-muted">
                                         El celular debe tener un minimo de 9 caracteres
                                     </small>
+                                    @error('primary_phone')
+                                        @if($message === "El valor del campo primary phone ya está en uso.")
+                                            <div class="alert alert-danger border-left-danger" role="alert">
+                                                <ul class="pl-4 my-2">
+                                                    <li>{{ __('El celular ingresado ya esta en uso.') }}</li>
+                                                </ul>
+                                            </div> 
+                                        @else
+                                            <div class="alert alert-danger border-left-danger" role="alert">
+                                                <ul class="pl-4 my-2">
+                                                    <li>{{ __('El celular ingresado debe ser solo numeros.') }}</li>
+                                                </ul>
+                                            </div> 
+                                        @endif
+                                    @enderror
                                 </div>
                             </div>
 
@@ -84,10 +111,31 @@
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="secondaryPhone">{{ __('Celular secundario') }}</label>
                                     @if($user->secundary_phone === "")
-                                        <input type="text" id="secondaryPhone" class="form-control" name="secondary_phone" value = "-">
+                                        <input type="text" id="secondaryPhone" pattern=".{9,}" title="Tiene que ingresar como minimo 9 caracteres" class="form-control" name="secundary_phone" value = "-">
                                     @else
-                                        <input type="text" id="secondaryPhone" class="form-control" name="secondary_phone" value="{{ old('secondaryPhone', $user->secundary_phone) }}">
+                                        <input type="text" id="secondaryPhone" pattern=".{9,}" title="Tiene que ingresar como minimo 9 caracteres" class="form-control" name="secundary_phone" value="{{ old('secundary_phone', $user->secundary_phone) }}">
                                     @endif
+                                    @error('secundary_phone')
+                                        @if($message === "El valor del campo primary phone ya está en uso.")
+                                            <div class="alert alert-danger border-left-danger" role="alert">
+                                                <ul class="pl-4 my-2">
+                                                    <li>{{ __('El celular ingresado ya esta en uso.') }}</li>
+                                                </ul>
+                                            </div> 
+                                        @elseif($message === "El campo secundary phone debe ser un número.")
+                                            <div class="alert alert-danger border-left-danger" role="alert">
+                                                <ul class="pl-4 my-2">
+                                                    <li>{{ __('El celular ingresado debe ser solo numeros.') }}</li>
+                                                </ul>
+                                            </div> 
+                                        @else
+                                            <div class="alert alert-danger border-left-danger" role="alert">
+                                                <ul class="pl-4 my-2">
+                                                    <li>{{$message}}</li>
+                                                </ul>
+                                            </div> 
+                                        @endif
+                                    @enderror
                                 </div>
                             </div>
                             
@@ -102,10 +150,18 @@
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="birthday">{{ __('Fecha de nacimiento') }}</label>
                                     @if($user->birthday != NULL)
-                                        <input type="date" max="{{ now() }}" id="birthday" class="form-control" name="birthday" value="{{ old('birthday', $user->birthday->format('Y-m-d')) }}">
+                                        <input type="date"  id="birthday" class="form-control" name="birthday" value="{{ old('birthday', $user->birthday->format('Y-m-d')) }}">
                                     @else
-                                        <input type="date" max="{{ now() }}" id="birthday" class="form-control" name="birthday" value="">
-                                    @endif                                            
+                                        <input type="date"  id="birthday" class="form-control" name="birthday" value="">
+                                    @endif 
+                                    
+                                    @error('start_date')
+                                        <div class="alert alert-danger border-left-danger" role="alert">
+                                            <ul class="pl-4 my-2">
+                                                <li>{{$message}}</li>
+                                            </ul>
+                                        </div> 
+                                    @enderror                                           
                                 </div>
                             </div>
                             
@@ -144,6 +200,13 @@
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="personalInformation">{{ __('Informacion personal') }}</label>
                                     <textarea rows="4" id="personalInformation" class="form-control" name="personal_information" value="{{old('personalInformation', $user->personal_information)}}">{{old('personal_information', $user->personal_information)}}</textarea>
+                                    @error('personal_information')
+                                        <div class="alert alert-danger border-left-danger" role="alert">
+                                            <ul class="pl-4 my-2">
+                                                <li>{{$message}}</li>
+                                            </ul>
+                                        </div> 
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -177,7 +240,7 @@
                         </div> 
                     </div>               
                     <div class="card-footer text-center">
-                        <button type="submit" class="btn btn-dark"><i class="fa fa-floppy-disk mr-1"></i>Guardar cambios</button>
+                        <button type="submit" class="btn btn-dark"><i class="fa fa-floppy-disk mr-1"></i>Actualizar</button>
                     </div> 
                 </div>
             </div> 

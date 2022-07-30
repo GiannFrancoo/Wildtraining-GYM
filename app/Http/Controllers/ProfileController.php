@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\UserStoreRequest;
+use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\Gender;
 use App\Models\Payment;
 use App\Models\User;
@@ -119,16 +121,16 @@ class ProfileController extends Controller
         }
     }
 
-    public function update(request $request, $profile_id){
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UserUpdateRequest $request, $profile_id){
         try{
-            $request->validate([
-                'name' => 'required|string|max:255',
-                'last_name' => 'required|nullable|string|max:255',
-                'email' => 'required|email:rfc,dns',
-                'primary_phone' => 'required|string|min:9',
-                'gender_id' => 'required',
-            ]);
-
+            
             $user = User::findOrFail($profile_id);
             $user->name = $request->name;
             $user->last_name = $request->last_name;
@@ -137,19 +139,11 @@ class ProfileController extends Controller
             $user->start_date = $request->start_date;
             $user->primary_phone = $request->primary_phone;
             $user->social_work_id = $request->social_work_id; 
+            $user->secundary_phone = $request->secundary_phone;
+            $user->address = $request->address;
+            $user->birthday = $request->birthday;
+            $user->personal_information = $request->personal_information;
             
-            if($request->secundary_phone != null){
-                $user->secundary_phone = $request->secundary_phone;
-            }
-            if($request->address != null){
-                $user->address = $request->address;
-            }
-            if($request->birthday != null){
-                $user->birthday = $request->birthday;
-            }
-            if($request->personal_information != null){
-                $user->personal_information = $request->personal_information;
-            }
 
             $user->save();        
      
@@ -177,18 +171,16 @@ class ProfileController extends Controller
         }
     }
 
-    public function store(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(UserStoreRequest $request)
     {
         try{
-            $request->validate([
-                'name' => 'required|string|max:255',
-                'last_name' => 'required|nullable|string|max:255',
-                'email' => 'required|unique:users,email|email:rfc,dns',
-                'primary_phone' => 'required|unique:users,primary_phone|string|min:9',
-                'gender_id' => 'required',
-            ]);
-
-            $user = new User();
+             $user = new User();
             $user->name = $request->name;
             $user->last_name = $request->last_name;
             $user->gender_id = Gender::findOrFail($request->gender_id)->id;
@@ -290,8 +282,7 @@ class ProfileController extends Controller
 
     public function updateSubscription($profile_id)
     {
-        try{
-            
+        try{  
             if(UserSubscription::where('user_id', $profile_id)->latest()->get()->isNotEmpty()){
                 $user_subscriptionOld = UserSubscription::where('user_id', $profile_id)->latest()->first();
                 $user_subscriptionOld->user_subscription_status_id = 2;

@@ -46,7 +46,7 @@
                     <div class="col-6">
                         <div class="form-group focused">
                             <label class="form-control-label" for="date">Fecha</label>
-                            <input type="datetime-local" id="date" class="form-control" placeholder="{{ date('d-m-Y H:i:s') }}" name="date" value="{{ now()->format('Y-m-d H:i:s') }}">
+                            <input type="datetime-local" id="date" max="{{ now() }}" required class="form-control" placeholder="{{ date('d-m-Y H:i:s') }}" name="date" value="{{ now()->format('Y-m-d H:i:s') }}">
                         </div>
                     </div>
 

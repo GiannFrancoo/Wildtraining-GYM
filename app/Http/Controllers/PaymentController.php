@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Payment\PaymentStoreRequest;
+use App\Http\Requests\Payment\PaymentUpdateRequest;
 use Exception;
 use Illuminate\Http\Request;
 use App\Models\Payment;
@@ -74,7 +76,7 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $payment_id)
+    public function store(PaymentStoreRequest $request, $payment_id)
     {
         try{
             $user = User::with('lastSubscription')->findOrfail($payment_id);
@@ -144,7 +146,7 @@ class PaymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $payment_id)
+    public function update(PaymentUpdateRequest $request, $payment_id)
     {
         try{
             $payment = Payment::findOrFail($payment_id);

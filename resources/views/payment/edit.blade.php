@@ -13,15 +13,6 @@
         </div>
     @endif
 
-    @if ($errors->any())
-        <div class="alert alert-danger border-left-danger" role="alert">
-            <ul class="pl-4 my-2">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
 
 
     <form method="POST" action="{{ route('payment.update', ['payment_id' => $payment->id]) }}">
@@ -42,8 +33,15 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">$</span>  
                                 </div>                          
-                                <input type="number" id="price" class="form-control" required name="price" value="{{ old('price', $payment->price) }}">
+                                <input type="number" id="price" min="1" class="form-control" required name="price" value="{{ old('price', $payment->price) }}">
                             </div>
+                            @error('price')
+                                <div class="alert alert-danger border-left-danger" role="alert">
+                                    <ul class="pl-4 my-2">
+                                        <li>{{$message}}</li>
+                                    </ul>
+                                </div> 
+                            @enderror
                         </div>
                     </div> 
 
@@ -51,6 +49,13 @@
                         <div class="form-group focused">
                             <label class="form-control-label" for="date">Fecha<span class="small text-danger">*</span></label>
                             <input type="datetime-local" id="date" required class="form-control" name="date" placeholder="now()" value="{{ old('date', $payment->date->format('Y-m-d H:i:s'))}}">
+                            @error('date')
+                                <div class="alert alert-danger border-left-danger" role="alert">
+                                    <ul class="pl-4 my-2">
+                                        <li>{{$message}}</li>
+                                    </ul>
+                                </div> 
+                            @enderror
                         </div>
                     </div>
 
@@ -82,7 +87,7 @@
             </div>
 
             <div class="card-footer text-center">
-                <button type="submit" class="btn btn-dark"><i class="fa fa-floppy-disk mr-1"></i>Guardar cambios</button>
+                <button type="submit" class="btn btn-dark"><i class="fa fa-floppy-disk mr-1"></i>Actualizar</button>
             </div>
 
         </div>

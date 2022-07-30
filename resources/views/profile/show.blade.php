@@ -30,8 +30,8 @@
                             </tr>
                             <tr>
                                 <td>Celular secundario:</td>
-                                @if ($user->secondary_phone != null)
-                                    <td class="text-right">{{ $user->secondary_phone }}</td>
+                                @if ($user->secundary_phone != null)
+                                    <td class="text-right">{{ $user->secundary_phone }}</td>
                                 @else
                                     <td class="text-right"> - </td>
                                 @endif

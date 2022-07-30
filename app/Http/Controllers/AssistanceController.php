@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Assistance\AssistanceStoreRequest;
+use App\Http\Requests\Assistance\AssistanceUpdateRequest;
 use App\Models\Assistance;
 use App\Models\User;
 use Carbon\Carbon;
@@ -71,7 +73,7 @@ class AssistanceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AssistanceStoreRequest $request)
     {
         try{       
             $assistance = new Assistance();
@@ -123,7 +125,7 @@ class AssistanceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AssistanceUpdateRequest $request, $id)
     {
         try{
             $assistance = Assistance::findOrFail($id);

@@ -127,7 +127,7 @@
                                     <td>{{ $payment->userSubscription->user->getFullNameAttribute() }}</td>
                                     <td>{{ $payment->date->format('d/m/Y') }}</td>
                                     <td>{{ $payment->paymentStatus->name }}</td>
-                                    <td>{{ $payment->userSubscription->subscription->name }}</td>
+                                    <td><h5><span class="badge badge-pill badge-dark">{{ $payment->userSubscription->subscription->name }}</span></h5></td>       
                                     <td>
                                         <!-- deberia cambiar el estado del pago -->
                                         <a href="{{ route('payment.edit', ['payment_id' => $payment->id]) }}" type="button" class="btn btn-secondary btn-circle mx-1" title="changeStatus" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
@@ -175,9 +175,9 @@
                                     <td>{{ $user->start_date->format('d/m/Y') }}</td>
                                     <td>
                                         @if ($user->lastSubscription->isEmpty())
-                                            Sin suscripción
+                                            <h5><span class="badge badge-pill badge-dark">Sin suscripción</span></h5>   
                                         @else
-                                            {{ $user->lastSubscription->first()->name }}                                               
+                                            <h5><span class="badge badge-pill badge-dark">{{ $user->lastSubscription->first()->name }} </span></h5>
                                         @endif 
                                     </td>
                                     <td>
