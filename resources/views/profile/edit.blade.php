@@ -89,7 +89,7 @@
                                     <small class="form-text text-muted">
                                         El celular debe tener un minimo de 9 caracteres
                                     </small>
-                                    <!--@error('primary_phone')
+                                    @error('primary_phone')
                                         @if($message === "El valor del campo primary phone ya está en uso.")
                                             <div class="alert alert-danger border-left-danger" role="alert">
                                                 <ul class="pl-4 my-2">
@@ -103,13 +103,6 @@
                                                 </ul>
                                             </div>
                                         @endif    
-                                    @enderror-->
-                                    @error('primary_phone')
-                                        <div class="alert alert-danger border-left-danger" role="alert">
-                                            <ul class="pl-4 my-2">
-                                                <li>{{$message}}</li>
-                                            </ul>
-                                        </div>                                    
                                     @enderror
                                 </div>
                             </div>
@@ -174,7 +167,7 @@
                             
                             <div class="col-lg-6">
                                 <div class="form-group focused">
-                                    <label class="form-control-label" for="startDate">{{ __('Fecha de inicio en el gimnasio') }}</label>
+                                    <label class="form-control-label" for="startDate">{{ __('Fecha de inicio en el gimnasio') }}<span class="small text-danger">*</span></label>
                                     <input type="date" id="startDate" class="form-control" name="start_date" value="{{ old('start_date', $user->start_date->format('Y-m-d')) }}">
                                 </div>
                             </div>

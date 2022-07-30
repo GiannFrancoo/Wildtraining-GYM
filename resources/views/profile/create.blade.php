@@ -100,25 +100,25 @@
                                     <label class="form-control-label" for="new_password">{{ __('Celular secundario') }}</label>
                                     <input type="text" id="new_password" pattern=".{9,}" title="Tiene que ingresar como minimo 9 caracteres" class="form-control" placeholder="2915678987" name="secundary_phone" value="{{ old('secundary_phone') }}">
                                     @error('secundary_phone')
-                                    @if($message === "El valor del campo primary phone ya está en uso.")
-                                        <div class="alert alert-danger border-left-danger" role="alert">
-                                            <ul class="pl-4 my-2">
-                                                <li>{{ __('El celular ingresado ya esta en uso.') }}</li>
-                                            </ul>
-                                        </div> 
-                                    @elseif($message === "El campo secundary phone debe ser un número.")
-                                        <div class="alert alert-danger border-left-danger" role="alert">
-                                            <ul class="pl-4 my-2">
-                                                <li>{{ __('El celular ingresado debe ser solo numeros.') }}</li>
-                                            </ul>
-                                        </div> 
-                                    @else
-                                        <div class="alert alert-danger border-left-danger" role="alert">
-                                            <ul class="pl-4 my-2">
-                                                <li>{{$message}}</li>
-                                            </ul>
-                                        </div> 
-                                    @endif
+                                        @if($message === "El valor del campo secundary phone ya está en uso.")
+                                            <div class="alert alert-danger border-left-danger" role="alert">
+                                                <ul class="pl-4 my-2">
+                                                    <li>{{ __('El celular ingresado ya esta en uso.') }}</li>
+                                                </ul>
+                                            </div> 
+                                        @elseif($message === "El campo secundary phone debe ser un número.")
+                                            <div class="alert alert-danger border-left-danger" role="alert">
+                                                <ul class="pl-4 my-2">
+                                                    <li>{{ __('El celular ingresado debe ser solo numeros.') }}</li>
+                                                </ul>
+                                            </div> 
+                                        @else
+                                            <div class="alert alert-danger border-left-danger" role="alert">
+                                                <ul class="pl-4 my-2">
+                                                    <li>{{$message}}</li>
+                                                </ul>
+                                            </div> 
+                                        @endif
                                     @enderror
                                 </div>
                             </div>
