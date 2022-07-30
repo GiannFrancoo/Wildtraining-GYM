@@ -60,9 +60,9 @@
                             <div class="col-lg-6">
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="gender">{{ __('Sexo') }}<span class="small text-danger">*</span></label>
-                                    <select class="custom-select" required id="gender_id" name="gender_id" value="{{ old('gender_id'), $user->gender->id }}">                                 
+                                    <select class="custom-select" required id="gender_id" name="gender_id" value="{{ old('gender_id', $user->gender->id) }}">                                 
                                         @foreach($genders as $gender)
-                                            <option value="{{ $gender->id }}" {{ ($gender->name === $user->gender->name) ? 'Selected' : '' }}>{{ $gender->name }}</option>
+                                            <option value="{{ $gender->id }}" {{ old('gender_id', $user->gender->id) == $gender->id ? 'Selected' : '' }}>{{ $gender->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -89,7 +89,7 @@
                                     <small class="form-text text-muted">
                                         El celular debe tener un minimo de 9 caracteres
                                     </small>
-                                    @error('primary_phone')
+                                    <!--@error('primary_phone')
                                         @if($message === "El valor del campo primary phone ya está en uso.")
                                             <div class="alert alert-danger border-left-danger" role="alert">
                                                 <ul class="pl-4 my-2">
@@ -101,8 +101,15 @@
                                                 <ul class="pl-4 my-2">
                                                     <li>{{ __('El celular ingresado debe ser solo numeros.') }}</li>
                                                 </ul>
-                                            </div> 
-                                        @endif
+                                            </div>
+                                        @endif    
+                                    @enderror-->
+                                    @error('primary_phone')
+                                        <div class="alert alert-danger border-left-danger" role="alert">
+                                            <ul class="pl-4 my-2">
+                                                <li>{{$message}}</li>
+                                            </ul>
+                                        </div>                                    
                                     @enderror
                                 </div>
                             </div>
@@ -152,7 +159,7 @@
                                     @if($user->birthday != NULL)
                                         <input type="date"  id="birthday" class="form-control" name="birthday" value="{{ old('birthday', $user->birthday->format('Y-m-d')) }}">
                                     @else
-                                        <input type="date"  id="birthday" class="form-control" name="birthday" value="">
+                                        <input type="date"  id="birthday" class="form-control" name="birthday" value="{{ old('birthday') }}">
                                     @endif 
                                     
                                     @error('start_date')
@@ -168,7 +175,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="startDate">{{ __('Fecha de inicio en el gimnasio') }}</label>
-                                    <input type="date" id="startDate" class="form-control" name="start_date" value="{{ old('startDate', $user->start_date->format('Y-m-d')) }}">
+                                    <input type="date" id="startDate" class="form-control" name="start_date" value="{{ old('start_date', $user->start_date->format('Y-m-d')) }}">
                                 </div>
                             </div>
 
@@ -178,7 +185,7 @@
                                         <label class="form-control-label" for="social_work_id">{{ __('Obra social') }}</label>
                                         <select class="custom-select" id="social_work_id" name="social_work_id" value="{{ old('social_work_id'), $user->social_work_id }}">                                           
                                             @foreach($socialWorks as $socialWork)
-                                                <option value="{{ $socialWork->id }}" {{ ($user->social_work_id === $socialWork->id) ? 'Selected' : '' }}>{{ $socialWork->name }}</option>
+                                                <option value="{{ $socialWork->id }}" {{ old('social_work_id', $user->social_work_id) == $socialWork->id ? 'Selected' : '' }}>{{ $socialWork->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -189,7 +196,7 @@
                                         <label class="form-control-label" for="social_work_id">{{ __('Obra social') }}</label>
                                         <select class="custom-select" id="social_work_id" name="social_work_id" value="{{ old('social_work_id'), $user->social_work_id }}">                                           
                                             @foreach($socialWorks as $socialWork)
-                                                <option value="{{ $socialWork->id }}">{{ $socialWork->name }}</option>
+                                                <option value="{{ $socialWork->id }}" {{ old('social_work_id') == $socialWork->id ? 'Selected' : '' }}>{{ $socialWork->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -223,17 +230,24 @@
                     <div class="card-body">
                         <div class="col-lg-12">
                             @if($activeSubscription != null)
-                                <select  class="custom-select" name="subscriptionIdSelected" value="{{ old('subscriptionIdSelected', $activeSubscription->name) }}">                                          
-                                    @foreach($subscriptions as $subscription)
-                                        <option value="{{ $subscription->id }}" {{ ($activeSubscription->id === $subscription->id) ? 'Selected' : '' }}>{{ $subscription->name }}</option>
-                                    @endforeach
+                                <select  class="custom-select" name="subscriptionIdSelected" value="{{ old('subscriptionIdSelected', $user->lastSubscription->first()->id) }}">                                          
+                                    @if( old('subscriptionIdSelected') === 'sinSubscripcion')
+                                        <option value="sinSubscripcion">Sin suscripcion</option>
+                                        @foreach($subscriptions as $subscription)  
+                                            <option value="{{ $subscription->id }}">{{ $subscription->name }}</option>
+                                        @endforeach
+                                    @else
+                                        @foreach($subscriptions as $subscription)  
+                                            <option value="{{ $subscription->id }}" {{ old('subscriptionIdSelected', $user->lastSubscription->first()->id) == $subscription->id ? 'Selected' : '' }}>{{ $subscription->name }}</option>
+                                        @endforeach
+                                    @endif
                                     <option value="sinSubscripcion">Sin suscripcion</option>                                          
                                 </select>
                             @else
-                                <select  class="custom-select" name="subscriptionIdSelected" value="old('subscriptionIdSelected')">
+                                <select  class="custom-select" name="subscriptionIdSelected" value="{{ old('subscriptionIdSelected') }}">
                                     <option selected value="sinSubscripcion">Sin suscripcion</option>                                          
                                     @foreach($subscriptions as $subscription)
-                                        <option value="{{ $subscription->id }}">{{ $subscription->name }}</option>
+                                        <option value="{{ $subscription->id }}" {{ old('subscriptionIdSelected') ==  $subscription->id ? 'Selected' : ''}}>{{ $subscription->name }}</option>
                                     @endforeach
                                 </select>
                             @endif 

@@ -48,9 +48,9 @@
                             <div class="col-lg-6">
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="gender_id">{{ __('Sexo') }}<span class="small text-danger">*</span></label>
-                                    <select class="custom-select" required id="gender_id" name="gender_id" value="{{ old('gender_id') }}">                                 
+                                    <select class="custom-select" required id="gender_id" name="gender_id" value="{{ old('gender_id, $gender->id') }}">                                 
                                         @foreach($genders as $gender)
-                                            <option value="{{ $gender->id }}" {{ ($gender->name === 'No posee') ? 'Selected' : '' }}>{{ $gender->name }}</option>
+                                            <option value="{{ $gender->id }}" {{old('gender_id') == $gender->id ? "selected" : ""}}>{{ $gender->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -140,7 +140,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group focused"><!-- AGREGAR VALIDACION con fecha minima y maxima-->
                                     <label class="form-control-label" for="birthday">{{ __('Fecha de nacimiento') }}</label>
-                                    <input type="date"  id="birthday" class="form-control" name="birthday" value="">
+                                    <input type="date"  id="birthday" class="form-control" name="birthday" value="{{ old('birthday') }}">
                                     @error('birthday')
                                         <div class="alert alert-danger border-left-danger" role="alert">
                                             <ul class="pl-4 my-2">
@@ -170,7 +170,7 @@
                                     <label class="form-control-label" for="social_work_id">{{ __('Obra social') }}</label>
                                     <select class="custom-select" required id="social_work_id" name="social_work_id" value="{{ old('social_work_id') }}">                                 
                                         @foreach($social_works as $social_work)
-                                            <option value="{{ $social_work->id }}">{{ $social_work->name }}</option>
+                                            <option value="{{ $social_work->id }}" {{old('social_work_id') == $social_work->id ? "selected" : ""}}>{{ $social_work->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -204,7 +204,7 @@
                             <select class="custom-select" required name="subscriptionIdSelected" value="old('subscriptionIdSelected')">
                                 <option selected value="sinSubscripcion"> Sin suscripcion </option>                                  
                                 @foreach($subscriptions as $subscription)
-                                    <option value="{{$subscription->id}}">{{ $subscription->name }}</option>
+                                    <option value="{{$subscription->id}}" {{old('subscriptionIdSelected') == $subscription->id ? "selected" : ""}}>{{ $subscription->name }}</option>
                                 @endforeach
                             </select>
                         </div>
