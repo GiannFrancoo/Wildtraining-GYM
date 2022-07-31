@@ -47,10 +47,15 @@ class PaymentController extends Controller
             $userSelected = null;
             $subscription = null;
 
-            if (isset($_GET['user']) && ($_GET['user'] != 'withoutUser')) { 
-                $userSelected = User::with('lastSubscription')->find($_GET['user']);
-                $subscription = $userSelected->lastSubscription->first();
-
+            if (isset($_GET['user']) && ($_GET['user'] != 'withoutUser') || $profile_id != null) { 
+                if($profile_id != null){
+                    $userSelected = User::with('lastSubscription')->find($profile_id);
+                }
+                else{
+                    $userSelected = User::with('lastSubscription')->find($_GET['user']);
+                }
+                    $subscription = $userSelected->lastSubscription->first();
+                
                 if (is_null($subscription)) {
                     return redirect()
                         ->back()
