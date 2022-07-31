@@ -24,6 +24,25 @@ class AssistanceController extends Controller
         $bussiestHours = ["hour" => 0, "count" => 0];
         $todayAssists = 0;
 
+
+
+        $hours = $assistances
+                ->groupBy(function ($assistance) {
+                    return $assistance->date->format('H');
+                })
+                ->map(function ($assistance, $hour) {
+                    return [
+                        "hour" => $hour,
+                        "count" => $assistance->count()
+                    ];
+                })
+                ->sortByDesc('hour')
+                ->toArray();
+        
+        // $hours->toArray();
+        // dd($hours);
+
+
         if ($assistances->isEmpty()){
             $bussiestHours = ["hour" => 0, "count" => 0];
             $todayAssists = 0;        
@@ -52,7 +71,8 @@ class AssistanceController extends Controller
         return view('assistance.assistance')->with([
             'assistances' => $assistances,
             'bussiestHours' => $bussiestHours['hour'],
-            'todayAssists' => $todayAssists
+            'todayAssists' => $todayAssists,
+            'hours' => $hours,
         ]);
     }
 

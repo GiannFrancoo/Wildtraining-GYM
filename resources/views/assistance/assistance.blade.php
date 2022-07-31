@@ -59,6 +59,19 @@
         </div>
     </div>
 
+    <!-- ChartJs -->
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card shadow ">
+                <div class="card-body">
+                    <canvas id="hourChart" width="323" height="253"> </canvas>
+                </div> 
+
+            </div>   
+        </div>
+    </div>
+
+
     <!-- Assistances table  -->
     <div class="row">
         <div class="col mb-4">
@@ -111,5 +124,48 @@
             order: [1, 'desc'],
         })
     })
+</script>
+
+<script type="text/javascript">  
+
+    var times = [];
+
+    for(var i = 8; i < 22; i++){
+        times.push(i);
+    }
+
+    var horas = <?php echo json_encode($hours); ?>;
+    console.log(horas);
+
+    const labels = times;
+    
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: 'Hora pico',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: horas,
+        }]
+    };
+    
+    const config = {
+        type: 'line',
+        data: data,
+        options: {
+            responsive:true,
+            maintainAspectRatio: false,
+            scales:{
+                y: {
+                    ticks:{
+                        stepSize: 1
+                    }
+                }
+            } 
+        }
+    };
+
+    const myChart = new Chart(document.getElementById('hourChart'), config);
+    
 </script>
 @endsection
