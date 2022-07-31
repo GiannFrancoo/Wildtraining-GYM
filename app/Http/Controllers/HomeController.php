@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
+use App\Models\PaymentStatus;
 use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -26,9 +27,12 @@ class HomeController extends Controller
      */
     public function index()
     {        
+        $pendingPayments = Payment::whereHas('PaymentStatus', function ($query) {
+            $query->where('id', PaymentStatus::PENDING);
+        })->orderBy('date','desc')->get();
+        
         $payments = Payment::take(5)->get();
         
-
         $users = User::with('lastSubscription')->get();
         $monthlyRevenue = 0;
         $usersWithoutSubscription = 0;
@@ -47,6 +51,7 @@ class HomeController extends Controller
             'payments' => $payments,
             'monthlyRevenue' => $monthlyRevenue, 
             'usersWithoutSubscription' => $usersWithoutSubscription,
+            'pendingPayments' => $pendingPayments,
         ]);
     }
 }

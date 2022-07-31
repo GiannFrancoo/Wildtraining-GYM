@@ -84,6 +84,7 @@
                                     <td data-sort="Ymd">{{ $assistance->date->format('d/m/Y') }}</td>
                                     <td>{{ $assistance->date->format('H:i') }}</td>
                                     <td class="d-flex justify-content-center">
+                                        <a href="{{ route('profile.show', ['profile_id' => $assistance->user->id]) }}" type="button" class="btn btn-circle btn-light mx-2" title="Show" data-toggle="tooltip"><i class="fa fa-eye"></i></a>
                                         <a href="{{ route('assistance.edit', ['assistance_id' => $assistance->id]) }}" type="button" class="btn btn-circle btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
                                         
                                         <form method="POST" action="{{ route('assistance.destroy', ['assistance_id' => $assistance->id]) }}" class="d-inline">  

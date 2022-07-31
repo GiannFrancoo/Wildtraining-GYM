@@ -44,22 +44,10 @@ class ProfileController extends Controller
     public function show($profile_id)
     {
         try{
-            // $user = User::with('subscriptions', function($query) use ($profile_id){
-            //     $query->where('user_id', $profile_id)
-            //     ->orderBy('user_subscription_status_id','asc');
-            // })
-            // ->get();
-            // $userSubscriptions = $user->subscriptions;
-
-
             $user = User::findOrFail($profile_id);
             $userSubscriptions = UserSubscription::where('user_id', $profile_id)
                 ->orderBy('user_subscription_status_id','asc')
                 ->get();
-
-
-
-
 
             $userPayments = Payment::whereHas('userSubscription', function($query) use ($profile_id){
                 $query->where('user_id', $profile_id);
@@ -74,7 +62,7 @@ class ProfileController extends Controller
             ]);
         }
         catch (Exception $e){
-            return redirect()->back()->withErrors($e->getMessage());   
+            return redirect()->back()->withErrors('Error al mostrar el usuario');   
         }
     }
 
@@ -104,7 +92,7 @@ class ProfileController extends Controller
             }
 
             $menUsers = $users->filter(function($user){
-                return $user->gender->id === 1;
+                return $user->gender->id === Gender::MAN;
             })->count();
 
             return view('profile.index',)->with([
@@ -139,7 +127,7 @@ class ProfileController extends Controller
             $user->start_date = $request->start_date;
             $user->primary_phone = $request->primary_phone;
             $user->social_work_id = $request->social_work_id; 
-            $user->secundary_phone = $request->secundary_phone;
+            $user->secondary_phone = $request->secondary_phone;
             $user->address = $request->address;
             $user->birthday = $request->birthday;
             $user->personal_information = $request->personal_information;
@@ -167,7 +155,7 @@ class ProfileController extends Controller
             return redirect()->route('profile.index')->withSuccess('Se guardaron los cambios con exito');
         }
         catch(Exception $e){
-            return redirect()->back()->withErrors($e->getMessage());     
+            return redirect()->back()->withErrors('Error al actualizar al usuario');     
         }
     }
 
@@ -191,8 +179,8 @@ class ProfileController extends Controller
             $user->role_id = Role::USER;
             $user->social_work_id = $request->social_work_id;
                    
-            if($request->secundary_phone != NULL){
-                $user->secundary_phone = $request->secundary_phone;
+            if($request->secondary_phone != NULL){
+                $user->secondary_phone = $request->secondary_phone;
             }
 
             if($request->address != NULL){
@@ -218,10 +206,10 @@ class ProfileController extends Controller
                 $user_subscription->save();
             }   
             
-            return redirect()->route('profile.index')->withSuccess('Se guardaron con exito los cambios.');
+            return redirect()->route('profile.index')->withSuccess('Se guardaron con exito los cambios');
         }
         catch (Exception $e){
-            return redirect()->back()->withErrors($e->getMessage());
+            return redirect()->back()->withErrors('Error al guardar al usuario');
         }      
        
     }
@@ -310,7 +298,7 @@ class ProfileController extends Controller
     public function usersWhoLeft()
     {
         try{
-            $users = User::has('lastAssistance')->with('lastAssistance')->get(); 
+            $users = User::has('lastAssistance')->with('lastAssistance','lastSubscription')->get(); 
             
             $usersLeft = $users
                 ->filter(function($user){
@@ -364,13 +352,19 @@ class ProfileController extends Controller
 
             if($profile_id != null){
                 $userSelected = User::findOrFail($profile_id);
-                $userSubscription = UserSubscription::where('user_id', $userSelected->id)->latest()->first();
+                $userSubscription = $userSelected->lastSubscription()->get();
+                if ($userSubscription->isEmpty()){
+                    $userSubscription = 'sinSubscripcion';
+                }
+                else{
+                    $userSubscription = $userSelected->lastSubscription()->first();
+                }
             }
             else{
                 if(isset($_GET['user']) && $_GET['user'] != 'withoutUser'){
                     $userSelected = User::findOrFail($_GET['user']);
                     if($userSelected->lastSubscription()->get()->isNotEmpty()){
-                        $userSubscription = UserSubscription::where('user_id', $userSelected->id)->latest()->first();
+                        $userSubscription = $userSelected->lastSubscription()->first();
                     }
                     else{
                         $userSubscription = 'sinSubscripcion';

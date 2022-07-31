@@ -52,7 +52,7 @@
             </div>
 
             <div class="card-footer text-center">
-                <button type="submit" class="btn btn-danger"><i class="fa fa-floppy-disk mr-1"></i>{{ __('Crear suscripción') }}</button>
+                <button type="submit" class="btn btn-dark"><i class="fa fa-floppy-disk mr-1"></i>{{ __('Crear suscripción') }}</button>
             </div>               
 
         </div>

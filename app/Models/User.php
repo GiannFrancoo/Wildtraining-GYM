@@ -24,7 +24,7 @@ class User extends Authenticatable
         'email',
         'password',
         'primary_phone',
-        'secundary_phone',
+        'secondary_phone',
         'address', 
         'birthday', 
         'start_date', 
@@ -114,7 +114,7 @@ class User extends Authenticatable
             ->withTimestamps()
             ->where([
                 ['user_subscriptions.deleted_at', '=', NULL],
-                ['user_subscriptions.user_subscription_status_id', '=', 1]
+                ['user_subscriptions.user_subscription_status_id', '=', UserSubscriptionStatus::ACTIVE]
             ]);
     }
 

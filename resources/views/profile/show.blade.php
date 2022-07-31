@@ -2,9 +2,28 @@
 
 @section('main-content')
 
+    @if (session('success'))
+        <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="alert alert-danger border-left-danger" role="alert">
+            <ul class="pl-4 my-2">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <!-- User profile -->
     <div class="row">
-        <div class="col-8">     
+        <div class="col-md-8 mb-3">     
             <div class="card border-left-secondary shadow h-100 py-2">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h5 class="h4 text-gray-800">Usuario: {{ $user->getFullNameAttribute() }}</h5>
@@ -30,8 +49,8 @@
                             </tr>
                             <tr>
                                 <td>Celular secundario:</td>
-                                @if ($user->secundary_phone != null)
-                                    <td class="text-right">{{ $user->secundary_phone }}</td>
+                                @if ($user->secondary_phone != null)
+                                    <td class="text-right">{{ $user->secondary_phone }}</td>
                                 @else
                                     <td class="text-right"> - </td>
                                 @endif
@@ -73,7 +92,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-md-4 mb-3">
             <div class="card">
                 <div class="card-header text-center align-items-center">
                     <h4 class="h5 text-gray-800"><i class="fa fa-circle-info mr-1"></i>Información personal</h4>    
@@ -87,45 +106,52 @@
         
     </div>
     
-    
-    @if ($user->subscriptions() != [])
     <hr>
-        <!-- Payments historial -->
-        <div class="row">
-            <div class="col">
-                <div class="card shadow">
-                    <div class="card-header py-3 d-flex justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-danger">{{ __('Historial de pagos') }}: {{ $user->getFullNameAttribute() }}</h6>
-                        <a href="{{ route('payment.create', ['profile_id' => $user->id]) }}" type="button" class="btn btn-dark" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>{{ __('Nuevo pago') }}</a>
-                    </div>
-                    <div class="card-body table-responsive">
-                        <table class="table table-bordered table-hover text-center" id="dataTable">    
-                            <thead>
-                                <tr>
-                                    <th>Abonado</th>
-                                    <th>Fecha</th>
-                                    <th>Suscripción</th>
-                                    <th>Estado</th>
-                                    <th>Acciones</th>
+
+    <!-- Payments historial -->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header py-3 d-flex justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-danger">{{ __('Historial de pagos') }}: {{ $user->getFullNameAttribute() }}</h6>
+                    <a href="{{ route('payment.create', ['profile_id' => $user->id]) }}" type="button" class="btn btn-dark" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>{{ __('Nuevo pago') }}</a>
+                </div>
+                <div class="card-body table-responsive">
+                    <table class="table table-bordered table-hover text-center" id="dataTable">    
+                        <thead>
+                            <tr>
+                                <th>Abonado</th>
+                                <th>Fecha</th>
+                                <th>Suscripción</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>                        
+                            @foreach ($userPayments as $payment)  
+                                <tr>                               
+                                    <td>${{ $payment->price }}</td>
+                                    <td>{{ $payment->date->format('d/m/Y') }}</td>
+                                    <td>{{ $payment->userSubscription->subscription->name }}</td>
+                                    <td>{{ $payment->paymentStatus->name }}</td>
+                                    <td>
+                                        <div class="d-flex justify-content-center">
+                                            <a href="{{ route('payment.edit', ['payment_id' => $payment->id]) }}" type="button" class="btn btn-circle btn-secondary" title="edit" method="GET" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
+                                            <form action="{{ route('payment.destroy', ['payment_id' => $payment->id]) }}" method="POST">
+                                            @csrf
+                                            @method("DELETE")
+                                                <button class="btn btn-danger btn-circle mx-2" type="submit" onclick="return confirm('¿Desea eliminar este pago?')"><i class="fa fa-trash"></i></button>
+                                            </form>
+                                        </div>
+                                    </td>                                
                                 </tr>
-                            </thead>
-                            <tbody>                        
-                                @foreach ($userPayments as $payment)  
-                                    <tr>                               
-                                        <td>${{ $payment->price }}</td>
-                                        <td>{{ $payment->date->format('d/m/Y') }}</td>
-                                        <td>{{ $payment->userSubscription->subscription->name }}</td>
-                                        <td>{{ $payment->paymentStatus->name }}</td>
-                                        <td></td>                                
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-    @endif
+    </div>
 
     <hr>
 
@@ -160,9 +186,6 @@
             </div>
         </div>
     </div>
-
-
-    
 
 @endsection
 

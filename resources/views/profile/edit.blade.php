@@ -110,12 +110,12 @@
                             <div class="col-lg-6">
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="secondaryPhone">{{ __('Celular secundario') }}</label>
-                                    @if($user->secundary_phone === "")
-                                        <input type="text" id="secondaryPhone" pattern=".{9,}" title="Tiene que ingresar como minimo 9 caracteres" class="form-control" name="secundary_phone" value = "-">
+                                    @if($user->secondary_phone === "")
+                                        <input type="text" id="secondaryPhone" pattern=".{9,}" title="Tiene que ingresar como minimo 9 caracteres" class="form-control" name="secondary_phone" value = "-">
                                     @else
-                                        <input type="text" id="secondaryPhone" pattern=".{9,}" title="Tiene que ingresar como minimo 9 caracteres" class="form-control" name="secundary_phone" value="{{ old('secundary_phone', $user->secundary_phone) }}">
+                                        <input type="text" id="secondaryPhone" pattern=".{9,}" title="Tiene que ingresar como minimo 9 caracteres" class="form-control" name="secondary_phone" value="{{ old('secondary_phone', $user->secondary_phone) }}">
                                     @endif
-                                    @error('secundary_phone')
+                                    @error('secondary_phone')
                                         @if($message === "El valor del campo primary phone ya está en uso.")
                                             <div class="alert alert-danger border-left-danger" role="alert">
                                                 <ul class="pl-4 my-2">
@@ -150,9 +150,9 @@
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="birthday">{{ __('Fecha de nacimiento') }}</label>
                                     @if($user->birthday != NULL)
-                                        <input type="date"  id="birthday" class="form-control" name="birthday" value="{{ old('birthday', $user->birthday->format('Y-m-d')) }}">
+                                        <input type="date" id="birthday" class="form-control" name="birthday" value="{{ old('birthday', $user->birthday->format('Y-m-d')) }}">
                                     @else
-                                        <input type="date"  id="birthday" class="form-control" name="birthday" value="{{ old('birthday') }}">
+                                        <input type="date" id="birthday" class="form-control" name="birthday" value="{{ old('birthday') }}">
                                     @endif 
                                     
                                     @error('start_date')

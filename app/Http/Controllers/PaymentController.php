@@ -43,7 +43,7 @@ class PaymentController extends Controller
     {   
         try{
             $paymentStatuses = PaymentStatus::all();
-            $users = User::all();
+            $users = User::whereHas('lastSubscription')->get();
             $userSelected = null;
             $subscription = null;
 
@@ -54,12 +54,13 @@ class PaymentController extends Controller
                 else{
                     $userSelected = User::with('lastSubscription')->find($_GET['user']);
                 }
-                    $subscription = $userSelected->lastSubscription->first();
+                
+                $subscription = $userSelected->lastSubscription->first();
                 
                 if (is_null($subscription)) {
                     return redirect()
                         ->back()
-                        ->with('error', 'El usuario no tiene suscripción');
+                        ->withErrors('El usuario no tiene ninguna suscripción activa');
                 }
             }
 
@@ -179,11 +180,12 @@ class PaymentController extends Controller
     public function destroy($payment_id)
     {
         try{      
-            $payments = Payment::all();
             $payment = Payment::findOrFail($payment_id);
             $payment->delete();
 
-            return redirect()->route('payment.index')->with('payments', $payments)->withSuccess('Se elimino con exito el pago');
+            return redirect()
+                ->back()
+                ->withSuccess('Se elimino con exito el pago');
         }
         catch(Exception $e){
             return redirect()->back()->withErrors('Error al eliminar el pago');
@@ -221,9 +223,7 @@ class PaymentController extends Controller
         }
         catch(Exception $e){
             return redirect()->back()->withErrors('Error al mostrar los pagos pendientes');
-        }
-        
-
+        }      
     }
 
     /**

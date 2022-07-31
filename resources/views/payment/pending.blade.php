@@ -5,7 +5,6 @@
     <!-- Header -->
     <h1 class="h3 mb-4 text-gray-800">{{ __('Pagos pendientes') }}</h1>      
     
-
     @if (session('success'))
         <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
@@ -38,22 +37,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-xl-4 col-md-6 mb-4">
-            <div class="card border-left-danger shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Nose</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">nose</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fa fa-clipboard-list fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Payments table -->
@@ -70,7 +53,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">Usuario</th>
-                                <th scope="col">Precio</th>
+                                <th scope="col">Abonado</th>
                                 <th scope="col">Fecha</th>
                                 <th scope="col">Subscripcion</th>
                                 <th scope="col">Estado</th>

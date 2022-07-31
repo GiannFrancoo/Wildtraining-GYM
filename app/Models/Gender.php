@@ -9,8 +9,8 @@ class Gender extends Model
 {
     protected $table = "genders";
 
-    const MEN = 1;
-    const WOMEN = 2;
+    const MAN = 1;
+    const WOMAN = 2;
     
     protected $fillable = [
         'name',

@@ -18,47 +18,34 @@
                     <div class="row">
                         <div class="col-lg-12 mb-1">
                             <div class="text-center">
+                                <p>Desarrolladores</p>
                                 <h5 class="font-weight-bold">Bentivegna Gian Franco | Cervelli Haderne Lucas</h5>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-4 mb-1 text-center">
-                            <a href="" target="_blank" class="btn btn-facebook btn-circle btn-lg"><i class="fab fa-facebook-f fa-fw"></i></a>
+                    <div class="row mb-1">
+                        <div class="col-md-6 text-center">
+                            <a href="https://www.instagram.com/gianfrancobentivegna" target="_blank" class="btn btn-circle btn-lg"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="https://www.linkedin.com/in/gianfrancobentivegna/" target="_blank" class="btn btn-circle btn-lg"><i class="fa-brands fa-linkedin"></i></a>
+                            <p>Bentivegna Gian Franco</p>
                         </div>
-                        <div class="col-md-4 mb-1 text-center">
-                            <a href="" target="_blank" class="btn btn-github btn-circle btn-lg"><i class="fab fa-github fa-fw"></i></a>
-                        </div>
-                        <div class="col-md-4 mb-1 text-center">
-                            <a href="" target="_blank" class="btn btn-twitter btn-circle btn-lg"><i class="fab fa-twitter fa-fw"></i></a>
+                        <div class="col-md-6 text-center">
+                            <a href="https://www.instagram.com/lucascervelli8/" target="_blank" class="btn btn-circle btn-lg"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="https://www.linkedin.com/in/gianfrancobentivegna/" target="_blank" class="btn btn-circle btn-lg"><i class="fa-brands fa-linkedin"></i></a>
+                            <p>Cervelli Haderne Lucas</p>
                         </div>
                     </div>
 
                     <hr>
 
                     <div class="row">
-                        <div class="col-lg-12">
-                            <h5 class="font-weight-bold">Laravel SB Admin 2</h5>
+                        <div class="col-lg-12 text-center">
+                            <h5 class="font-weight-bold">Plantilla utilizada: Laravel SB Admin 2</h5>
                             <p>SB Admin 2 for Laravel.</p>
-                            <p>Recommend to install this preset on a project that you are starting from scratch, otherwise your project's design might break.</p>
-                            <a href="https://github.com/aleckrh/laravel-sb-admin-2" target="_blank" class="btn btn-github">
-                                <i class="fab fa-github fa-fw"></i> Go to repository
+                            <a href="https://github.com/GiannFrancoo/Wildtraining-GYM" target="_blank" class="btn btn-github">
+                                <i class="fab fa-github fa-fw"></i> Repositorio
                             </a>
-                        </div>
-                    </div>
-
-                    <hr>
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <h5 class="font-weight-bold">Credits</h5>
-                            <p>Laravel SB Admin 2 uses some open-source third-party libraries/packages, many thanks to the web community.</p>
-                            <ul>
-                                <li><a href="https://laravel.com" target="_blank">Laravel</a> - Open source framework.</li>
-                                <li><a href="https://github.com/DevMarketer/LaravelEasyNav" target="_blank">LaravelEasyNav</a> - Making managing navigation in Laravel easy.</li>
-                                <li><a href="https://startbootstrap.com/themes/sb-admin-2" target="_blank">SB Admin 2</a> - Thanks to Start Bootstrap.</li>
-                            </ul>
                         </div>
                     </div>
 

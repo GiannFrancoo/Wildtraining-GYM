@@ -21,28 +21,32 @@ class SubscriptionController extends Controller
      */
     public function index()
     {        
-        $subscriptions = Subscription::all();
-        $users = User::all();
-        $subscriptionArray = array();
-        $totalSubscription = 0;
+        try{
+        
+            $subscriptions = Subscription::all();
+            $users = User::whereHas('lastSubscription')->get();
+            $subscriptionArray = array();
+            $totalSubscription = 0;
 
-        foreach ($subscriptions as $subscription){
-            $totalSubscription = 0;            
+            foreach ($subscriptions as $subscription){
+                $totalSubscription = 0;            
 
-            foreach ($users as $user){
-                if (UserSubscription::where('user_id', $user->id)->latest()->first() != null){
-                    $lastSubscriptionId = UserSubscription::where('user_id', $user->id)->latest()->first()->subscription_id;
-
-                    if ($subscription->id == $lastSubscriptionId){
-                        $totalSubscription++;
+                foreach ($users as $user){
+                    if ($user->lastSubscription->isNotEmpty()){
+                        if ($subscription->id == $user->lastSubscription->first()->id){
+                            $totalSubscription++;
+                        }
                     }
                 }
+
+                $subscriptionArray = Arr::add($subscriptionArray, $subscription->id, $totalSubscription);
             }
 
-            $subscriptionArray = Arr::add($subscriptionArray, $subscription->id, $totalSubscription);
+            return view('subscription.subscription')->with(['subscriptions' => $subscriptions, 'subscriptionArray' => $subscriptionArray]);
         }
-
-        return view('subscription.subscription')->with(['subscriptions' => $subscriptions, 'subscriptionArray' => $subscriptionArray]);
+        catch(Exception $e){
+            return redirect()->back()->withErrors('Error al mostrar las suscripciones');
+        }   
     }
 
     /**
@@ -85,26 +89,21 @@ class SubscriptionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        $subscription = Subscription::find($id);
-        $users = User::all();
-        $subscriptionArray = array();
+    public function show($subscription_id)
+    {   
+        try{
+            $subscription = Subscription::findOrFail($subscription_id);
 
-        foreach ($users as $user){
-            if (UserSubscription::where('user_id', $user->id)->latest()->first() != null){
-                $lastSubscriptionId = UserSubscription::where('user_id', $user->id)->latest()->first()->subscription_id;
+            $users = User::whereHas('lastSubscription', function($query) use ($subscription){
+                $query->where('subscriptions.id', $subscription->id);     
+            })->get();
 
-                if ($subscription->id == $lastSubscriptionId){
-                    $subscriptionArray = Arr::add($subscriptionArray, $user->id, $user);
-                }
-            }
+            return view('subscription.show')->with(['subscription' => $subscription, 'users' => $users]);
+
         }
-        
-        $subscriptionArray = Arr::flatten($subscriptionArray);
-
-        return view('subscription.show')->with(['subscription' => $subscription, 'subscriptionArray' => $subscriptionArray]);
-
+        catch (Exception $e){
+            return redirect()->back()->withErrors('Error al mostrar la suscripción');
+        }
     }
 
     /**

@@ -58,45 +58,40 @@
 
         <!-- Earnings (Monthly) Card Example -->
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Pendiente a pago</div>
-                            <div class="row no-gutters align-items-center">
-                                <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                </div>
-                                <div class="col">
-                                    <div class="progress progress-sm mr-2">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
+            <a href="{{ route('payment.pending') }}" class="text-decoration-none">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">{{ __('Pendiente a pago') }}</div>
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $pendingPayments->count() }}</div>
                             </div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            <div class="col-auto">
+                                <i class="fa fa-clock fa-2x text-gray-300"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
 
          <!-- Total Users -->
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Usuarios   -   Sin suscripción</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $users->count() }}   -   {{ $usersWithoutSubscription }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-users fa-2x text-gray-300"></i>
+            <a href="{{ route('profile.index') }}" class="text-decoration-none">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Usuarios   -   Sin suscripción</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $users->count() }}   -   {{ $usersWithoutSubscription }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-users fa-2x text-gray-300"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 
@@ -180,12 +175,13 @@
                                             <h5><span class="badge badge-pill badge-dark">{{ $user->lastSubscription->first()->name }} </span></h5>
                                         @endif 
                                     </td>
-                                    <td>
+                                    <td class="d-flex justify-content-center">
+                                        <a href="{{route('profile.show', ['profile_id' => $user->id])}}" type="button" class="btn btn-circle btn-light mx-1" title="Show"><i class="fa fa-eye"></i></a>
                                         <a href="{{route('profile.edit', ['profile_id' => $user->id])}}" type="button" class="btn btn-circle btn-secondary" title="Edit"><i class="fa fa-pencil"></i></a>
-                                        <form action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" method="POST" class="d-inline">
+                                        <form action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" method="POST">
                                             @csrf
                                             @method("DELETE")
-                                            <button class="btn btn-circle btn-danger ml-3" onclick="return confirm('¿Desea borrar al usuario {{ $user->name }}?')" title="Delete"><i class="fa fa-trash"></i></button>
+                                            <button class="btn btn-circle btn-danger mx-1" onclick="return confirm('¿Desea borrar al usuario {{ $user->name }}?')" title="Delete"><i class="fa fa-trash"></i></button>
                                         </form>
                                     </td>
                                 </tr>

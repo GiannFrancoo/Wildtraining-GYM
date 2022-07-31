@@ -27,7 +27,7 @@
                 <div class="row">                                            
                     <div class="col-12">
                         <div class="form-group focused">
-                            <label class="form-control-label" for="price">Precio<span class="small text-danger">*</span></label>
+                            <label class="form-control-label" for="price">Abonado<span class="small text-danger">*</span></label>
 
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">

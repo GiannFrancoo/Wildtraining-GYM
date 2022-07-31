@@ -69,14 +69,15 @@
                                     <tr>
                                         <td>{{ $user->getFullNameAttribute() }}</td>
                                         <td>{{ $user->primary_phone }}</td>
-                                        @if($user->lastSubscription()->first() != null)
-                                            <td>{{ $user->lastSubscription()->first()->name}}</td>
+                                        @if($user->lastSubscription->first() != null)
+                                            <td><h5><span class="badge badge-pill badge-dark">{{ $user->lastSubscription->first()->name }}</span></h5></td>
                                         @else
-                                            <td>{{ __('No tiene') }}</td>
+                                            <td><h5><span class="badge badge-pill badge-dark">{{ __('No tiene') }}</span></h5></td>
                                         @endif                                         
                                         <td>{{ $user->assistances->first->get()->date->format('m/d/Y') }}</td>
-                                        <td class="text-center">
-                                            <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-secondary btn-circle mx-1"><i class="fa fa-pencil"></i></a> 
+                                        <td class="d-flex justify-content-center">
+                                            <a href="{{ route('profile.show', ['profile_id' => $user->id]) }}" type="button" class="btn btn-light btn-circle"><i class="fa fa-eye"></i></a>
+                                            <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-secondary btn-circle mx-2"><i class="fa fa-pencil"></i></a> 
                                         </td> 
                                     </tr>
                                 @endforeach

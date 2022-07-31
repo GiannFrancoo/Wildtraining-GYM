@@ -60,7 +60,7 @@
                             <select class="custom-select" name="subscriptionIdSelected" value="">  
                                 @if($userSubscription != 'sinSubscripcion')                                
                                     @foreach($subscriptions as $subscription)
-                                        <option value="{{ $subscription->id }}" {{ ($userSubscription->subscription->id === $subscription->id) ? 'Selected' : ''}} >{{ $subscription->name }}</option>
+                                        <option value="{{ $subscription->id }}" {{ ($userSubscription->id === $subscription->id) ? 'Selected' : ''}} >{{ $subscription->name }}</option>
                                     @endforeach
                                     <option value="sinSubscripcion">Sin suscripcion</option>
                                 @else
@@ -74,7 +74,7 @@
                         <div class="col-md-6 form-group focused">
                             <label class="form-control-label">{{ __('Suscripcion actual') }}</label>
                             @if($userSubscription != 'sinSubscripcion')
-                                <input type="text" class="form-control" readonly value="{{ $userSubscription->subscription->name }}">
+                                <input type="text" class="form-control" readonly value="{{ $userSubscription->name }}">
                             @else
                                 <input type="text" class="form-control" readonly value="Sin suscripcion">
                             @endif

@@ -61,7 +61,7 @@
           <div class="row">
             <div class="col-6">
               <div class="form-group focused">
-                <label class="form-control-label" for="name">{{ __('Precio') }}<span class="small text-danger">*</span></label>       
+                <label class="form-control-label" for="name">{{ __('Abonado') }}<span class="small text-danger">*</span></label>       
                 <!--Input precio-->
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">

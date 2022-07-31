@@ -27,8 +27,8 @@ class UserStoreRequest extends FormRequest
             'name' => 'required|string|max:255',
             'last_name' => 'required|nullable|string|max:255',
             'email' => 'required|email|unique:users,email,',
-            'primary_phone' => 'required|numeric|min:9|unique:users,primary_phone|unique:users,secundary_phone,',
-            'secundary_phone' => 'nullable|numeric|min:9|unique:users,primary_phone|unique:users,secundary_phone', 
+            'primary_phone' => 'required|numeric|min:9|unique:users,primary_phone|unique:users,secondary_phone,',
+            'secondary_phone' => 'nullable|numeric|min:9|unique:users,primary_phone|unique:users,secondary_phone', 
             'gender_id' => 'required',
         ]; 
     }

@@ -4,8 +4,7 @@
 
     <!-- Page Heading -->
     <h1 class="h3 mb-4 text-gray-800">{{ __('Creando nuevo usuario') }}</h1>
-
-   
+ 
     <form action="{{route('profile.store')}}" method="POST">
     @csrf
         <div class="row">
@@ -98,8 +97,8 @@
                             <div class="col-lg-6">
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="new_password">{{ __('Celular secundario') }}</label>
-                                    <input type="text" id="new_password" pattern=".{9,}" title="Tiene que ingresar como minimo 9 caracteres" class="form-control" placeholder="2915678987" name="secundary_phone" value="{{ old('secundary_phone') }}">
-                                    @error('secundary_phone')
+                                    <input type="text" id="new_password" pattern=".{9,}" title="Tiene que ingresar como minimo 9 caracteres" class="form-control" placeholder="2915678987" name="secondary_phone" value="{{ old('secondary_phone') }}">
+                                    @error('secondary_phone')
                                         @if($message === "El valor del campo secundary phone ya está en uso.")
                                             <div class="alert alert-danger border-left-danger" role="alert">
                                                 <ul class="pl-4 my-2">
@@ -154,7 +153,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group focused"><!-- AGREGAR VALIDACION con min="2017-07-18" y max-->
                                     <label class="form-control-label" for="start_date">{{ __('Fecha de inicio en el gimnasio') }}<span class="small text-danger">*</span></label>
-                                    <input type="date" id="new_password" required class="form-control"  name="start_date" value="{{ old('start_date') }}">
+                                    <input type="date" id="new_password" required class="form-control"  name="start_date" value="{{ old('start_date', now()->format('Y-m-d')) }}">
                                     @error('start_date')
                                         <div class="alert alert-danger border-left-danger" role="alert">
                                             <ul class="pl-4 my-2">

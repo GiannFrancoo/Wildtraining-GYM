@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'password'              => 'password',
             'remember_token'        => Str::random(10),     
             'primary_phone'         => $this->faker->phoneNumber(),
-            'secundary_phone'       => $this->faker->phoneNumber(),
+            'secondary_phone'       => $this->faker->phoneNumber(),
             'address'               => $this->faker->address(),
             'birthday'              => Carbon::now()->subYears(rand(1, 55)),
             'start_date'            => Carbon::now()->subYears(rand(1, 55)),

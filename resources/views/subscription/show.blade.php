@@ -89,11 +89,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($subscriptionArray as $user)
+                            @foreach ($users as $user)
                                 <tr>
                                     <td>{{ $user->getFullNameAttribute() }}</td>
                                     <td>{{ $user->primary_phone }}</td>
                                     <td class="d-flex justify-content-center">
+                                        <a href="{{ route('profile.show', ['profile_id' => $user->id]) }}" type="button" class="btn btn-circle btn-light mx-2" title="Show" data-toggle="tooltip"><i class="fa fa-eye"></i></a>
                                         <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-circle btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
 
                                         <form method="POST" action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}">
