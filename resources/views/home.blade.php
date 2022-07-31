@@ -114,6 +114,7 @@
                                 <th>Estado</th>
                                 <th>Suscripción</th>
                                 <th>Acciones</th>
+                                <th>Cambiar estado</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -123,14 +124,23 @@
                                     <td>{{ $payment->date->format('d/m/Y') }}</td>
                                     <td>{{ $payment->paymentStatus->name }}</td>
                                     <td><h5><span class="badge badge-pill badge-dark">{{ $payment->userSubscription->subscription->name }}</span></h5></td>       
-                                    <td>
+                                    <td class="d-flex justify-content-center">
                                         <!-- deberia cambiar el estado del pago -->
                                         <a href="{{ route('payment.edit', ['payment_id' => $payment->id]) }}" type="button" class="btn btn-secondary btn-circle mx-1" title="changeStatus" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
-                                        <form action="{{ route('payment.destroy', ['payment_id' => $payment->id]) }}" method="POST" class="d-inline">
+                                        <form action="{{ route('payment.destroy', ['payment_id' => $payment->id]) }}" method="POST" class="mx-1">
                                             @csrf
                                             @method("DELETE")
                                             <button class="btn btn-circle btn-danger ml-2" onclick="return confirm('¿Desea borrar el pago asociado a {{ $payment->userSubscription->user->getFullNameAttribute() }}?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button>
-                                        </form>                          
+                                        </form> 
+                                    </td> 
+                                    <td>
+                                        <form action="{{ route('payment.changeStatus', ['payment_id' => $payment->id]) }}" method="GET" class="mx-1">
+                                            <select class="custom-select" style="text-align:center;" onChange="this.form.submit()" name="paymentStatusSelect" value="">                                           
+                                                @foreach($statusesPayments as $statusPayment)    
+                                                    <option value="{{ $statusPayment->id }}"  {{($payment->paymentStatus->id === $statusPayment->id) ? 'Selected' : ''}}>{{ $statusPayment->name }}</option>
+                                                @endforeach
+                                            </select>                                   
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

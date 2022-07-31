@@ -229,14 +229,23 @@ class PaymentController extends Controller
     /**
      * Change the status to a payment
      */
-
     public function changeStatus(Request $request, $payment_id)
     {
-        try{            
+        try{        
             $payment = Payment::findOrFail($payment_id);
-            $payment->payment_status_id = $request->new_payment_status_id;
-            $payment->payment_status_updated_at = now();
-            $payment->save();           
+            if (isset($_GET['paymentStatusSelect'])){
+                $payment->payment_status_id = $_GET['paymentStatusSelect'];
+                $payment->payment_status_updated_at = now();
+                $payment->save();
+                return redirect()->route('home')->withSuccess('Se actualizo el estado del pago correctamente');
+            }
+            else{
+                $payment->payment_status_id = $request->new_payment_status_id;
+                $payment->payment_status_updated_at = now();
+                $payment->save();
+            }
+            
+                       
 
             return redirect()->route('payment.index')->withSuccess("Se cambio el estado del pago correctamente");
         }

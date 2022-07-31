@@ -52,6 +52,7 @@ class HomeController extends Controller
             'monthlyRevenue' => $monthlyRevenue, 
             'usersWithoutSubscription' => $usersWithoutSubscription,
             'pendingPayments' => $pendingPayments,
+            'statusesPayments' => PaymentStatus::all(),
         ]);
     }
 }
