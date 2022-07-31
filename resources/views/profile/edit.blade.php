@@ -116,13 +116,13 @@
                                         <input type="text" id="secondaryPhone" pattern=".{9,}" title="Tiene que ingresar como minimo 9 caracteres" class="form-control" name="secondary_phone" value="{{ old('secondary_phone', $user->secondary_phone) }}">
                                     @endif
                                     @error('secondary_phone')
-                                        @if($message === "El valor del campo primary phone ya está en uso.")
+                                        @if($message === "El valor del campo secondary phone ya está en uso.")
                                             <div class="alert alert-danger border-left-danger" role="alert">
                                                 <ul class="pl-4 my-2">
                                                     <li>{{ __('El celular ingresado ya esta en uso.') }}</li>
                                                 </ul>
                                             </div> 
-                                        @elseif($message === "El campo secundary phone debe ser un número.")
+                                        @elseif($message === "El campo secondary phone debe ser un número.")
                                             <div class="alert alert-danger border-left-danger" role="alert">
                                                 <ul class="pl-4 my-2">
                                                     <li>{{ __('El celular ingresado debe ser solo numeros.') }}</li>
