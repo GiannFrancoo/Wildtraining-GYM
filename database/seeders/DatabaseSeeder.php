@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             SubscriptionSeeder::class,
             UserSubscriptionSeeder::class,
             PaymentSeeder::class,
+            AssistanceSeeder::class,
         ]);
         
         
