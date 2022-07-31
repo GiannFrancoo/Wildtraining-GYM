@@ -61,6 +61,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/assistance/{assistance_id}/edit}', [AssistanceController::class, 'edit'])->name('assistance.edit');
     Route::put('/assistance/{assistance_id}', [AssistanceController::class, 'update'])->name('assistance.update');
     Route::delete('/assistance/{assistance_id}', [AssistanceController::class, 'destroy'])->name('assistance.destroy');
+    Route::get('/assistance/todayAssistances', [AssistanceController::class, 'todayAssistances'])->name('assistance.todayAssistances');
     
     //Routes for payments
     Route::get('/payment/create/{profile_id?}', [PaymentController::class, 'create'])->name('payment.create');

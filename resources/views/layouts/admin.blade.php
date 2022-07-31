@@ -149,6 +149,13 @@
                         <i class="fa-solid fa-add"></i>
                         <span>{{ __('Nueva') }}</span>
                     </a>
+                </li>                
+                <!-- List of assistances today -->
+                <li class="nav-item {{ Nav::isRoute('assistance.todayAssistances') }}">
+                    <a class="nav-link" href="{{ route('assistance.todayAssistances') }}">
+                        <i class="fa-solid fa-check"></i>
+                        <span>{{ __('Hoy') }}</span>
+                    </a>
                 </li>
                 <!-- List of assistances -->
                 <li class="nav-item {{ Nav::isRoute('assistance.index') }}">

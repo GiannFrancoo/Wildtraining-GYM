@@ -178,4 +178,24 @@ class AssistanceController extends Controller
             return redirect()->back()->withErrors('Error al eliminar la asistencia');
         }
     }
+
+
+    /**
+     * Today assistances 
+     */
+
+    public function todayAssistances()
+    {
+        try{
+            $todayAssistances = Assistance::whereDate('date', today())->get();
+
+            return view('assistance.todayAssistances')
+                ->with(['todayAssistances' => $todayAssistances]);
+        }
+        catch(Exception $e){
+            return redirect()->back()->withErrors("Error al mostrar las asistencias de hoy");
+        }
+
+    }
+
 }
