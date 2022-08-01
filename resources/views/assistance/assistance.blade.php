@@ -135,15 +135,18 @@
         times.push(i);
     }
 
-    var horas = <?php echo json_encode($hours); ?>;
-    console.log(horas);
+    var horas = "{{ json_encode($chart['data']) }}"
+    horas = horas.replaceAll('&quot;', '').split(',');
 
-    const labels = times;
-    
+    var labels = "{{ json_encode($chart['labels']) }}"
+    labels = labels.replaceAll('&quot;', '').split(',');
+
+    console.log(labels, horas);
+
     const data = {
         labels: labels,
         datasets: [{
-            label: 'Hora pico',
+            label: 'Asistencias',
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
             data: horas,
@@ -158,6 +161,8 @@
             maintainAspectRatio: false,
             scales:{
                 y: {
+                    min: 0,
+                    max: Math.max(...horas) + 1,
                     ticks:{
                         stepSize: 1
                     }

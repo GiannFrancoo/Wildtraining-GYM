@@ -3,7 +3,7 @@
 @section('main-content')
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">{{ __('Asistencias de hoy: ') }}<small class="text-muted">{{ now()->format('m/d/Y') }}</small></h1>
+    <h1 class="h3 mb-4 text-gray-800">{{ __('Asistencias de hoy: ') }}<small class="text-muted">{{ now()->format('d/m/Y') }}</small></h1>
 
     @if (session('success'))
         <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">

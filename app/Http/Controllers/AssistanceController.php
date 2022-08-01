@@ -6,10 +6,7 @@ use App\Http\Requests\Assistance\AssistanceStoreRequest;
 use App\Http\Requests\Assistance\AssistanceUpdateRequest;
 use App\Models\Assistance;
 use App\Models\User;
-use Carbon\Carbon;
 use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 
 class AssistanceController extends Controller
 {
@@ -24,35 +21,37 @@ class AssistanceController extends Controller
         $bussiestHours = ["hour" => 0, "count" => 0];
         $todayAssists = 0;
 
-
-
         $hours = $assistances
                 ->groupBy(function ($assistance) {
                     return $assistance->date->format('H');
                 })
                 ->map(function ($assistance, $hour) {
+                    $assistance = $assistance->unique('user_id');
+
                     return [
-                        "hour" => $hour,
+                        "hour" => (int) $hour,
                         "count" => $assistance->count()
                     ];
                 })
-                ->sortByDesc('hour')
+                ->sortBy('hour')
                 ->toArray();
         
         // $hours->toArray();
         // dd($hours);
 
 
-        if ($assistances->isEmpty()){
+        // if ($assistances->isEmpty()){
             $bussiestHours = ["hour" => 0, "count" => 0];
             $todayAssists = 0;        
-        }
-        else{
+        // }
+        if ($assistances->isNotEmpty()){
             $bussiestHours = $assistances
                 ->groupBy(function ($assistance) {
                     return $assistance->date->format('H');
                 })
                 ->map(function ($assistance, $hour) {
+                    $assistance = $assistance->unique('user_id');
+
                     return [
                         "hour" => $hour,
                         "count" => $assistance->count()
@@ -67,12 +66,33 @@ class AssistanceController extends Controller
                 })
                 ->count();
         }
-                    
+
+        $avgAssistancesPerHour = Assistance::query()->get();
+        $avgAssistancesPerHour = $avgAssistancesPerHour
+            ->groupBy(function ($assistance) {
+                return $assistance->date->format('H');
+            })
+            ->map(function ($assistance, $hour) {
+                return [
+                    "hour" => (int) $hour,
+                    "count" => $assistance->count()
+                ];
+            })
+            ->sortBy('hour')
+            ->values()
+            ->toArray();
+
+            // dd(array_column($hours, 'count'));
+        
         return view('assistance.assistance')->with([
             'assistances' => $assistances,
             'bussiestHours' => $bussiestHours['hour'],
             'todayAssists' => $todayAssists,
             'hours' => $hours,
+            'chart' => [
+                "labels" => implode(",", array_column($hours, 'hour')),
+                "data" => implode(",", array_column($hours, 'count')),
+            ]
         ]);
     }
 
