@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Gender;
 use App\Models\Role;
-use App\Models\SocialWork;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
@@ -33,7 +32,7 @@ class UserFactory extends Factory
             'start_date'            => Carbon::now()->subYears(rand(1, 55)),
             'personal_information'  => $this->faker->realText(),
             'role_id'               => Role::find(2)->id, 
-            'social_work_id'        => SocialWork::inRandomOrder()->first()->id,
+            'social_work'           => Str::random(10),
         ];
     }
 

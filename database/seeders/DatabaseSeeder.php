@@ -18,12 +18,11 @@ class DatabaseSeeder extends Seeder
             GenderSeeder::class,
             PaymentStatusSeeder::class,
             UserSubscriptionStatusSeeder::class,
-            SocialWorkSeeder::class,
             UserSeeder::class,
             SubscriptionSeeder::class,
-            UserSubscriptionSeeder::class,
-            PaymentSeeder::class,
-            AssistanceSeeder::class,
+            // UserSubscriptionSeeder::class,
+            // PaymentSeeder::class,
+            // AssistanceSeeder::class,
         ]);
         
         

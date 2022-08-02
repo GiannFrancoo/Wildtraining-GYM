@@ -126,13 +126,6 @@ class User extends Authenticatable
             ->withPivot('id', 'start_date', 'user_subscription_status_id', 'user_subscription_status_updated_at')
             ->withTimestamps()
             ->where('user_subscriptions.deleted_at', NULL);
-    }
-
-    
-    public function social_work()
-    {
-        return $this->belongsTo(SocialWork::class);
-    }
-    
+    }   
    
 }

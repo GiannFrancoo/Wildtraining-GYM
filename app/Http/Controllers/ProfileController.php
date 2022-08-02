@@ -7,7 +7,6 @@ use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\Gender;
 use App\Models\Payment;
 use App\Models\User;
-use App\Models\SocialWork;
 use App\Models\UserSubscription;
 use App\Models\Role;
 use App\Models\Subscription;
@@ -25,12 +24,10 @@ class ProfileController extends Controller
     public function create()
     {
         try{
-            $social_works = SocialWork::all();
             $genders = Gender::all();
             $roles = Role::all();
             $subscriptions = Subscription::all();
             return view('profile.create')->with([
-                'social_works' => $social_works,
                 'genders' => $genders,
                 'roles' => $roles,
                 'subscriptions' => $subscriptions
@@ -71,8 +68,6 @@ class ProfileController extends Controller
         try{      
             $subscriptions = Subscription::all();
             $users = User::latest()->get();
-            $monthlyRevenue = 0;
-            $usersWithoutSubscription = 0;
             $ages = 0;
             $usersWithoutBirthday = 0;
             
@@ -119,7 +114,12 @@ class ProfileController extends Controller
             $user->email = $request->email;
             $user->start_date = $request->start_date;
             $user->primary_phone = $request->primary_phone;
-            $user->social_work_id = $request->social_work_id; 
+
+            if($request->social_work != NULL)
+                $user->social_work = $request->social_work; 
+            else
+                $user->social_work = "No definida";            
+
             $user->secondary_phone = $request->secondary_phone;
             $user->address = $request->address;
             $user->birthday = $request->birthday;
@@ -139,7 +139,7 @@ class ProfileController extends Controller
                 $user_subscription->subscription_id = $request->subscriptionIdSelected;
                 $user_subscription->start_date = now();
                 $user_subscription->user_subscription_status_updated_at = now();
-                $user_subscription->user_subscription_status_id = UserSubscriptionStatus::where('name','Activa')->first()->id;
+                $user_subscription->user_subscription_status_id = UserSubscriptionStatus::where('name',UserSubscriptionStatus::ACTIVE)->first()->id;
                 $user_subscription->save();
             }          
             
@@ -159,7 +159,7 @@ class ProfileController extends Controller
     public function store(UserStoreRequest $request)
     {
         try{
-             $user = new User();
+            $user = new User();
             $user->name = $request->name;
             $user->last_name = $request->last_name;
             $user->gender_id = Gender::findOrFail($request->gender_id)->id;
@@ -168,7 +168,11 @@ class ProfileController extends Controller
             $user->start_date = $request->start_date;
             $user->password = 'password';
             $user->role_id = Role::USER;
-            $user->social_work_id = $request->social_work_id;
+
+            if($request->social_work != NULL)
+                $user->social_work = $request->social_work;
+            else
+                $user->social_work = "No definida";            
                    
             if($request->secondary_phone != NULL){
                 $user->secondary_phone = $request->secondary_phone;
@@ -211,7 +215,6 @@ class ProfileController extends Controller
             $userSubscriptions = null;
             $user = User::findOrFail($profile_id);
             $genders = Gender::all();
-            $socialWorks = SocialWork::all();
             $subscriptions = Subscription::all();
             $activeSubscription = null;
 
@@ -226,7 +229,6 @@ class ProfileController extends Controller
                 'genders' => $genders,
                 'userSubscriptions' => $userSubscriptions,
                 'activeSubscription' => $activeSubscription,
-                'socialWorks' => $socialWorks,
                 'subscriptions' => $subscriptions,
             ]);
         }

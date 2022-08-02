@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->date('birthday')->nullable();
             $table->date('start_date');
             $table->longText('personal_information')->nullable();
+            $table->string('social_work');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
@@ -35,9 +36,6 @@ class CreateUsersTable extends Migration
 
             $table->unsignedBigInteger('role_id');
             $table->foreign('role_id')->references('id')->on('roles')->onUpdate('cascade')->onDelete('cascade');
-
-            $table->unsignedBigInteger('social_work_id');
-            $table->foreign('social_work_id')->references('id')->on('social_works')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

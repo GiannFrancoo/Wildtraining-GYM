@@ -22,36 +22,36 @@ class UserSeeder extends Seeder
         
         $usersAdmin = [
             [
-                'name'                  => 'Lucas',
-                'last_name'             => 'Cervelli Haderne',
-                'email'                 => 'lucasch98.lch@gmail.com',
-                'gender_id'             => Gender::MAN,
-                'email_verified_at'     => now(),
-                'password'              => 'password',
-                'remember_token'        => Str::random(10),     
-                'primary_phone'         => '123456789',
-                'secondary_phone'       => '123456799',
-                'address'               => 'avenida siempre viva 123',
-                'birthday'              => Carbon::now()->subYears(rand(1, 55)),
-                'start_date'            => Carbon::now()->subYears(rand(1, 55)),
-                'role_id'               => Role::ADMIN, 
-                'social_work_id'        => SocialWork::inRandomOrder()->first()->id,
-            ],
-            [
                 'name'                  => 'Gian Franco',
                 'last_name'             => 'Bentivegna',
-                'email'                 => 'GiannFrancoo1@hotmail.com',
+                'email'                 => 'giannfrancoo1@hotmail.com',
                 'gender_id'             => Gender::MAN,
                 'email_verified_at'     => now(),
                 'password'              => 'password',
                 'remember_token'        => Str::random(10),     
-                'primary_phone'         => '12345678999',
-                'secondary_phone'       => '123456789999',
-                'address'               => 'avenida siempre viva 123',
-                'birthday'              => Carbon::now()->subYears(rand(1, 55)),
-                'start_date'            => Carbon::now()->subYears(rand(1, 55)),
+                'primary_phone'         => '+54 9 291 5023991',
+                'secondary_phone'       => '+54 9 291 5024849',
+                'address'               => 'Eduardo Gonzalez 480',
+                'birthday'              => Carbon::createFromDate(1998,8,28,'America/Argentina/Buenos_Aires'),
+                'start_date'            => Carbon::createFromDate(2022,5,1,'America/Argentina/Buenos_Aires'),
                 'role_id'               => Role::ADMIN, 
-                'social_work_id'        => SocialWork::inRandomOrder()->first()->id,   
+                'social_work'           => 'osecac',   
+            ],
+            [
+                'name'                  => 'Juan Martin',
+                'last_name'             => 'Sanchez',
+                'email'                 => 'martinst1@hotmail.com',
+                'gender_id'             => Gender::MAN,
+                'email_verified_at'     => now(),
+                'password'              => 'Larenga73',
+                'remember_token'        => Str::random(10),     
+                'primary_phone'         => '+54 9 2915 04-8149',
+                'secondary_phone'       => '',
+                'address'               => 'Rosario 1942 2A',
+                'birthday'              => Carbon::createFromDate(1989,7,21,'America/Argentina/Buenos_Aires'),
+                'start_date'            => Carbon::createFromDate(2022,4,11,'America/Argentina/Buenos_Aires'),
+                'role_id'               => Role::ADMIN, 
+                'social_work'           => 'No definida',   
             ]
         ];
 
@@ -59,8 +59,7 @@ class UserSeeder extends Seeder
             User::updateOrCreate($userAdmin);
         }       
         
-        User::factory(20)
-             ->create();       
+        // User::factory(20)->create();       
 
     }
 }

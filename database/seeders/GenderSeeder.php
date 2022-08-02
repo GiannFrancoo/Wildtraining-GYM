@@ -16,8 +16,8 @@ class GenderSeeder extends Seeder
     public function run()
     {
         $genders = [
-            ['id' => 1, 'name' => 'Masculino'],
-            ['id' => 2, 'name' => 'Femenino'],
+            ['id' => 1, 'name' => 'Masculino', 'color' => 'info'],
+            ['id' => 2, 'name' => 'Femenino', 'color' => 'danger'],
         ];
 
         foreach ($genders as $gender) {

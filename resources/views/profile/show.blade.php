@@ -77,7 +77,7 @@
                             </tr>
                             <tr>
                                 <td>Obra social:</td>
-                                <td class="text-right">{{ $user->social_work->name }}</td>
+                                <td class="text-right">{{ $user->social_work }}</td>
                             </tr>
                             <tr>
                                 <td>Plan:</td>

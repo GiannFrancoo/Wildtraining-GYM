@@ -166,12 +166,15 @@
 
                             <div class="col-lg-6">
                                 <div class="form-group focused">
-                                    <label class="form-control-label" for="social_work_id">{{ __('Obra social') }}</label>
-                                    <select class="custom-select" required id="social_work_id" name="social_work_id" value="{{ old('social_work_id') }}">                                 
-                                        @foreach($social_works as $social_work)
-                                            <option value="{{ $social_work->id }}" {{old('social_work_id') == $social_work->id ? "selected" : ""}}>{{ $social_work->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    <label class="form-control-label" for="social_work">{{ __('Obra social') }}</label>
+                                    <input type="text" id="social_work" class="form-control" placeholder="Ejemplo: osecac" name="social_work" value="{{ old('social_work') }}">
+                                    @error('social_work')
+                                        <div class="alert alert-danger border-left-danger" role="alert">
+                                            <ul class="pl-4 my-2">
+                                                <li>{{$message}}</li>
+                                            </ul>
+                                        </div> 
+                                    @enderror
                                 </div>
                             </div>
 

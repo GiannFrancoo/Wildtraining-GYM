@@ -165,31 +165,14 @@
                                     <label class="form-control-label" for="startDate">{{ __('Fecha de inicio en el gimnasio') }}<span class="small text-danger">*</span></label>
                                     <input type="date" id="startDate" class="form-control" name="start_date" value="{{ old('start_date', $user->start_date->format('Y-m-d')) }}">
                                 </div>
-                            </div>
+                            </div> 
 
-                            @if($user->social_work_id != null)
-                                <div class="col-lg-6">
-                                    <div class="form-group focused">
-                                        <label class="form-control-label" for="social_work_id">{{ __('Obra social') }}</label>
-                                        <select class="custom-select" id="social_work_id" name="social_work_id" value="{{ old('social_work_id'), $user->social_work_id }}">                                           
-                                            @foreach($socialWorks as $socialWork)
-                                                <option value="{{ $socialWork->id }}" {{ old('social_work_id', $user->social_work_id) == $socialWork->id ? 'Selected' : '' }}>{{ $socialWork->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            @else
                             <div class="col-lg-6">
-                                    <div class="form-group focused">
-                                        <label class="form-control-label" for="social_work_id">{{ __('Obra social') }}</label>
-                                        <select class="custom-select" id="social_work_id" name="social_work_id" value="{{ old('social_work_id'), $user->social_work_id }}">                                           
-                                            @foreach($socialWorks as $socialWork)
-                                                <option value="{{ $socialWork->id }}" {{ old('social_work_id') == $socialWork->id ? 'Selected' : '' }}>{{ $socialWork->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                <div class="form-group focused">
+                                    <label class="form-control-label" for="social_work">{{ __('Obra social') }}</label>
+                                    <input type="text" id="social_work" class="form-control" name="social_work" value="{{ old('social_work', $user->social_work) }}">
                                 </div>
-                            @endif  
+                            </div>
 
                             <div class="col-md-12">
                                 <div class="form-group focused">
