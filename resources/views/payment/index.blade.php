@@ -78,7 +78,7 @@
                                 <th>Usuario</th>
                                 <th>Abonado</th>
                                 <th>Fecha</th>
-                                <th>Subscripcion</th>
+                                <th>Planes</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                                 <th>Cambiar estado</th>

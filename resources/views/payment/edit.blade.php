@@ -68,7 +68,7 @@
 
                     <div class="col-12">
                         <div class="form-group">
-                            <label class="form-control-label" for="userSubscription">Subscripcion</label>
+                            <label class="form-control-label" for="userSubscription">Plan</label>
                             <input readonly type="text" id="userSubscription" class="form-control" name="userSubscription" value="{{ old('name', $payment->userSubscription->subscription->name) }}">                                  
                         </div>
                     </div>

@@ -59,7 +59,7 @@
                                 <th scope="col">Usuario</th>
                                 <th scope="col">Abonado</th>
                                 <th scope="col">Fecha</th>
-                                <th scope="col">Subscripcion</th>
+                                <th scope="col">Planes</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Acciones</th>
                             </tr>

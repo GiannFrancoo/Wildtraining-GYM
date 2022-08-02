@@ -119,7 +119,7 @@ class SubscriptionController extends Controller
             return view('subscription.edit')->with('subscription', $subscription);
         }
         catch(Exception $e){
-            return redirect()->back()->withErrors('Error al editar una susbscripción');
+            return redirect()->back()->withErrors('Error al editar un plan');
         }
     }
 
