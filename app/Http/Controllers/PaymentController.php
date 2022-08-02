@@ -12,7 +12,7 @@ use App\Models\User;
 use App\Models\Subscription;
 use App\Models\UserSubscription;
 use App\Models\UserSubscriptionStatus;
-use phpDocumentor\Reflection\DocBlock\Tags\Throws;
+use Illuminate\Database\Eloquent\Collection;
 
 class PaymentController extends Controller
 {
@@ -243,27 +243,35 @@ class PaymentController extends Controller
      */
     public function generatePendingPayments()
     {  
-        try{
+        try{    
             $userSubscriptions = UserSubscription::query()
                 ->where('user_subscription_status_id', UserSubscriptionStatus::ACTIVE)
-                ->with('user', 'subscription')
-                ->get();
+                ->with('user', 'subscription', 'payments')
+                ->get();                    
 
-            $userSubscriptions->each(function ($userSubscription) {
-                $payment = Payment::create([
-                    "user_subscription_id" => $userSubscription->id,
-                    "price" => $userSubscription->subscription->month_price,
-                    "date" => now(),
-                    "payment_status_id" => PaymentStatus::PENDING, 
-                    "payment_status_updated_at" => now(),
-                ]);
+            $userSubscriptions->each(function ($userSubscription){
+
+                $userPayments = collect(); //reinicio
+
+                $userPayments = $userSubscription->payments->filter(function ($payment){
+                   return (($payment->date->format('m') == now()->month) && ($payment->date->format('Y') == now()->year));
+                });
+
+                if ($userPayments->isEmpty()){
+                    $payment = Payment::create([
+                        "user_subscription_id" => $userSubscription->id,
+                        "price" => $userSubscription->subscription->month_price,
+                        "date" => now(),
+                        "payment_status_id" => PaymentStatus::PENDING, 
+                        "payment_status_updated_at" => now(),
+                    ]);
+                }               
             });
-            
-            
             
             return redirect()->back()->with(['success' => 'Exito al generar los pagos a los usuarios con un plan activo']);
         }
         catch(Exception $e){
+            dd($e->getMessage());
             return redirect()->back()->withErrors('Error al generar los pagos, con estado pendiente, a lo usuarios con un plan activa');
         }
     }

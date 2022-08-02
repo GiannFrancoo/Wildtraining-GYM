@@ -69,12 +69,12 @@
                                     <tr>
                                         <td>{{ $user->getFullNameAttribute() }}</td>
                                         <td>{{ $user->primary_phone }}</td>
-                                        @if($user->lastSubscription->first() != null)
+                                        @if($user->lastSubscription->isNotEmpty())
                                             <td><h5><span class="badge badge-pill badge-dark">{{ $user->lastSubscription->first()->name }}</span></h5></td>
                                         @else
                                             <td><h5><span class="badge badge-pill badge-dark">{{ __('No tiene') }}</span></h5></td>
                                         @endif                                         
-                                        <td>{{ $user->assistances->first->get()->date->format('d/m/Y') }}</td>
+                                        <td data-sort="Ymd">{{ $user->lastAssistances->first()->date->format('d/m/Y') }}</td>
                                         <td class="d-flex justify-content-center">
                                             <a href="{{ route('profile.show', ['profile_id' => $user->id]) }}" type="button" class="btn btn-light btn-circle"><i class="fa fa-eye"></i></a>
                                             <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-secondary btn-circle mx-2"><i class="fa fa-pencil"></i></a> 
@@ -93,7 +93,12 @@
 @section('custom_js')
 <script>
     $(document).ready(function () {
-        $('#dataTable').DataTable()
+        $('#dataTable').DataTable({
+            order: [3, 'desc'],
+        })
     })
 </script>
+
+
+
 @endsection

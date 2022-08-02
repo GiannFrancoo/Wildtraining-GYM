@@ -98,7 +98,7 @@ class User extends Authenticatable
         return $this->hasMany(Assistance::class);
     }
 
-    public function lastAssistance()
+    public function lastAssistances()
     {
         return $this
             ->hasMany(Assistance::class)

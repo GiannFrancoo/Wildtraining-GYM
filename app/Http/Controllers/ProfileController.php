@@ -278,11 +278,13 @@ class ProfileController extends Controller
     public function usersWhoLeft()
     {
         try{
-            $users = User::has('lastAssistance')->with('lastAssistance','lastSubscription')->get(); 
+            $users = User::has('lastAssistances')
+                ->with('lastAssistances', 'lastSubscription')
+                ->get(); 
             
             $usersLeft = $users
                 ->filter(function($user){
-                    return $user->lastAssistance->first()->date->diffInDays(now()) >= 30;
+                    return $user->lastAssistances->first()->date->diffInDays(now()) > 31;
                 });
 
             return view('profile.usersWhoLeft')->with([
