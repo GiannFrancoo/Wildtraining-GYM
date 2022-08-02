@@ -29,11 +29,11 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" id="ganancia">Ganancia estimada (Mensual)</div>                            
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="Myid1">${{ number_format($monthlyRevenue, 2, '.',',') }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="eyeMonthlyDiv">${{ number_format($monthlyRevenue, 2, '.',',') }}</div>
                         </div> 
                         <div class="col-auto">
-                            <a onclick="toggleText1()">
-                                <i class="fas fa-eye fa-2x text-gray-300"></i>
+                            <a id="eyeMonthly" onclick="hiddenMonthly()">
+                                <i class="fa fa-eye fa-2x text-gray-300"></i>
                             </a>
                         </div>
                     </div>
@@ -49,11 +49,11 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Ganancia estimada (Anual)</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="Myid2">${{ number_format($monthlyRevenue*12, 2, '.',',') }}</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="eyeAnnualDiv">${{ number_format($monthlyRevenue*12, 2, '.',',') }}</div>
                             </div>
                             <div class="col-auto">
-                                <a onclick="toggleText2()">
-                                    <i class="fas fa-eye fa-2x text-gray-300"></i>
+                                <a id="eyeAnnual" onclick="hiddenAnnual()">
+                                    <i class="fa fa-eye fa-2x text-gray-300"></i>
                                 </a>
                             </div>
                         </div>
@@ -226,24 +226,28 @@
 </script>
 
 <script>
-function toggleText1(){
-  var x = document.getElementById("Myid1");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
+  function hiddenMonthly() {
+    var x = document.getElementById("eyeMonthlyDiv");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+    $('#eyeMonthly').find("i").toggleClass("fa-eye fa-eye-slash");
   }
-}
 </script>
 
 <script>
-function toggleText2(){
-  var x = document.getElementById("Myid2");
+function hiddenAnnual(){
+  var x = document.getElementById("eyeAnnualDiv");
   if (x.style.display === "none") {
     x.style.display = "block";
   } else {
     x.style.display = "none";
   }
+  $('#eyeAnnual').find("i").toggleClass("fa-eye fa-eye-slash");
 }
 </script>
+
+
 @endsection
