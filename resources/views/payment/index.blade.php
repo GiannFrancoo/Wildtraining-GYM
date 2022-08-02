@@ -22,18 +22,17 @@
 
     <!-- Cards with revenues -->
     <div class="row">
-        <!-- Earnings (Monthly) Card Example -->
         <div class="col-lg-6 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" id="ganancia">Ganancia estimada (Mensual)</div>                            
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="eyeMonthlyDiv">${{ number_format($monthlyRevenue, 2, '.',',') }}</div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" id="ganancia">Ganancia (Mensual)</div>                            
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="eyeMonthlyDiv" style="display:none;">${{ number_format($monthlyRevenue, 2, '.',',') }}</div>
                         </div> 
                         <div class="col-auto">
                             <a id="eyeMonthly" onclick="hiddenMonthly()">
-                                <i class="fa fa-eye fa-2x text-gray-300"></i>
+                                <i class="fa fa-eye-slash fa-2x text-gray-300"></i>
                             </a>
                         </div>
                     </div>
@@ -48,12 +47,12 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Ganancia estimada (Anual)</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="eyeAnnualDiv">${{ number_format($monthlyRevenue*12, 2, '.',',') }}</div>
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Ganancia (Anual)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="eyeAnnualDiv" style="display:none;">${{ number_format($monthlyRevenue*12, 2, '.',',') }}</div>
                             </div>
                             <div class="col-auto">
                                 <a id="eyeAnnual" onclick="hiddenAnnual()">
-                                    <i class="fa fa-eye fa-2x text-gray-300"></i>
+                                    <i class="fa fa-eye-slash fa-2x text-gray-300"></i>
                                 </a>
                             </div>
                         </div>
