@@ -25,7 +25,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(GenerateMonthlyPayments::class)->daily();
+        //Comento la invocación ya que se va a hacer manualmente a través de un botón en pendingPayments
+        //$schedule->command(GenerateMonthlyPayments::class)->daily();
     }
 
     /**

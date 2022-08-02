@@ -32,6 +32,7 @@ class GenerateMonthlyPayments extends Command
      */
     public function handle()
     {
+        //Comando para generar los pagos automaticos todos los 1ro de los meses (Anda)
         $now = Carbon::today();
         if ($now !== Carbon::today()->firstOfMonth()) {
             return;

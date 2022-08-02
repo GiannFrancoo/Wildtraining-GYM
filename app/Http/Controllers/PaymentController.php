@@ -11,6 +11,8 @@ use App\Models\PaymentStatus;
 use App\Models\User;
 use App\Models\Subscription;
 use App\Models\UserSubscription;
+use App\Models\UserSubscriptionStatus;
+use phpDocumentor\Reflection\DocBlock\Tags\Throws;
 
 class PaymentController extends Controller
 {
@@ -21,12 +23,48 @@ class PaymentController extends Controller
      */
     public function index()
     {
+        
+        $gananciaMensual = User::has('lastSubscription')->each(function ($item, $key){
+
+        })->get();
+
+        dd($gananciaMensual);
+
+        // $monthlyRevenue = 0;
+        // $usersWithoutSubscription = 0;
+
+        // foreach ($users as $user) {            
+        //     if($user->lastSubscription->isNotEmpty()){
+        //         $monthlyRevenue = $monthlyRevenue + $user->lastSubscription->first()->month_price;  
+        //     }  
+        //     else{
+        //         $usersWithoutSubscription++;
+        //     }        
+        // }
+
+
+
+
+
+        // return view('home')->with([
+        //     'users' => $users,
+        //     'payments' => $payments,
+        //     'monthlyRevenue' => $monthlyRevenue, 
+        //     'usersWithoutSubscription' => $usersWithoutSubscription,
+        //     'pendingPayments' => $pendingPayments,
+        //     'statusesPayments' => PaymentStatus::all(),
+        // ]);
+        
+        
+        
+        
         try{
             $payments = Payment::orderBy('date','desc')->get();
             return view('payment.index')
                 ->with([
                     'payments' => $payments,
                     'paymentStatuses' => PaymentStatus::all(),
+                    'monthlyRevenue' => $monthlyRevenue,
                 ]);
         }
         catch(Exception $e){
@@ -224,6 +262,36 @@ class PaymentController extends Controller
         catch(Exception $e){
             return redirect()->back()->withErrors('Error al mostrar los pagos pendientes');
         }      
+    }
+
+    /**
+     * Generate pending payments
+     */
+    public function generatePendingPayments()
+    {  
+        try{
+            $userSubscriptions = UserSubscription::query()
+                ->where('user_subscription_status_id', UserSubscriptionStatus::ACTIVE)
+                ->with('user', 'subscription')
+                ->get();
+
+            $userSubscriptions->each(function ($userSubscription) {
+                $payment = Payment::create([
+                    "user_subscription_id" => $userSubscription->id,
+                    "price" => $userSubscription->subscription->month_price,
+                    "date" => now(),
+                    "payment_status_id" => PaymentStatus::PENDING, 
+                    "payment_status_updated_at" => now(),
+                ]);
+            });
+            
+            
+            
+            return redirect()->back()->with(['success' => 'Exito al generar los pagos a los usuarios con un plan activo']);
+        }
+        catch(Exception $e){
+            return redirect()->back()->withErrors('Error al generar los pagos, con estado pendiente, a lo usuarios con un plan activa');
+        }
     }
 
     /**
