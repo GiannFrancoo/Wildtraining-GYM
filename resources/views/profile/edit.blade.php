@@ -213,14 +213,14 @@
              <div class="col-12">
                 <div class="card shadow mb-2">
                     <div class="card-header text-center mt-3">
-                        <h6 class="m-0 font-weight-bold text-danger"> {{ __('Suscripcion') }} </h6>
+                        <h6 class="m-0 font-weight-bold text-danger"> {{ __('Plan') }} </h6>
                     </div>
                     <div class="card-body">
                         <div class="col-lg-12">
                             @if($activeSubscription != null)
                                 <select  class="custom-select" name="subscriptionIdSelected" value="{{ old('subscriptionIdSelected', $user->lastSubscription->first()->id) }}">                                          
                                     @if( old('subscriptionIdSelected') === 'sinSubscripcion')
-                                        <option value="sinSubscripcion">Sin suscripcion</option>
+                                        <option value="sinSubscripcion">Sin plan</option>
                                         @foreach($subscriptions as $subscription)  
                                             <option value="{{ $subscription->id }}">{{ $subscription->name }}</option>
                                         @endforeach
@@ -229,11 +229,11 @@
                                             <option value="{{ $subscription->id }}" {{ old('subscriptionIdSelected', $user->lastSubscription->first()->id) == $subscription->id ? 'Selected' : '' }}>{{ $subscription->name }}</option>
                                         @endforeach
                                     @endif
-                                    <option value="sinSubscripcion">Sin suscripcion</option>                                          
+                                    <option value="sinSubscripcion">Sin plan</option>                                          
                                 </select>
                             @else
                                 <select  class="custom-select" name="subscriptionIdSelected" value="{{ old('subscriptionIdSelected') }}">
-                                    <option selected value="sinSubscripcion">Sin suscripcion</option>                                          
+                                    <option selected value="sinSubscripcion">Sin plan</option>                                          
                                     @foreach($subscriptions as $subscription)
                                         <option value="{{ $subscription->id }}" {{ old('subscriptionIdSelected') ==  $subscription->id ? 'Selected' : ''}}>{{ $subscription->name }}</option>
                                     @endforeach

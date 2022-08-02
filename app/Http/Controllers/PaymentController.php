@@ -98,7 +98,7 @@ class PaymentController extends Controller
                 if (is_null($subscription)) {
                     return redirect()
                         ->back()
-                        ->withErrors('El usuario no tiene ninguna suscripción activa');
+                        ->withErrors('El usuario no tiene ningun plan activo');
                 }
             }
 

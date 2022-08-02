@@ -113,9 +113,9 @@
                                 <th>Usuario</th>
                                 <th>Telefono</th>
                                 <th>Fecha de inicio</th>
-                                <th>Suscripcion</th>
+                                <th>Plan</th>
                                 <th>Acciones</th>
-                                <th>Cambiar suscripcion</th>
+                                <th>Cambiar plan</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -127,7 +127,7 @@
                                     @if($user->lastSubscription()->first() != null)                                 
                                         <td><h5><span class="badge badge-pill badge-dark">{{ $user->lastSubscription()->first()->name}}</span></h5></td>
                                     @else
-                                        <td><h5><span class="badge badge-pill badge-dark">{{ __('Sin suscripcion') }}</span></h5></td>
+                                        <td><h5><span class="badge badge-pill badge-dark">{{ __('Sin plan') }}</span></h5></td>
                                     @endif
                                     <td class="d-flex justify-content-center">
                                         <a href="{{ route('profile.show', ['profile_id' => $user->id]) }}" type="button" class="btn btn-circle btn-light mx-1"><i class="fa fa-eye"></i></a>
@@ -147,11 +147,11 @@
                                                 @foreach($subscriptions as $subscription)    
                                                     <option value="{{ $subscription->id }}"  {{($user->lastSubscription()->first()->id === $subscription->id) ? 'Selected' : ''}}>{{ $subscription->name }}</option>
                                                 @endforeach
-                                                    <option value="sinSubscripcion"> Sin suscripcion </option>
+                                                    <option value="sinSubscripcion"> Sin plan </option>
                                                 </select>                                   
                                             @else
                                                 <select class="custom-select" style="text-align:center;" onChange="this.form.submit()" name="newSubscription_id" value="">                                           
-                                                    <option selected value="sinSubscripcion"> Sin suscripcion </option>
+                                                    <option selected value="sinSubscripcion"> Sin plan </option>
                                                     @foreach($subscriptions as $subscription)    
                                                         <option value="{{ $subscription->id }}">{{ $subscription->name }}</option>
                                                     @endforeach

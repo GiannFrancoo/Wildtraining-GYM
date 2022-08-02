@@ -80,11 +80,11 @@
                                 <td class="text-right">{{ $user->social_work->name }}</td>
                             </tr>
                             <tr>
-                                <td>Suscripción:</td>
+                                <td>Plan:</td>
                                 @if ($user->lastSubscription->first() != null)
                                     <td class="text-right">{{ $user->lastSubscription->first()->name }}</td>
                                 @else
-                                    <td class="text-right"> No tiene suscripción </td>
+                                    <td class="text-right"> No tiene plan </td>
                                 @endif
                             </tr>
                         </tbody>
@@ -122,7 +122,7 @@
                             <tr>
                                 <th>Abonado</th>
                                 <th>Fecha</th>
-                                <th>Suscripción</th>
+                                <th>Plan</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
                             </tr>
@@ -160,14 +160,14 @@
         <div class="col">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-danger">{{ __('Historial de suscripciones del usuario') }}</h6>
-                    <a href="{{ route('profile.changeSubscription', ['profile_id' => $user->id]) }}" type="button" class="btn btn-dark" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>{{ __('Cambiar suscripción') }}</a>
+                    <h6 class="m-0 font-weight-bold text-danger">{{ __('Historial de planes del usuario') }}</h6>
+                    <a href="{{ route('profile.changeSubscription', ['profile_id' => $user->id]) }}" type="button" class="btn btn-dark" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>{{ __('Cambiar plan') }}</a>
                 </div>
                 <div class="card-body table-responsive">
                     <table class="table table-bordered table-hover text-center" id="dataTable">    
                         <thead>
                             <tr>
-                                <th>Suscripcion</th>
+                                <th>Plan</th>
                                 <th>Fecha de modificación</th>
                                 <th>Estado</th>
                             </tr>

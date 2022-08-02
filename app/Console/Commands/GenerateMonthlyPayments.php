@@ -23,7 +23,7 @@ class GenerateMonthlyPayments extends Command
      *
      * @var string
      */
-    protected $description = 'Generar pagos mensuales para suscripciones activas';
+    protected $description = 'Generar pagos mensuales para planes activos';
 
     /**
      * Execute the console command.

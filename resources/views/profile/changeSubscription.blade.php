@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('main-content')
 
-    <h1 class="h3 mb-4 text-gray-800">{{ __('Cambiar suscripción') }}</h1>
+    <h1 class="h3 mb-4 text-gray-800">{{ __('Cambiar plan') }}</h1>
 
     @if (session('success'))
         <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
@@ -51,20 +51,20 @@
         @method('PUT')
             <div class="card shadow mb-4"> 
                 <div class="card-header py-3">  
-                    <h6 class="m-0 font-weight-bold text-danger">{{ __('Seleccion de suscripcion nueva') }}</h6>
+                    <h6 class="m-0 font-weight-bold text-danger">{{ __('Seleccion de plan nuevo') }}</h6>
                 </div>
                 <div class="card-body">
                     <div class="row">                    
                         <div class="col-md-6 form-group focused" id="subscriptionUserSelectedId">
-                            <label class="form-control-label">{{ __('Suscripcion nueva') }}</label>
+                            <label class="form-control-label">{{ __('Plan nuevo') }}</label>
                             <select class="custom-select" name="subscriptionIdSelected" value="">  
                                 @if($userSubscription != 'sinSubscripcion')                                
                                     @foreach($subscriptions as $subscription)
                                         <option value="{{ $subscription->id }}" {{ ($userSubscription->id === $subscription->id) ? 'Selected' : ''}} >{{ $subscription->name }}</option>
                                     @endforeach
-                                    <option value="sinSubscripcion">Sin suscripcion</option>
+                                    <option value="sinSubscripcion">Sin plan</option>
                                 @else
-                                    <option selected value="sinSubscripcion">Sin suscripcion</option>
+                                    <option selected value="sinSubscripcion">Sin plan</option>
                                     @foreach($subscriptions as $subscription)
                                         <option value="{{ $subscription->id }}" >{{ $subscription->name }}</option>
                                     @endforeach
@@ -72,11 +72,11 @@
                             </select>
                         </div>
                         <div class="col-md-6 form-group focused">
-                            <label class="form-control-label">{{ __('Suscripcion actual') }}</label>
+                            <label class="form-control-label">{{ __('Plan actual') }}</label>
                             @if($userSubscription != 'sinSubscripcion')
                                 <input type="text" class="form-control" readonly value="{{ $userSubscription->name }}">
                             @else
-                                <input type="text" class="form-control" readonly value="Sin suscripcion">
+                                <input type="text" class="form-control" readonly value="Sin plan">
                             @endif
                         </div>       
                     </div>
@@ -95,7 +95,7 @@
         <div class="col mb-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                    <h6 class="m-0 font-weight-bold text-danger">{{ __('Lista de suscripciones') }}</h6>
+                    <h6 class="m-0 font-weight-bold text-danger">{{ __('Lista de planes') }}</h6>
                     <a href="{{route('subscription.create')}}" class="btn btn-dark mr-1"><i class="fa fa-add mr-1"></i>{{ __('Nueva') }}</a>
                 </div>
                 <div class="card-body table-responsive">

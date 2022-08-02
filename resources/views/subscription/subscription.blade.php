@@ -4,7 +4,7 @@
 
     <!-- Page Heading -->
     <div class="d-flex justify-content-between">
-        <h1 class="h3 mb-4 text-gray-800">{{ __('Suscripciones') }}</h1>
+        <h1 class="h3 mb-4 text-gray-800">{{ __('Planes') }}</h1>
         <div>
             <a href="{{route('subscription.create')}}" class="btn btn-dark mr-1"><i class="fa fa-add mr-1"></i>Agregar</a>    
         </div>        
@@ -44,7 +44,7 @@
                             <form action="{{ route('subscription.destroy', ['subscription_id' => $subscription->id]) }}" method="POST">
                                 @csrf
                                 @method("DELETE")
-                                <button class="btn btn-danger btn-circle mx-2" type="submit" onclick="return confirm('¿Desea eliminar esta suscripción y con ella todos los alumnos?')"><i class="fa fa-trash"></i></button>
+                                <button class="btn btn-danger btn-circle mx-2" type="submit" onclick="return confirm('¿Desea eliminar este plan y con ella todos los alumnos?')"><i class="fa fa-trash"></i></button>
                             </form>
                         </div>
                     </div>

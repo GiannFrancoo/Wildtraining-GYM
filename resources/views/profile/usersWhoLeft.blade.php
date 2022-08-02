@@ -59,7 +59,7 @@
                                 <tr>
                                     <th scope="col">Nombre y apellido</th>
                                     <th scope="col">Telefono</th>
-                                    <th scope="col">Suscripcion</th>
+                                    <th scope="col">Plan</th>
                                     <th scope="col">Ultima asistencia</th>
                                     <th scope="col">Acción</th>
                                 </tr>

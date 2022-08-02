@@ -95,7 +95,7 @@
                 <li class="nav-item {{ Nav::isRoute('profile.changeSubscription') }}">
                     <a class="nav-link" href="{{ route('profile.changeSubscription') }}">
                         <i class="fa-solid fa-arrow-right-arrow-left"></i>
-                        <span>{{ __('Cambiar suscripción') }}</span>
+                        <span>{{ __('Cambiar plan') }}</span>
                     </a>
                 </li>
                 <!-- List of users -->
@@ -112,7 +112,7 @@
         <li class="nav-item {{ Nav::isRoute('subscription.*') }}">
             <a class="nav-link" data-toggle="collapse" href="#collapseSubscriptions" role="button" aria-expanded="false" aria-controls="collapseSubscriptions">
                 <i class="fa-solid fa-calendar"></i>
-                <span>{{ __('Suscripciones') }}</span>
+                <span>{{ __('Planes') }}</span>
             </a>
         </li>
         <div class="collapse ml-1 {{ Nav::isRoute('subscription.*', 'show') }}" id="collapseSubscriptions">
@@ -121,7 +121,7 @@
                 <li class="nav-item {{ Nav::isRoute('subscription.create') }}">
                     <a class="nav-link" href="{{ route('subscription.create') }}">
                         <i class="fa-solid fa-add"></i>
-                        <span>{{ __('Nueva') }}</span>
+                        <span>{{ __('Nuevo') }}</span>
                     </a>
                 </li>
                 <!-- List of subscriptions -->

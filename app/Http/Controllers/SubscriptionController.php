@@ -45,7 +45,7 @@ class SubscriptionController extends Controller
             return view('subscription.subscription')->with(['subscriptions' => $subscriptions, 'subscriptionArray' => $subscriptionArray]);
         }
         catch(Exception $e){
-            return redirect()->back()->withErrors('Error al mostrar las suscripciones');
+            return redirect()->back()->withErrors('Error al mostrar los planes');
         }   
     }
 
@@ -102,7 +102,7 @@ class SubscriptionController extends Controller
 
         }
         catch (Exception $e){
-            return redirect()->back()->withErrors('Error al mostrar la suscripción');
+            return redirect()->back()->withErrors('Error al mostrar el plan');
         }
     }
 

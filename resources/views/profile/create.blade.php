@@ -196,12 +196,12 @@
             <div class="col-12">
                 <div class="card shadow mb-4">
                     <div class="card-header text-center">
-                        <h6 class="m-0 font-weight-bold text-danger"> {{ __('Suscripcion') }} </h6>
+                        <h6 class="m-0 font-weight-bold text-danger"> {{ __('Plan') }} </h6>
                     </div>
                     <div class="card-body">
                         <div class="col-lg-12">
                             <select class="custom-select" required name="subscriptionIdSelected" value="old('subscriptionIdSelected')">
-                                <option selected value="sinSubscripcion"> Sin suscripcion </option>                                  
+                                <option selected value="sinSubscripcion"> Sin plan </option>                                  
                                 @foreach($subscriptions as $subscription)
                                     <option value="{{$subscription->id}}" {{old('subscriptionIdSelected') == $subscription->id ? "selected" : ""}}>{{ $subscription->name }}</option>
                                 @endforeach

@@ -3,7 +3,7 @@
 @section('main-content')
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800">Suscripción: {{ $subscription->name }}</h1>
+    <h1 class="h3 mb-4 text-gray-800">Plan: {{ $subscription->name }}</h1>
 
     @if (session('success'))
         <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
@@ -35,7 +35,7 @@
                         <form action="{{ route('subscription.destroy', ['subscription_id' => $subscription->id]) }}" method="POST">
                             @csrf
                             @method("DELETE")
-                            <button class="btn btn-danger btn-circle mx-2" type="submit" onclick="return confirm('¿Desea eliminar esta subscripción y con ella todos los alumnos suscriptos?')"><i class="fa fa-trash"></i></button>
+                            <button class="btn btn-danger btn-circle mx-2" type="submit" onclick="return confirm('¿Desea eliminar este plan y con el todos los alumnos?')"><i class="fa fa-trash"></i></button>
                         </form>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                 <div class="card-header py-3">
                     <div class="row d-flex justify-content-between align-items-center">
                         <div class="col-6 my-2">    
-                            <h6 class="m-0 font-weight-bold text-danger">{{ __('Lista de usuarios en la suscripción') }}</h6>
+                            <h6 class="m-0 font-weight-bold text-danger">{{ __('Lista de usuarios en el plan') }}</h6>
                         </div>
                         <div>
                             <a href="{{ route('profile.create') }}" type="button" class="btn btn-dark float-right" title="Add" data-toggle="tooltip"><i class="fa fa-plus mr-1"></i>Agregar</a>                        

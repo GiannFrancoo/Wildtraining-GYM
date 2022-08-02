@@ -88,7 +88,7 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Usuarios   -   Sin suscripción</div>
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Usuarios   -   Sin plan</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $users->count() }}   -   {{ $usersWithoutSubscription }}</div>
                             </div>
                             <div class="col-auto">
@@ -119,7 +119,7 @@
                                 <th>Nombre y apellido</th>
                                 <th>Fecha</th>
                                 <th>Estado</th>
-                                <th>Suscripción</th>
+                                <th>Plan</th>
                                 <th>Acciones</th>
                                 <th>Cambiar estado</th>
                             </tr>
@@ -174,7 +174,7 @@
                                 <th>Nombre y apellido</th>
                                 <th>Telefono</th>
                                 <th>Fecha inicio</th>
-                                <th>Suscripción</th>
+                                <th>Plan</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -186,7 +186,7 @@
                                     <td>{{ $user->start_date->format('d/m/Y') }}</td>
                                     <td>
                                         @if ($user->lastSubscription->isEmpty())
-                                            <h5><span class="badge badge-pill badge-dark">Sin suscripción</span></h5>   
+                                            <h5><span class="badge badge-pill badge-dark">Sin plan</span></h5>   
                                         @else
                                             <h5><span class="badge badge-pill badge-dark">{{ $user->lastSubscription->first()->name }} </span></h5>
                                         @endif 

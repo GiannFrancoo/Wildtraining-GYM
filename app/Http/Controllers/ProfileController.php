@@ -268,10 +268,10 @@ class ProfileController extends Controller
                 $user_subscription->save();
             }
                   
-            return redirect()->route('profile.index')->withSuccess('Se guardo la nueva suscripcion');
+            return redirect()->route('profile.index')->withSuccess('Se guardo el nuevo plan');
         }
         catch(Exception $e){
-            return redirect()->back()->withErrors('Error al guardar la nueva suscripcion del usuario');   
+            return redirect()->back()->withErrors('Error al guardar el nuevo plan del usuario');   
         }
     }
 
@@ -316,10 +316,10 @@ class ProfileController extends Controller
                 $userSubscription->save();  
             }
 
-            return redirect()->route('profile.changeSubscription')->withSuccess('Se guardaron los cambios de suscripción');
+            return redirect()->route('profile.changeSubscription')->withSuccess('Se guardaron los cambios del plan');
         }
         catch(Exception $e){
-            return redirect()->back()->withErrors('Error al guardar el cambio de suscripcion');
+            return redirect()->back()->withErrors('Error al guardar el cambio de plan');
         }
     }
 

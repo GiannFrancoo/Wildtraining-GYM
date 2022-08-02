@@ -102,7 +102,7 @@
 
             <div class="col-6">
               <div class="form-group">
-                <label class="form-control-label" for="subscription">{{ __('Suscripción activa') }}</label>
+                <label class="form-control-label" for="subscription">{{ __('Plan activa') }}</label>
                 <input type="text" class="form-control" readonly value="{{ $subscription->name }}">
               </div>
             </div>
