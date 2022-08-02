@@ -32,7 +32,7 @@
             @csrf
                 <div class="row">
 
-                    <div class="col-6">                        
+                    <div class="col-lg-6">                        
                         <div class="form-group focused">
                             <label class="form-control-label" for="user">Usuario</label>
                             <select  class="custom-select" required name="user_id" value="{{ old('user_id') }}">                                           
@@ -41,9 +41,9 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div>                   
 
-                    <div class="col-6">
+                    <div class="col-lg-6">
                         <div class="form-group focused">
                             <label class="form-control-label" for="date">Fecha</label>
                             <input type="datetime-local" id="date" required class="form-control" placeholder="{{ date('d-m-Y H:i:s') }}" name="date" value="{{ now()->format('Y-m-d H:i:s') }}">
@@ -61,6 +61,4 @@
             </form>            
         </div>
     </div>
-
-
 @endsection

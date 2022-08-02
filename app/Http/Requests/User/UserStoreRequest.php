@@ -27,8 +27,8 @@ class UserStoreRequest extends FormRequest
             'name' => 'required|string|max:255',
             'last_name' => 'required|nullable|string|max:255',
             'email' => 'nullable|email',
-            'primary_phone' => 'nullable|numeric|min:9|',
-            'secondary_phone' => 'nullable|numeric|min:9|', 
+            'primary_phone' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|',
+            'secondary_phone' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|', 
             'gender_id' => 'required',
         ]; 
     }
