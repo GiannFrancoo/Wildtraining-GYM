@@ -126,20 +126,21 @@ class ProfileController extends Controller
             $user->personal_information = $request->personal_information;
             $user->save();        
      
-            if(UserSubscription::where('user_id', $profile_id)->latest()->get()->isNotEmpty()){
-                $user_subscriptionOld = UserSubscription::where('user_id', $profile_id)->latest()->first();
-                $user_subscriptionOld->user_subscription_status_id = UserSubscriptionStatus::where('name','Inactiva')->first()->id;
+            $userSubscription = UserSubscription::where('user_id', $profile_id)->with('user')->latest()->get();
+            if($userSubscription->isNotEmpty()){
+                $user_subscriptionOld = $userSubscription->first();
+                $user_subscriptionOld->user_subscription_status_id = UserSubscriptionStatus::INACTIVE;
                 $user_subscriptionOld->user_subscription_status_updated_at = now();
                 $user_subscriptionOld->save();
             }
 
-            if($request->subscriptionIdSelected != 'sinSubscripcion'){
+            if($request->subscriptionIdSelected != 'sinSubscripcion'){ //se puede hacer con un create
                 $user_subscription = new UserSubscription();
                 $user_subscription->user_id = $profile_id;
                 $user_subscription->subscription_id = $request->subscriptionIdSelected;
                 $user_subscription->start_date = now();
                 $user_subscription->user_subscription_status_updated_at = now();
-                $user_subscription->user_subscription_status_id = UserSubscriptionStatus::where('name',UserSubscriptionStatus::ACTIVE)->first()->id;
+                $user_subscription->user_subscription_status_id = UserSubscriptionStatus::ACTIVE;
                 $user_subscription->save();
             }          
             

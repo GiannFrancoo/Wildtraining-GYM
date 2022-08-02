@@ -117,7 +117,7 @@
                     <a href="{{ route('payment.create', ['profile_id' => $user->id]) }}" type="button" class="btn btn-dark" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>{{ __('Nuevo pago') }}</a>
                 </div>
                 <div class="card-body table-responsive">
-                    <table class="table table-bordered table-hover text-center" id="dataTable">    
+                    <table class="table table-bordered table-hover text-center" id="paymentsTable">    
                         <thead>
                             <tr>
                                 <th>Abonado</th>
@@ -164,7 +164,7 @@
                     <a href="{{ route('profile.changeSubscription', ['profile_id' => $user->id]) }}" type="button" class="btn btn-dark" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>{{ __('Cambiar plan') }}</a>
                 </div>
                 <div class="card-body table-responsive">
-                    <table class="table table-bordered table-hover text-center" id="dataTable">    
+                    <table class="table table-bordered table-hover text-center" id="historialTable">    
                         <thead>
                             <tr>
                                 <th>Plan</th>
@@ -192,7 +192,13 @@
 @section('custom_js')
 <script>
     $(document).ready(function () {
-        $('#dataTable').DataTable({
+        $('#historialTable').DataTable({
+            order: [1, 'desc'],
+        })
+    })
+
+    $(document).ready(function () {
+        $('#paymentsTable').DataTable({
             order: [1, 'desc'],
         })
     })

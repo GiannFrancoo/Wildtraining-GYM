@@ -13,6 +13,16 @@
         </div>
     @endif
 
+    @if ($errors->any())
+        <div class="alert alert-danger border-left-danger" role="alert">
+            <ul class="pl-4 my-2">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
 
     <!-- Form to edit the user -->
     <form action="{{ route('profile.update', ['profile_id' => $user->id])}}" method="POST">
