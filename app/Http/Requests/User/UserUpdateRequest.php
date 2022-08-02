@@ -27,9 +27,9 @@ class UserUpdateRequest extends FormRequest
          return [
             'name' => 'required|string|max:255',
             'last_name' => 'required|nullable|string|max:255',
-            'email' =>'required|email|unique:users,email,'.$this->profile_id,
-            'primary_phone' => 'required|numeric|min:9|unique:users,secondary_phone,' .$this->profile_id,
-            'secondary_phone' => 'nullable|unique:users,primary_phone|numeric|min:9' .$this->profile_id,
+            'email' =>'nullable|email',
+            'primary_phone' => 'nullable|numeric|min:9',
+            'secondary_phone' => 'nullable|numeric|min:9',
             'gender_id' => 'required',
         ]; 
     }

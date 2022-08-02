@@ -57,8 +57,8 @@
 
                             <div class="col-lg-6">
                                 <div class="form-group focused">
-                                    <label class="form-control-label" for="email">{{ __('Email') }}<span class="small text-danger">*</span></label>
-                                    <input type="email" id="email" required class="form-control" name="email" placeholder="example@example.com" value="{{ old('email') }}">
+                                    <label class="form-control-label" for="email">{{ __('Email') }}</label>
+                                    <input type="email" id="email" class="form-control" name="email" placeholder="example@example.com" value="{{ old('email') }}">
                                     @error('email')
                                         <div class="alert alert-danger border-left-danger" role="alert">
                                             <ul class="pl-4 my-2">
@@ -71,8 +71,8 @@
 
                             <div class="col-lg-6">
                                 <div class="form-group focused">
-                                    <label class="form-control-label" for="new_password">{{ __('Celular') }}<span class="small text-danger">*</span></label>
-                                    <input type="numeric" id="new_password" required pattern=".{9,}" title="Tiene que ingresar como minimo 9 caracteres" placeholder="2915678987" class="form-control" name="primary_phone" value="{{ old('primary_phone')}}">
+                                    <label class="form-control-label" for="new_password">{{ __('Celular') }}</label>
+                                    <input type="numeric" id="new_password" pattern=".{9,}" title="Tiene que ingresar como minimo 9 caracteres" placeholder="2915678987" class="form-control" name="primary_phone" value="{{ old('primary_phone')}}">
                                     <small id="passwordHelpBlock" class="form-text text-muted">
                                         El celular debe tener un minimo de 9 caracteres
                                     </small>

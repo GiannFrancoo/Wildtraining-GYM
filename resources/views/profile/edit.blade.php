@@ -70,39 +70,39 @@
 
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="email">{{ __('Email') }}<span class="small text-danger">*</span></label>
+                                    <label class="form-control-label" for="email">{{ __('Email') }}</label>
                                     <input type="email" id="email" class="form-control" name="email" placeholder="ejemplo@ejemplo.com" value="{{ old('email', $user->email) }}">
                                     @error('email')
                                         <div class="alert alert-danger border-left-danger" role="alert">
                                             <ul class="pl-4 my-2">
-                                                <li>{{ __('El email ingresado ya esta en uso.') }}</li>
+                                                <li>{{$message}}</li>
                                             </ul>
-                                        </div>                                    
+                                        </div>                                     
                                     @enderror
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="form-group focused">
-                                    <label class="form-control-label">{{ __('Celular') }}<span class="small text-danger">*</span></label>
-                                    <input type="text" id="primaryPhone" pattern=".{9,}" title="Tiene que ingresar como minimo 9 caracteres" class="form-control" name="primary_phone" value="{{ old('primary_phone', $user->primary_phone) }}">
+                                    <label class="form-control-label">{{ __('Celular') }}</label>
+                                    <input type="text" id="primaryPhone" pattern=".{9,}" placeholder="2915678987" title="Tiene que ingresar como minimo 9 caracteres" class="form-control" name="primary_phone" value="{{ old('primary_phone', $user->primary_phone) }}">
                                     <small class="form-text text-muted">
                                         El celular debe tener un minimo de 9 caracteres
                                     </small>
                                     @error('primary_phone')
-                                        @if($message === "El valor del campo primary phone ya está en uso.")
+                                        @if($message === "El campo primary phone debe ser un número.")
                                             <div class="alert alert-danger border-left-danger" role="alert">
                                                 <ul class="pl-4 my-2">
-                                                    <li>{{ __('El celular ingresado ya esta en uso.') }}</li>
+                                                    <li>{{ __('El celular ingresado debe ser solo numeros.') }}</li>
                                                 </ul>
                                             </div> 
                                         @else
                                             <div class="alert alert-danger border-left-danger" role="alert">
                                                 <ul class="pl-4 my-2">
-                                                    <li>{{ __('El celular ingresado debe ser solo numeros.') }}</li>
+                                                    <li>{{$message}}</li>
                                                 </ul>
-                                            </div>
-                                        @endif    
+                                            </div> 
+                                        @endif
                                     @enderror
                                 </div>
                             </div>
@@ -111,18 +111,13 @@
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="secondaryPhone">{{ __('Celular secundario') }}</label>
                                     @if($user->secondary_phone === "")
-                                        <input type="text" id="secondaryPhone" pattern=".{9,}" title="Tiene que ingresar como minimo 9 caracteres" class="form-control" name="secondary_phone" value = "-">
+                                        <input type="text" id="secondaryPhone" pattern=".{9,}" placeholder="2915678987" title="Tiene que ingresar como minimo 9 caracteres" class="form-control" name="secondary_phone" value = "-">
                                     @else
-                                        <input type="text" id="secondaryPhone" pattern=".{9,}" title="Tiene que ingresar como minimo 9 caracteres" class="form-control" name="secondary_phone" value="{{ old('secondary_phone', $user->secondary_phone) }}">
+                                        <input type="text" id="secondaryPhone" pattern=".{9,}" placeholder="2915678987" title="Tiene que ingresar como minimo 9 caracteres" class="form-control" name="secondary_phone" value="{{ old('secondary_phone', $user->secondary_phone) }}">
                                     @endif
+
                                     @error('secondary_phone')
-                                        @if($message === "El valor del campo secondary phone ya está en uso.")
-                                            <div class="alert alert-danger border-left-danger" role="alert">
-                                                <ul class="pl-4 my-2">
-                                                    <li>{{ __('El celular ingresado ya esta en uso.') }}</li>
-                                                </ul>
-                                            </div> 
-                                        @elseif($message === "El campo secondary phone debe ser un número.")
+                                        @if($message === "El campo secondary phone debe ser un número.")
                                             <div class="alert alert-danger border-left-danger" role="alert">
                                                 <ul class="pl-4 my-2">
                                                     <li>{{ __('El celular ingresado debe ser solo numeros.') }}</li>
@@ -199,7 +194,7 @@
                             <div class="col-md-12">
                                 <div class="form-group focused">
                                     <label class="form-control-label" for="personalInformation">{{ __('Informacion personal') }}</label>
-                                    <textarea rows="4" id="personalInformation" class="form-control" name="personal_information" value="{{old('personalInformation', $user->personal_information)}}">{{old('personal_information', $user->personal_information)}}</textarea>
+                                    <textarea rows="4" id="personalInformation" class="form-control" name="personal_information" placeholder="Información que considere importante mencionar... (operaciones, lesiones, etc)" value="{{old('personalInformation', $user->personal_information)}}">{{old('personal_information', $user->personal_information)}}</textarea>
                                     @error('personal_information')
                                         <div class="alert alert-danger border-left-danger" role="alert">
                                             <ul class="pl-4 my-2">
