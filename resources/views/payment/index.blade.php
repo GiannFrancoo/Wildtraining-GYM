@@ -22,18 +22,18 @@
 
     <!-- Cards with revenues -->
     <div class="row">
-       <!-- Earnings (Monthly) Card Example -->
-       <div class="col-lg-6 col-md-6 mb-4">
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-lg-6 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" id="ganancia">Ganancia estimada (Mensual)</div>                            
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">actualizar</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="eyeMonthlyDiv">${{ number_format($monthlyRevenue, 2, '.',',') }}</div>
                         </div> 
                         <div class="col-auto">
-                            <a id="ojoMensual" onClick="ocultarMensual()">
-                                <i class="fa fa-dollar-sign fa-2x text-gray-300"></i>
+                            <a id="eyeMonthly" onclick="hiddenMonthly()">
+                                <i class="fa fa-eye fa-2x text-gray-300"></i>
                             </a>
                         </div>
                     </div>
@@ -43,19 +43,23 @@
 
         <!-- Earnings (Monthly) Card Example -->
         <div class="col-lg-6 col-md-6 mb-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Ganancia estimada (Anual)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">actualizar</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fa fa-dollar-sign fa-2x text-gray-300"></i>
+            
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Ganancia estimada (Anual)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="eyeAnnualDiv">${{ number_format($monthlyRevenue*12, 2, '.',',') }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <a id="eyeAnnual" onclick="hiddenAnnual()">
+                                    <i class="fa fa-eye fa-2x text-gray-300"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 
@@ -118,8 +122,6 @@
         </div>
     </div>
 
-  
-
 @endsection
 
 @section('custom_js')
@@ -130,4 +132,31 @@
             })
         })
     </script>
+
+    <script>
+    function hiddenMonthly() {
+        var x = document.getElementById("eyeMonthlyDiv");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } 
+        else {
+            x.style.display = "none";
+        }
+        $('#eyeMonthly').find("i").toggleClass("fa-eye fa-eye-slash");
+    }
+    </script>
+
+    <script>
+        function hiddenAnnual(){
+            var x = document.getElementById("eyeAnnualDiv");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            }
+            else {
+                x.style.display = "none";
+            }
+            $('#eyeAnnual').find("i").toggleClass("fa-eye fa-eye-slash");
+        }
+    </script>
+
 @endsection

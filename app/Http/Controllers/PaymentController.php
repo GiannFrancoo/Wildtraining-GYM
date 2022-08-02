@@ -23,42 +23,16 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        
-        $gananciaMensual = User::has('lastSubscription')->each(function ($item, $key){
-
-        })->get();
-
-        dd($gananciaMensual);
-
-        // $monthlyRevenue = 0;
-        // $usersWithoutSubscription = 0;
-
-        // foreach ($users as $user) {            
-        //     if($user->lastSubscription->isNotEmpty()){
-        //         $monthlyRevenue = $monthlyRevenue + $user->lastSubscription->first()->month_price;  
-        //     }  
-        //     else{
-        //         $usersWithoutSubscription++;
-        //     }        
-        // }
-
-
-
-
-
-        // return view('home')->with([
-        //     'users' => $users,
-        //     'payments' => $payments,
-        //     'monthlyRevenue' => $monthlyRevenue, 
-        //     'usersWithoutSubscription' => $usersWithoutSubscription,
-        //     'pendingPayments' => $pendingPayments,
-        //     'statusesPayments' => PaymentStatus::all(),
-        // ]);
-        
-        
-        
-        
         try{
+            $monthlyRevenue = 0;
+            $users = User::has('lastSubscription')
+                ->with('lastSubscription')
+                ->get();
+
+            foreach ($users as $user) {
+                $monthlyRevenue = $monthlyRevenue + $user->lastSubscription->first()->month_price;
+            }      
+        
             $payments = Payment::orderBy('date','desc')->get();
             return view('payment.index')
                 ->with([
