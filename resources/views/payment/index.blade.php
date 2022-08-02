@@ -20,6 +20,45 @@
         </div>
     @endif
 
+    <!-- Cards with revenues -->
+    <div class="row">
+       <!-- Earnings (Monthly) Card Example -->
+       <div class="col-lg-6 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" id="ganancia">Ganancia estimada (Mensual)</div>                            
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">actualizar</div>
+                        </div> 
+                        <div class="col-auto">
+                            <a id="ojoMensual" onClick="ocultarMensual()">
+                                <i class="fa fa-dollar-sign fa-2x text-gray-300"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-lg-6 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Ganancia estimada (Anual)</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">actualizar</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fa fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Payments table -->
     <div class="row">        
         <div class="col mb-4">
@@ -49,8 +88,8 @@
                                     @endif
                                     <th>${{ $payment->price }}</th>
                                     <td data-sort="Ymd">{{ $payment->date->format('d/m/Y') }}</td>   
-                                    <td><h5><span class="badge badge-pill badge-dark">{{ $payment->userSubscription->subscription->name }}</span></h5></td>                  
-                                    <td>{{ $payment->paymentStatus->name }}</td>
+                                    <td>{{ $payment->userSubscription->subscription->name }}</td>                  
+                                    <td><h5><span class="badge badge-pill badge-{{$payment->paymentStatus->color}}">{{ $payment->paymentStatus->name }}</span></h5></td>                                    
                                     <td class="text-center d-flex justify-content-center">                                    
                                         <a href="{{ route('payment.edit', ['payment_id' => $payment->id]) }}" type="button" class="btn btn-circle btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
                                         <div>
@@ -79,14 +118,16 @@
         </div>
     </div>
 
+  
+
 @endsection
 
 @section('custom_js')
-<script>
-    $(document).ready(function () {
-        $('#dataTable').DataTable({
-            order: [2, 'desc'],
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                order: [2, 'desc'],
+            })
         })
-    })
-</script>
+    </script>
 @endsection

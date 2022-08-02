@@ -113,7 +113,7 @@
         <div class="col">
             <div class="card shadow">
                 <div class="card-header py-3 d-flex justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-danger">{{ __('Historial de pagos') }}: {{ $user->getFullNameAttribute() }}</h6>
+                    <h6 class="m-0 font-weight-bold text-danger">{{ __('Historial de pagos del usuario') }}</h6>
                     <a href="{{ route('payment.create', ['profile_id' => $user->id]) }}" type="button" class="btn btn-dark" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>{{ __('Nuevo pago') }}</a>
                 </div>
                 <div class="card-body table-responsive">
@@ -133,7 +133,7 @@
                                     <td>${{ $payment->price }}</td>
                                     <td>{{ $payment->date->format('d/m/Y') }}</td>
                                     <td>{{ $payment->userSubscription->subscription->name }}</td>
-                                    <td>{{ $payment->paymentStatus->name }}</td>
+                                    <td><h5><span class="badge badge-pill badge-{{$payment->paymentStatus->color}}">{{ $payment->paymentStatus->name }}</span></h5></td>
                                     <td>
                                         <div class="d-flex justify-content-center">
                                             <a href="{{ route('payment.edit', ['payment_id' => $payment->id]) }}" type="button" class="btn btn-circle btn-secondary" title="edit" method="GET" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
@@ -160,7 +160,7 @@
         <div class="col">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-danger">{{ __('Historial de suscripciones') }}: {{ $user->getFullNameAttribute() }}</h6>
+                    <h6 class="m-0 font-weight-bold text-danger">{{ __('Historial de suscripciones del usuario') }}</h6>
                     <a href="{{ route('profile.changeSubscription', ['profile_id' => $user->id]) }}" type="button" class="btn btn-dark" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>{{ __('Cambiar suscripción') }}</a>
                 </div>
                 <div class="card-body table-responsive">
@@ -177,7 +177,7 @@
                                 <tr>                               
                                     <td>{{ $userSubscription->subscription->name }}</td>
                                     <td data-order="Ymd">{{ $userSubscription->user_subscription_status_updated_at->format('d/m/Y') }}</td>
-                                    <td>{{ $userSubscription->status->name }}</td>                                
+                                    <td><h5><span class="badge badge-pill badge-{{$userSubscription->status->color}}">{{ $userSubscription->status->name }}</td>                                
                                 </tr>
                             @endforeach
                         </tbody>

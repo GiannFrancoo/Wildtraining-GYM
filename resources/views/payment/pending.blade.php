@@ -3,8 +3,12 @@
 @section('main-content')
 
     <!-- Header -->
-    <h1 class="h3 mb-4 text-gray-800">{{ __('Pagos pendientes') }}</h1>      
-    
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h1 class="h3 text-gray-800">{{ __('Pagos pendientes') }}</h1>   
+        <a href="{{ route('payment.generatePendingPayments') }}" type="button" class="btn btn-dark" title="create_pending_payments" method="GET" data-toggle="tooltip"><i class="fa fa-clock mr-1"></i>{{ __('Generar pagos pendientes') }}</a>    
+
+    </div>
+
     @if (session('success'))
         <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
@@ -68,8 +72,8 @@
                                     @endif
                                     <th scope="row">${{ $payment->price }}</th>
                                     <td>{{ $payment->date->format('d/m/Y') }}</td>                           
-                                    <td><h5><span class="badge badge-pill badge-dark">{{ $payment->userSubscription->subscription->name }}</span></h5></td>                  
-                                    <td>{{ $payment->paymentStatus->name }}</td>
+                                    <td>{{ $payment->userSubscription->subscription->name }}</td>                  
+                                    <td><h5><span class="badge badge-pill badge-{{$payment->paymentStatus->color}}">{{ $payment->paymentStatus->name }}</span></h5></td>
                                     <td class="text-center d-flex justify-content-center">                                    
                                         <a href="{{ route('payment.edit', ['payment_id' => $payment->id]) }}" type="button" class="btn btn-circle btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
                                         <div>

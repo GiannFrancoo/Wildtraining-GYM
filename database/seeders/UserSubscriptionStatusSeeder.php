@@ -15,8 +15,8 @@ class UserSubscriptionStatusSeeder extends Seeder
     public function run()
     {
         $userSubscriptionStatuses = [
-            ['id' => 1, 'name' => 'Activa'],
-            ['id' => 2, 'name' => 'Inactiva'],
+            ['id' => 1, 'name' => 'Activa', 'color' => 'success'],
+            ['id' => 2, 'name' => 'Inactiva', 'color' => 'dark'],
         ];
 
         foreach ($userSubscriptionStatuses as $userSubscriptionStatus) {

@@ -72,6 +72,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/payment/{payment_id}', [PaymentController::class, 'update'])->name('payment.update');
     Route::get('/payment/pending', [PaymentController::class, 'pending'])->name('payment.pending');
     Route::get('/payment/changeStatus/{payment_id}', [PaymentController::class, 'changeStatus'])->name('payment.changeStatus');
+    Route::get('/payment/generatePendingPayments', [PaymentController::class, 'generatePendingPayments'])->name('payment.generatePendingPayments');
+
     
     Route::get('/about', function () {
         return view('about');

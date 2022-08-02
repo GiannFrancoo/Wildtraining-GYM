@@ -9,8 +9,11 @@
 
             <div class="card shadow mb-4">
 
-                <div class="card-profile-image mt-4">
-                    <img src="{{ asset('img/favicon.png') }}" class="rounded-circle" alt="user-image">
+                <div class="card-header mt-4 text-center">
+                    <a href="https://www.instagram.com/wild.training2022/" target="_blank">
+                        <img src="{{ asset('img/favicon.png') }}" class="rounded-circle" alt="user-image">
+                    </a>
+                    <h3 class="mt-2">Wildtraining</h3>
                 </div>
 
                 <div class="card-body">

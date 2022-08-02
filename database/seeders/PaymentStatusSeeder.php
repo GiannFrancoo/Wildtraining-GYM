@@ -15,9 +15,9 @@ class PaymentStatusSeeder extends Seeder
     public function run()
     {
         $paymentStatuses = [
-            ['id' => 1, 'name' => 'Pendiente'],
-            ['id' => 2, 'name' => 'Pagado'],
-            ['id' => 3, 'name' => 'Cancelado'],
+            ['id' => 1, 'name' => 'Pendiente', 'color' => 'warning'],
+            ['id' => 2, 'name' => 'Pagado', 'color' => 'success'],
+            ['id' => 3, 'name' => 'Cancelado', 'color' => 'secondary'],
         ];
 
         foreach ($paymentStatuses as $paymentStatus) {

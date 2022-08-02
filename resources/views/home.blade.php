@@ -129,10 +129,9 @@
                                 <tr>
                                     <td>{{ $payment->userSubscription->user->getFullNameAttribute() }}</td>
                                     <td>{{ $payment->date->format('d/m/Y') }}</td>
-                                    <td>{{ $payment->paymentStatus->name }}</td>
-                                    <td><h5><span class="badge badge-pill badge-dark">{{ $payment->userSubscription->subscription->name }}</span></h5></td>       
+                                    <td><h5><span class="badge badge-pill badge-{{$payment->paymentStatus->color}}">{{ $payment->paymentStatus->name }}</span></h5></td>
+                                    <td>{{ $payment->userSubscription->subscription->name }}</td>       
                                     <td class="d-flex justify-content-center">
-                                        <!-- deberia cambiar el estado del pago -->
                                         <a href="{{ route('payment.edit', ['payment_id' => $payment->id]) }}" type="button" class="btn btn-secondary btn-circle mx-1" title="changeStatus" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
                                         <form action="{{ route('payment.destroy', ['payment_id' => $payment->id]) }}" method="POST" class="mx-1">
                                             @csrf
