@@ -75,20 +75,14 @@ class ProfileController extends Controller
             $usersWithoutSubscription = 0;
             $ages = 0;
             $usersWithoutBirthday = 0;
+            
             foreach ($users as $user) {
-                if($this->getAge($user) != 0){
-                    $ages += $this->getAge($user); 
+                if($user->getAge() != 0){
+                    $ages += $user->getAge();
                 }
                 else{
                     $usersWithoutBirthday++;
-                }
-
-                if($user->subscriptions()->latest()->first() != null){
-                    $monthlyRevenue = $monthlyRevenue + $user->subscriptions()->latest()->first()->month_price;  
-                }  
-                else{
-                    $usersWithoutSubscription++;
-                }        
+                }     
             }
 
             $menUsers = $users->filter(function($user){
@@ -98,10 +92,9 @@ class ProfileController extends Controller
             return view('profile.index',)->with([
                 'users' => $users, 
                 'menUsers' => $menUsers,
-                'monthlyRevenue' => $monthlyRevenue, 
-                'usersWithoutSubscription' => $usersWithoutSubscription,
                 'averageAges' => (floor($ages/($users->count() - $usersWithoutBirthday))),
                 'subscriptions' => $subscriptions,
+                'totalUsersWithActiveSubscription' => User::has('lastSubscription')->count(),
             ]);
         }
         catch(Exception $e){
@@ -131,8 +124,6 @@ class ProfileController extends Controller
             $user->address = $request->address;
             $user->birthday = $request->birthday;
             $user->personal_information = $request->personal_information;
-            
-
             $user->save();        
      
             if(UserSubscription::where('user_id', $profile_id)->latest()->get()->isNotEmpty()){
@@ -255,17 +246,6 @@ class ProfileController extends Controller
         catch(Exception $e){
             return redirect()->back()->withErrors('Error al eliminar el usuario');   
         }
-    }
-
-    public function getAge($user)
-    {
-        $hoy = now();
-        $edad = 0;
-        if($user->birthday != null){
-            $edad = $hoy->diff($user->birthday->format('Y-m-d'))->y;
-             
-        }
-        return $edad;
     }
 
     public function updateSubscription($profile_id)
