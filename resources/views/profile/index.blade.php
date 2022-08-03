@@ -122,7 +122,11 @@
                             @foreach ($users as $user)
                                 <tr>
                                     <td>{{ $user->getFullNameAttribute() }}</td>
-                                    <td>{{ $user->primary_phone }}</td>
+                                    @if($user->primary_phone != NULL)
+                                        <td>{{ $user->primary_phone }}</td>
+                                    @else
+                                        <td> - </td>
+                                    @endif
                                     <td data-sort="{{ strtotime($user->start_date) }}">{{ $user->start_date->format('d/m/Y') }}</td>
                                     @if($user->lastSubscription()->first() != null)                                 
                                         <td><h5><span class="badge badge-pill badge-dark">{{ $user->lastSubscription()->first()->name}}</span></h5></td>

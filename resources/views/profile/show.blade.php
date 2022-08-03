@@ -41,12 +41,20 @@
                         <tbody>
                             <tr>
                                 <td>Email:</td>
-                                <td class="text-right">{{ $user->email }}</td>
+                                @if ($user->email != null)
+                                    <td class="text-right">{{ $user->email }}</td>
+                                @else
+                                    <td class="text-right"> - </td>
+                                @endif
                             </tr>
                             <tr>
                                 <td>Celular:</td>
-                                <td class="text-right">{{ $user->primary_phone }}</td>
-                            </tr>
+                                @if ($user->primary_phone != null)
+                                    <td class="text-right">{{ $user->primary_phone }}</td>
+                                @else
+                                    <td class="text-right"> - </td>
+                                @endif                                    
+                            </tr>   
                             <tr>
                                 <td>Celular secundario:</td>
                                 @if ($user->secondary_phone != null)

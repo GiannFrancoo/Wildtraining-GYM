@@ -62,7 +62,7 @@
             </a>
         </div>
 
-        <!-- Earnings (Monthly) Card Example -->
+        <!-- Pending payments -->
         <div class="col-xl-3 col-md-6 mb-4">
             <a href="{{ route('payment.pending') }}" class="text-decoration-none">
                 <div class="card border-left-info shadow h-100 py-2">

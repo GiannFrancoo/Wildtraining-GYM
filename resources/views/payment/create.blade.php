@@ -57,86 +57,89 @@
     <hr>
     <form action="{{ route('payment.store', ['profile_id' => $userSelected->id]) }}" method="POST">
     @csrf
-      <div class="row">
-        <div class="card shadow col-lg-9 md-4 mb-3">
-          <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-danger">{{ __('Generar pago') }} </h6>
-          </div>
-          <div class="card-body">          
-            <div class="row">
-              <div class="col-6">
-                <div class="form-group focused">
-                  <label class="form-control-label" for="name">{{ __('Abonado') }}<span class="small text-danger">*</span></label>       
-                  <!--Input precio-->
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">$</span>
+      <div class="row d-flex">
+
+        <div class="col-lg-9 col-md-9 col-sm-12 order-md-1 order-sm-2">
+          <div class="card shadow mb-3">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-danger">{{ __('Generar pago') }} </h6>
+            </div>
+            <div class="card-body">          
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group focused">
+                    <label class="form-control-label" for="name">{{ __('Abonado') }}<span class="small text-danger">*</span></label>       
+                    <!--Input precio-->
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                      </div>
+
+                      @if($amounthMonthPay === 1)
+                        <input type="number" required class="form-control" min="1" name="price" value="{{ $subscription->month_price }}">
+                      @else
+                        <input type="number" required class="form-control" min="1" name="price" value="{{ $priceAmounthMonthPay }}">
+                      @endif
                     </div>
-
-                    @if($amounthMonthPay === 1)
-                      <input type="number" required class="form-control" min="1" name="price" value="{{ $subscription->month_price }}">
-                    @else
-                      <input type="number" required class="form-control" min="1" name="price" value="{{ $priceAmounthMonthPay }}">
-                    @endif
-                  </div>
-                  @error('price')
-                    <div class="alert alert-danger border-left-danger" role="alert">
-                      <ul class="pl-4 my-2">
-                          <li>{{$message}}</li>
-                      </ul>
-                    </div> 
-                  @enderror
-                </div>     
-              </div>
-
-              <div class="col-6">
-                <div class="form-group focused">
-                    <label class="form-control-label" for="payment">{{ __('Fecha') }}<span class="small text-danger">*</span></label>
-                    <input type="datetime-local" id="payment" required class="form-control" name="date" placeholder="payment" value="{{ now() }}">
-                    @error('date')
+                    @error('price')
                       <div class="alert alert-danger border-left-danger" role="alert">
                         <ul class="pl-4 my-2">
                             <li>{{$message}}</li>
                         </ul>
                       </div> 
                     @enderror
+                  </div>     
                 </div>
-              </div>
 
-              <div class="col-6">
-                <div class="form-group focused">
-                  <label class="form-control-label" for="user_selected">{{ __('Usuario seleccionado') }}</label>
-                  <input type="text" name="userSelected" class="form-control" readonly value="{{ $userSelected->getFullNameAttribute() }}">
+                <div class="col-6">
+                  <div class="form-group focused">
+                      <label class="form-control-label" for="date">{{ __('Fecha') }}<span class="small text-danger">*</span></label>
+                      <input type="datetime-local" id="date" required class="form-control" name="date" placeholder="date" value="{{ now() }}">
+                      @error('date')
+                        <div class="alert alert-danger border-left-danger" role="alert">
+                          <ul class="pl-4 my-2">
+                              <li>{{$message}}</li>
+                          </ul>
+                        </div> 
+                      @enderror
+                  </div>
                 </div>
-              </div>
 
-              <div class="col-6">
-                <div class="form-group">
-                  <label class="form-control-label" for="subscription">{{ __('Plan activo') }}</label>
-                  <input type="text" class="form-control" readonly value="{{ $subscription->name }}">
+                <div class="col-6">
+                  <div class="form-group focused">
+                    <label class="form-control-label" for="user_selected">{{ __('Usuario seleccionado') }}</label>
+                    <input type="text" name="userSelected" class="form-control" readonly value="{{ $userSelected->getFullNameAttribute() }}">
+                  </div>
                 </div>
-              </div>
 
-              <div class="col-6">
-                <div class="form-group focused">
-                    <label class="form-control-label" for="paymentStatus">{{ __('Estado del pago') }}</label>
-                    <select class="custom-select" name="paymentStatus" value="{{ old('paymentStatus') }}">                                           
-                        @foreach($paymentStatuses as $paymentStatus)
-                          <option value="{{ $paymentStatus->id }}">{{ $paymentStatus->name }}</option>
-                        @endforeach
-                    </select>
+                <div class="col-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="subscription">{{ __('Plan activo') }}</label>
+                    <input type="text" class="form-control" readonly value="{{ $subscription->name }}">
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="form-group focused">
+                      <label class="form-control-label" for="paymentStatus">{{ __('Estado del pago') }}</label>
+                      <select class="custom-select" name="paymentStatus" value="{{ old('paymentStatus') }}">                                           
+                          @foreach($paymentStatuses as $paymentStatus)
+                            <option value="{{ $paymentStatus->id }}">{{ $paymentStatus->name }}</option>
+                          @endforeach
+                      </select>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          
-          <div class="card-footer text-center">
-            <button type="submit" class="btn btn-dark"><i class="fa fa-floppy-disk mr-1"></i>{{ __('Generar pago') }}</button>
+            
+            <div class="card-footer text-center">
+              <button type="submit" class="btn btn-dark"><i class="fa fa-floppy-disk mr-1"></i>{{ __('Generar pago') }}</button>
+            </div>
           </div>
         </div>
       
-        <div class="col-lg-3 md-2 mb-2">
-          <div class="card shadow">
+        <div class="col-lg-3 col-md-3 col-sm-12 order-md-2 order-sm-1">
+          <div class="card shadow  mb-3">
             <div class="card-header text-center align-items-center">
               <h6 class="m-0 font-weight-bold text-danger">Meses a abonar</h6>    
             </div>
@@ -144,10 +147,11 @@
               <input type="number" class="form-control text-center" id="onthsPay" min="1" name="amounthMonthPay" value="{{ $amounthMonthPay }}">
             </div>
             <div class="card-footer text-center">
-              <button type="submit" class="btn btn-dark" name="btnApply"><i class="fa fa-pencil mr-1"></i>{{ __('Aplicar') }}</button>
+              <button type="submit" class="btn btn-dark" name="btnApply"><i class="fa fa-forward mr-1"></i>{{ __('Aplicar') }}</button>
             </div>
           </div>
         </div>
+
       </div>
     </form> 
   @endif
