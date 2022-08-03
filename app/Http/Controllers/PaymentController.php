@@ -133,7 +133,8 @@ class PaymentController extends Controller
                     'payment_status_id' => $request->paymentStatus,
                     'payment_status_updated_at' => now(),
                 ]);
-                $now->addMonth(); 
+                $now->addMonth()->firstOfMonth();
+                 
             }
 
             return redirect()

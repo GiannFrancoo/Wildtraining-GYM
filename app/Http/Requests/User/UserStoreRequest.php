@@ -26,7 +26,7 @@ class UserStoreRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'last_name' => 'required|nullable|string|max:255',
-            'email' => 'nullable|email',
+            'email' => 'nullable|email|unique:users,email',
             'primary_phone' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|',
             'secondary_phone' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:9|', 
             'gender_id' => 'required',

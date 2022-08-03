@@ -106,7 +106,7 @@
               <div class="col-6">
                 <div class="form-group focused">
                   <label class="form-control-label" for="user_selected">{{ __('Usuario seleccionado') }}</label>
-                  <input type="text" name="userSelected" class="form-control" readonly value="{{ $userSelected->name }}">
+                  <input type="text" name="userSelected" class="form-control" readonly value="{{ $userSelected->getFullNameAttribute() }}">
                 </div>
               </div>
 
