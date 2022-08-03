@@ -63,7 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/assistance/{assistance_id}', [AssistanceController::class, 'destroy'])->name('assistance.destroy');
     Route::get('/assistance/todayAssistances', [AssistanceController::class, 'todayAssistances'])->name('assistance.todayAssistances');
     
-    //Routes for payments
+    //Routes for payments 
     Route::get('/payment/create/{profile_id?}', [PaymentController::class, 'create'])->name('payment.create');
     Route::post('/payment/{profile_id}', [PaymentController::class, 'store'])->name('payment.store');
     Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');

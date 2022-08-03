@@ -48,7 +48,7 @@
                     <div class="col-12">
                         <div class="form-group focused">
                             <label class="form-control-label" for="date">Fecha<span class="small text-danger">*</span></label>
-                            <input type="datetime-local" id="date" required class="form-control" name="date" placeholder="now()" value="{{ old('date', $payment->date->format('Y-m-d H:i:s'))}}">
+                            <input type="datetime-local" id="date" required class="form-control" name="date"  value="{{ old('date', $payment->date->format('Y-m-d H:i:s'))}}">
                             @error('date')
                                 <div class="alert alert-danger border-left-danger" role="alert">
                                     <ul class="pl-4 my-2">

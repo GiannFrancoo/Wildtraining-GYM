@@ -58,10 +58,12 @@ class PaymentController extends Controller
     public function create($profile_id = null)
     {   
         try{
+            
             $paymentStatuses = PaymentStatus::all();
             $users = User::whereHas('lastSubscription')->get();
             $userSelected = null;
             $subscription = null;
+
 
             if (isset($_GET['user']) && ($_GET['user'] != 'withoutUser') || $profile_id != null) { 
                 if($profile_id != null){
@@ -85,6 +87,8 @@ class PaymentController extends Controller
                 'paymentStatuses' => $paymentStatuses,
                 'userSelected' => $userSelected,
                 'subscription' => $subscription,
+                'amounthMonthPay' => 1,
+                'priceAmounthMonthPay' => null,
             ]);
         }
         catch(Exception $e){
@@ -98,19 +102,39 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PaymentStoreRequest $request, $payment_id)
+    public function store(PaymentStoreRequest $request, $profile_id)
     {
         try{
-            $user = User::with('lastSubscription')->findOrfail($payment_id);
-            $userSubscription = $user->lastSubscription->first()->pivot;
+            if (isset($_POST['btnApply'])) {
+                $paymentStatuses = PaymentStatus::all();
+                $users = User::has('lastSubscription')->get();
+                $userSelected = User::with('lastSubscription')->find($profile_id);
+                $subscription = $userSelected->lastSubscription->first();
+                $priceAmounthMonthPay = $subscription->month_price * $request->amounthMonthPay;
 
-            $userSubscription->payments()->create([
-                'user_subscription_id' => $userSubscription->id,
-                'price' => $request->price,
-                'date' => $request->date,
-                'payment_status_id' => $request->paymentStatus,
-                'payment_status_updated_at' => now(),
-            ]);
+                return view('payment.create')->with([
+                    'users' => $users,
+                    'paymentStatuses' => $paymentStatuses,
+                    'userSelected' => $userSelected,
+                    'subscription' => $subscription,
+                    'amounthMonthPay' => $request->amounthMonthPay,
+                    'priceAmounthMonthPay' => $priceAmounthMonthPay,
+                ]);
+            }
+
+            $user = User::with('lastSubscription')->findOrfail($profile_id);
+            $userSubscription = $user->lastSubscription->first()->pivot;
+            $now = Carbon::now();
+            for($size = 0; $size < $request->amounthMonthPay; $size++){
+                $userSubscription->payments()->create([
+                    'user_subscription_id' => $userSubscription->id,
+                    'price' => ($request->price / $request->amounthMonthPay),
+                    'date' => $now,
+                    'payment_status_id' => $request->paymentStatus,
+                    'payment_status_updated_at' => now(),
+                ]);
+                $now->addMonth(); 
+            }
 
             return redirect()
                 ->route('payment.index')
@@ -316,5 +340,5 @@ class PaymentController extends Controller
         catch(Exception $e){
             return redirect()->back()->withErrors('Error al seleccionar usuario');
         }
-    }   
+    }  
 }

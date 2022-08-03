@@ -101,9 +101,7 @@
                     <p>{{ $user->personal_information }}</p>
                 </div>
             </div>   
-
         </div>
-        
     </div>
     
     <hr>
