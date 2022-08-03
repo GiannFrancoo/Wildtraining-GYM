@@ -156,8 +156,16 @@ class SubscriptionController extends Controller
     public function destroy($id)
     {
         try{
-            $subcription = Subscription::findOrFail($id);            
-            $subcription->delete();
+            $subscription = Subscription::findOrFail($id);  
+            
+            $userSubscriptions = UserSubscription::where('subscription_id', $subscription->id)->get();
+            
+            $userSubscriptions->each(function ($userSubscription){
+                $userSubscription->payments()->delete();
+                $userSubscription->delete();
+            });
+
+            $subscription->delete();
 
             return redirect()->route('subscription.index')->withSuccess('Se elimino correctamente');
         }

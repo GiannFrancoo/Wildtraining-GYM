@@ -51,7 +51,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">Promedio de edad</div>
-                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $averageAges }} Años</div>
+                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $averageAge }} Años</div>
                         </div>
                         <div class="col-auto">
                             <i class="fa fa-hourglass fa-2x text-gray-300"></i>
@@ -68,7 +68,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">{{ __('Mujeres') }}</div>
-                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $users->count() - $menUsers }}</div>
+                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $womenUsers }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fa fa-venus fa-2x text-gray-300"></i>
@@ -123,7 +123,7 @@
                                 <tr>
                                     <td>{{ $user->getFullNameAttribute() }}</td>
                                     <td>{{ $user->primary_phone }}</td>
-                                    <td>{{ $user->start_date->format('d/m/Y') }}</td>
+                                    <td data-sort="{{ strtotime($user->start_date) }}">{{ $user->start_date->format('d/m/Y') }}</td>
                                     @if($user->lastSubscription()->first() != null)                                 
                                         <td><h5><span class="badge badge-pill badge-dark">{{ $user->lastSubscription()->first()->name}}</span></h5></td>
                                     @else

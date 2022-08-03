@@ -67,29 +67,33 @@ class ProfileController extends Controller
     {
         try{      
             $subscriptions = Subscription::all();
-            $users = User::latest()->get();
-            $ages = 0;
-            $usersWithoutBirthday = 0;
-            
-            foreach ($users as $user) {
-                if($user->getAge() != 0){
-                    $ages += $user->getAge();
-                }
-                else{
-                    $usersWithoutBirthday++;
-                }     
-            }
 
-            $menUsers = $users->filter(function($user){
-                return $user->gender->id === Gender::MAN;
-            })->count();
+            $users = User::with('lastSubscription')
+                ->latest()
+                ->get();
+
+            $menUsers = $users
+                ->where('gender_id', Gender::MAN)
+                ->count();
+
+            $womenUsers = $users->count() - $menUsers;
+                
+            $averageAge = $users
+                ->filter(fn($user) => !is_null($user->birthday))
+                ->avg(fn($user) => $user->birthday->age);            
+            
+            $totalUsersWithActiveSubscription = $users
+                ->filter(fn($user) => $user->lastSubscription
+                ->isNotEmpty())
+                ->count();
 
             return view('profile.index',)->with([
                 'users' => $users, 
                 'menUsers' => $menUsers,
-                'averageAges' => (floor($ages/($users->count() - $usersWithoutBirthday))),
+                'womenUsers' => $womenUsers,
+                'averageAge' => floor($averageAge),
                 'subscriptions' => $subscriptions,
-                'totalUsersWithActiveSubscription' => User::has('lastSubscription')->count(),
+                'totalUsersWithActiveSubscription' => $totalUsersWithActiveSubscription,
             ]);
         }
         catch(Exception $e){
@@ -242,7 +246,17 @@ class ProfileController extends Controller
     {
         try{
             $user = User::findOrFail($profile_id);
-            $user->delete();
+
+            $user->assistances()->delete();
+
+            $userSubscriptions = UserSubscription::where('user_id', $user->id)->get();
+
+            $userSubscriptions->each(function ($userSubscription){
+                $userSubscription->payments()->delete();
+                $userSubscription->delete();
+            });
+            
+            $user->delete(); 
 
             return redirect()->route('profile.index')->withSuccess('Se elimino con éxito al usuario');
         }

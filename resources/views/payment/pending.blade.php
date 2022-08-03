@@ -62,6 +62,7 @@
                                 <th scope="col">Planes</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Acciones</th>
+                                <th scope="col">Cambiar estado</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -71,7 +72,7 @@
                                         <td>{{ $payment->userSubscription->user->getFullNameAttribute() }}</td>
                                     @endif
                                     <th scope="row">${{ $payment->price }}</th>
-                                    <td>{{ $payment->date->format('d/m/Y') }}</td>                           
+                                    <td data-sort="{{ strtotime($payment->date) }}">{{ $payment->date->format('d/m/Y') }}</td>                           
                                     <td>{{ $payment->userSubscription->subscription->name }}</td>                  
                                     <td><h5><span class="badge badge-pill badge-{{$payment->paymentStatus->color}}">{{ $payment->paymentStatus->name }}</span></h5></td>
                                     <td class="text-center d-flex justify-content-center">                                    
@@ -83,6 +84,15 @@
                                                 <button type="submit" class="btn btn-circle btn-danger ml-2" onclick="return confirm('¿Desea borrar pago seleccionado?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button> 
                                             </form>  
                                         </div>                          
+                                    </td>                                     
+                                    <td>  
+                                        <form action="{{ route('payment.changeStatus', ['payment_id' => $payment->id]) }}" method="GET">
+                                            <select class="custom-select" style="text-align:center;" onChange="this.form.submit()" name="new_payment_status_id" value="old(new_payment_status_id)">                                           
+                                                @foreach($paymentStatuses as $paymentStatus)    
+                                                    <option value="{{ $paymentStatus->id }}"  {{($payment->paymentStatus->id === $paymentStatus->id) ? 'Selected' : ''}}>{{ $paymentStatus->name }}</option>
+                                                @endforeach
+                                            </select>   
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

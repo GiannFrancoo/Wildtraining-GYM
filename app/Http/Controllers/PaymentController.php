@@ -33,12 +33,15 @@ class PaymentController extends Controller
             foreach ($users as $user) {
                 $monthlyRevenue = $monthlyRevenue + $user->lastSubscription->first()->month_price;
             }      
-        
+
             $payments = Payment::orderBy('date','desc')->get();
+
+            $paymentStatuses = PaymentStatus::all();
+
             return view('payment.index')
                 ->with([
                     'payments' => $payments,
-                    'paymentStatuses' => PaymentStatus::all(),
+                    'paymentStatuses' => $paymentStatuses,
                     'monthlyRevenue' => $monthlyRevenue,
                 ]);
         }
@@ -231,8 +234,13 @@ class PaymentController extends Controller
                 $query->where('id', PaymentStatus::PENDING);
             })->orderBy('date','desc')->get();
 
+            $paymentStatuses = PaymentStatus::all();
+
             return view('payment.pending')
-                ->with(['pendingPayments' => $pendingPayments]);
+                ->with([
+                    'pendingPayments' => $pendingPayments,
+                    'paymentStatuses' => $paymentStatuses,
+                ]);
         }
         catch(Exception $e){
             return redirect()->back()->withErrors('Error al mostrar los pagos pendientes');
@@ -303,7 +311,7 @@ class PaymentController extends Controller
             
                        
 
-            return redirect()->route('payment.index')->withSuccess("Se cambio el estado del pago correctamente");
+            return redirect()->back()->withSuccess("Se cambio el estado del pago correctamente");
         }
         catch(Exception $e){
             return redirect()->back()->withErrors('Error al seleccionar usuario');

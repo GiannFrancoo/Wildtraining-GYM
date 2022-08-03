@@ -183,7 +183,7 @@
                                 <tr>
                                     <td>{{ $user->getFullNameAttribute() }}</td>
                                     <td>{{ $user->primary_phone }}</td>
-                                    <td>{{ $user->start_date->format('d/m/Y') }}</td>
+                                    <td data-sort="{{ strtotime($user->start_date) }}">{{ $user->start_date->format('d/m/Y') }}</td>
                                     <td>
                                         @if ($user->lastSubscription->isEmpty())
                                             <h5><span class="badge badge-pill badge-dark">Sin plan</span></h5>   

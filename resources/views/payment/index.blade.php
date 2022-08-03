@@ -90,8 +90,8 @@
                                         <td>{{ $payment->userSubscription->user->getFullNameAttribute() }}</td>
                                     @endif
                                     <th>${{ $payment->price }}</th>
-                                    <td data-sort="Ymd">{{ $payment->date->format('d/m/Y') }}</td>   
-                                    <td>{{ $payment->userSubscription->subscription->name }}</td>                  
+                                    <td data-sort="{{ strtotime($payment->date) }}">{{ $payment->date->format('d/m/Y') }}</td> 
+                                    <td>{{ $payment->userSubscription->subscription->name }}</td>                                    
                                     <td><h5><span class="badge badge-pill badge-{{$payment->paymentStatus->color}}">{{ $payment->paymentStatus->name }}</span></h5></td>                                    
                                     <td class="text-center d-flex justify-content-center">                                    
                                         <a href="{{ route('payment.edit', ['payment_id' => $payment->id]) }}" type="button" class="btn btn-circle btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>

@@ -65,7 +65,7 @@
                             @foreach ($todayAssistances as $assistance)
                                 <tr>
                                     <td>{{ $assistance->user->getFullNameAttribute() }}</td>
-                                    <td data-sort="Ymd">{{ $assistance->date->format('d/m/Y') }}</td>
+                                    <td data-sort="{{ strtotime($assistance->date) }}">{{ $assistance->date->format('d/m/Y') }}</td>
                                     <td>{{ $assistance->date->format('H:i') }}</td>
                                     <td class="d-flex justify-content-center">
                                         <a href="{{ route('profile.show', ['profile_id' => $assistance->user->id]) }}" type="button" class="btn btn-circle btn-light mx-2" title="Show" data-toggle="tooltip"><i class="fa fa-eye"></i></a>

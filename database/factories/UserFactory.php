@@ -29,7 +29,7 @@ class UserFactory extends Factory
             'secondary_phone'       => $this->faker->phoneNumber(),
             'address'               => $this->faker->address(),
             'birthday'              => Carbon::now()->subYears(rand(1, 55)),
-            'start_date'            => Carbon::now()->subYears(rand(1, 55)),
+            'start_date'            => $this->faker->dateTimeBetween('-10 years', 'now'),
             'personal_information'  => $this->faker->realText(),
             'role_id'               => Role::find(2)->id, 
             'social_work'           => Str::random(10),
