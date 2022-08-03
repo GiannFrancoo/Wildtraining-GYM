@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Payment\PaymentStoreRequest;
-use App\Http\Requests\Payment\PaymentUpdateRequest;
 use Exception;
-use Illuminate\Http\Request;
-use App\Models\Payment;
-use App\Models\PaymentStatus;
+use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Payment;
 use App\Models\Subscription;
+use Illuminate\Http\Request;
+use App\Models\PaymentStatus;
 use App\Models\UserSubscription;
 use App\Models\UserSubscriptionStatus;
 use Illuminate\Database\Eloquent\Collection;
+use App\Http\Requests\Payment\PaymentStoreRequest;
+use App\Http\Requests\Payment\PaymentUpdateRequest;
 
 class PaymentController extends Controller
 {
@@ -243,29 +244,34 @@ class PaymentController extends Controller
      */
     public function generatePendingPayments()
     {  
-        try{    
+        $now = Carbon::today();
+
+        try{
             $userSubscriptions = UserSubscription::query()
                 ->where('user_subscription_status_id', UserSubscriptionStatus::ACTIVE)
-                ->with('user', 'subscription', 'payments')
-                ->get();                    
+                ->with('subscription', 'payments')
+                ->get();
+                
+            $userSubscriptions->each(function ($userSubscription) use ($now) {
+                $payments = $userSubscription->payments
+                    ->filter(function ($payment) use ($now) {
+                        return (
+                            $payment->date->isBetween($now->copy()->firstOfMonth(), $now->copy()->endOfMonth()->endOfDay()) &&
+                            $payment->payment_status_id !== PaymentStatus::CANCELLED
+                        );
+                    });
 
-            $userSubscriptions->each(function ($userSubscription){
+                if ($payments->isNotEmpty()) {
+                    return;
+                }
 
-                $userPayments = collect(); //reinicio
-
-                $userPayments = $userSubscription->payments->filter(function ($payment){
-                   return (($payment->date->format('m') == now()->month) && ($payment->date->format('Y') == now()->year));
-                });
-
-                if ($userPayments->isEmpty()){
-                    $payment = Payment::create([
-                        "user_subscription_id" => $userSubscription->id,
-                        "price" => $userSubscription->subscription->month_price,
-                        "date" => now(),
-                        "payment_status_id" => PaymentStatus::PENDING, 
-                        "payment_status_updated_at" => now(),
-                    ]);
-                }               
+                Payment::create([
+                    "user_subscription_id" => $userSubscription->id,
+                    "price" => $userSubscription->subscription->month_price,
+                    "date" => $now,
+                    "payment_status_id" => PaymentStatus::PENDING, 
+                    "payment_status_updated_at" => now(),
+                ]);
             });
             
             return redirect()->back()->with(['success' => 'Exito al generar los pagos a los usuarios con un plan activo']);
