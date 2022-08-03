@@ -33,7 +33,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col form-group focused">
-              <select class="custom-select" onChange="this.form.submit()" name="user">
+              <select class="custom-select" name="user">
                 <option selected value="withoutUser">{{ __('Seleccione un usuario') }}</option>                                  
                 @foreach($users as $user)
                   @if($userSelected != null)
@@ -44,6 +44,9 @@
                 @endforeach
               </select>
             </div>
+          </div>
+          <div class="card-footer text-center" onChange="this.form.submit()">
+            <button type="submit" class="btn btn-dark"><i class="fa fa-search mr-1"></i>Buscar</button>
           </div>
         </div>
       </div>
