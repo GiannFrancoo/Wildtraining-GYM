@@ -116,7 +116,7 @@
                     <table class="table table-bordered table-hover text-center" id="tableLastPayments">    
                         <thead>
                             <tr>
-                                <th>Nombre y apellido</th>
+                                <th>Usuario</th>
                                 <th>Fecha</th>
                                 <th>Estado</th>
                                 <th>Plan</th>
@@ -171,7 +171,7 @@
                     <table class="table table-bordered table-hover text-center" id="tableLastUsers">    
                         <thead>
                             <tr>
-                                <th>Nombre y apellido</th>
+                                <th>Usuario</th>
                                 <th>Telefono</th>
                                 <th>Fecha inicio</th>
                                 <th>Plan</th>

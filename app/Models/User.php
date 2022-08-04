@@ -62,7 +62,7 @@ class User extends Authenticatable
             return "{$this->name}";
         }
 
-        return "{$this->name} {$this->last_name}";
+        return "{$this->last_name} {$this->name}";
     }
     
     /**

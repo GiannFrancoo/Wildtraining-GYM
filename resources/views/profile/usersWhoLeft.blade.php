@@ -57,7 +57,7 @@
                     <table class="table table-bordered table-hover text-center" id="dataTable">    
                             <thead>
                                 <tr>
-                                    <th scope="col">Nombre y apellido</th>
+                                    <th scope="col">Usuario</th>
                                     <th scope="col">Telefono</th>
                                     <th scope="col">Plan</th>
                                     <th scope="col">Ultima asistencia</th>
