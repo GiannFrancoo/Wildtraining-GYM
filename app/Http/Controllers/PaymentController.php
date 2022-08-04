@@ -63,7 +63,7 @@ class PaymentController extends Controller
             $users = User::whereHas('lastSubscription')->get();
             $userSelected = null;
             $subscription = null;
-
+            $paymentStatusDefault = PaymentStatus::findOrFail(PaymentStatus::PAID);
 
             if (isset($_GET['user']) && ($_GET['user'] != 'withoutUser') || $profile_id != null) { 
                 if($profile_id != null){
@@ -89,6 +89,7 @@ class PaymentController extends Controller
                 'subscription' => $subscription,
                 'amounthMonthPay' => 1,
                 'priceAmounthMonthPay' => null,
+                'paymentStatusDefault' => $paymentStatusDefault
             ]);
         }
         catch(Exception $e){
@@ -111,6 +112,7 @@ class PaymentController extends Controller
                 $userSelected = User::with('lastSubscription')->find($profile_id);
                 $subscription = $userSelected->lastSubscription->first();
                 $priceAmounthMonthPay = $subscription->month_price * $request->amounthMonthPay;
+                $paymentStatusDefault = PaymentStatus::findOrFail($request->paymentStatus);
 
                 return view('payment.create')->with([
                     'users' => $users,
@@ -119,6 +121,7 @@ class PaymentController extends Controller
                     'subscription' => $subscription,
                     'amounthMonthPay' => $request->amounthMonthPay,
                     'priceAmounthMonthPay' => $priceAmounthMonthPay,
+                    'paymentStatusDefault' => $paymentStatusDefault,
                 ]);
             }
 
