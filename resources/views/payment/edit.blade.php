@@ -78,7 +78,7 @@
                             <label class="form-control-label" for="paymentStatus">Estado del pago</label>
                             <select class="custom-select" name="paymentStatus" value="{{ old('$payment->paymentStatus->name') }}">                                           
                                 @foreach($paymentsStatuses as $paymentStatus)
-                                    <option value="{{ $paymentStatus->id }}" {{($payment->paymentStatus->id === $paymentStatus->id) ? 'Selected' : ''}}>{{ $paymentStatus->name }}</option>
+                                    <option value="{{ $paymentStatus->id }}" {{($paymentStatus->id === $paymentStatus->id) ? 'Selected' : ''}}>{{ $paymentStatus->name }}</option>
                                 @endforeach
                             </select>
                         </div>

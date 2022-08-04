@@ -122,9 +122,12 @@
                 <div class="col-6">
                   <div class="form-group focused">
                       <label class="form-control-label" for="paymentStatus">{{ __('Estado del pago') }}</label>
-                      <select class="custom-select" name="paymentStatus" value="{{ old('paymentStatus') }}">                                           
+                      <select class="custom-select" name="paymentStatus" value="{{ old('paymentStatus') }}">                                          
+                        <option value="{{ $paymentStatusDefault->id }}" selected>{{ $paymentStatusDefault->name }}</option>
                           @foreach($paymentStatuses as $paymentStatus)
-                            <option value="{{ $paymentStatus->id }}">{{ $paymentStatus->name }}</option>
+                            @if($paymentStatus->id != $paymentStatusDefault->id)
+                              <option value="{{ $paymentStatus->id }}" {{( old('paymentStatus') === $paymentStatus->id) ? 'Selected' : ''}}>{{ $paymentStatus->name }}</option>
+                            @endif
                           @endforeach
                       </select>
                   </div>
