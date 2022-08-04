@@ -33,7 +33,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1" id="ganancia">Total</div>
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1" id="ganancia">Total Activos</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalUsersWithActiveSubscription }}</div>
                         </div>
                         <div class="col-auto">
@@ -112,7 +112,6 @@
                             <tr>
                                 <th>Usuario</th>
                                 <th>Telefono</th>
-                                <th>Fecha de inicio</th>
                                 <th>Plan</th>
                                 <th>Acciones</th>
                                 <th>Cambiar plan</th>
@@ -127,15 +126,14 @@
                                     @else
                                         <td> - </td>
                                     @endif
-                                    <td data-sort="{{ strtotime($user->start_date) }}">{{ $user->start_date->format('d/m/Y') }}</td>
                                     @if($user->lastSubscription()->first() != null)                                 
                                         <td><h5><span class="badge badge-pill badge-dark">{{ $user->lastSubscription()->first()->name}}</span></h5></td>
                                     @else
                                         <td><h5><span class="badge badge-pill badge-dark">{{ __('Sin plan') }}</span></h5></td>
                                     @endif
                                     <td class="d-flex justify-content-center">
-                                        <a href="{{ route('profile.show', ['profile_id' => $user->id]) }}" type="button" class="btn btn-circle btn-light mx-1"><i class="fa fa-eye"></i></a>
-                                        <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-circle btn-secondary mx-1"><i class="fa fa-pencil"></i></a>
+                                        <a href="{{ route('profile.show', ['profile_id' => $user->id]) }}" type="button" title="Ver usuario" class="btn btn-circle btn-light mx-1"><i class="fa fa-eye"></i></a>
+                                        <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" title="Editar usuario" class="btn btn-circle btn-secondary mx-1"><i class="fa fa-pencil"></i></a>
                                         <div class="mx-1">
                                             <form action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" method="POST">
                                                 @csrf
@@ -143,6 +141,11 @@
                                                 <button class="btn btn-circle btn-danger" onclick="return confirm('¿Desea borrar al usuario {{$user->name}}?')"><i class="fa fa-trash"></i></button>
                                             </form>
                                         </div>
+                                        @if($user->lastSubscription()->first() != null)
+                                            <a href="{{ route('payment.create', ['profile_id' => $user->id]) }}" type="button" class="btn btn-circle btn-success" title="Crear pago"><i class="fa fa-dollar"></i></a>
+                                        @else
+                                            <a href="{{ route('payment.create', ['profile_id' => $user->id]) }}" type="button" class="btn btn-circle btn-secondary" title="Crear pago"><i class="fa fa-dollar"></i></a>
+                                        @endif
                                     </td>  
                                     <td>  
                                         <form action="{{ route('profile.updateSubscription', ['profile_id' => $user->id]) }}" method="GET" >
@@ -178,7 +181,7 @@
 <script>
     $(document).ready(function () {
         $('#dataTable').DataTable( {
-            order: [[2, 'desc']],
+            order: [[0, 'desc']],
         })
     })
 </script>

@@ -20,15 +20,25 @@
         </div>
     @endif
 
+    @if ($errors->any())
+        <div class="alert alert-danger border-left-danger" role="alert">
+            <ul class="pl-4 my-2">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <!-- Card headers -->
     <div class="row">
         <!-- Earnings (Monthly) Card Example -->
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" id="ganancia">Ganancia (Mensual)</div>                            
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1" id="ganancia">Ganancia (Mensual)</div>                            
                             <div class="h5 mb-0 font-weight-bold text-gray-800" id="eyeMonthlyDiv" style="display:none;">${{ number_format($monthlyRevenue, 2, '.',',') }}</div>
                         </div> 
                         <div class="col-auto">
@@ -42,34 +52,32 @@
         </div>
 
         <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            
-                <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Ganancia (Anual)</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="eyeAnnualDiv" style="display:none;">${{ number_format($monthlyRevenue*12, 2, '.',',') }}</div>
-                            </div>
-                            <div class="col-auto">
-                                <a id="eyeAnnual" onclick="hiddenAnnual()">
-                                    <i class="fa fa-eye-slash fa-2x text-gray-300"></i>
-                                </a>
-                            </div>
+        <div class="col-xl-3 col-md-6 mb-4">            
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Ganancia (Anual)</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="eyeAnnualDiv" style="display:none;">${{ number_format($monthlyRevenue*12, 2, '.',',') }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <a id="eyeAnnual" onclick="hiddenAnnual()">
+                                <i class="fa fa-eye-slash fa-2x text-gray-300"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-            </a>
+            </div>
         </div>
 
         <!-- Pending payments -->
         <div class="col-xl-3 col-md-6 mb-4">
             <a href="{{ route('payment.pending') }}" class="text-decoration-none">
-                <div class="card border-left-info shadow h-100 py-2">
+                <div class="card border-left-dark shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">{{ __('Pendiente a pago') }}</div>
+                                <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">{{ __('Pendiente a pago') }}</div>
                                 <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $pendingPayments->count() }}</div>
                             </div>
                             <div class="col-auto">
@@ -81,15 +89,15 @@
             </a>
         </div>
 
-         <!-- Total Users -->
+        <!-- Total Users -->
         <div class="col-xl-3 col-md-6 mb-4">
             <a href="{{ route('profile.index') }}" class="text-decoration-none">
                 <div class="card border-left-warning shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Usuarios   -   Sin plan</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $users->count() }}   -   {{ $usersWithoutSubscription }}</div>
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total usuarios / Sin plan</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $users->count() }} / {{ $usersWithoutSubscription }}</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-users fa-2x text-gray-300"></i>
@@ -173,7 +181,6 @@
                             <tr>
                                 <th>Usuario</th>
                                 <th>Telefono</th>
-                                <th>Fecha inicio</th>
                                 <th>Plan</th>
                                 <th>Acciones</th>
                             </tr>
@@ -183,7 +190,6 @@
                                 <tr>
                                     <td>{{ $user->getFullNameAttribute() }}</td>
                                     <td>{{ $user->primary_phone }}</td>
-                                    <td data-sort="{{ strtotime($user->start_date) }}">{{ $user->start_date->format('d/m/Y') }}</td>
                                     <td>
                                         @if ($user->lastSubscription->isEmpty())
                                             <h5><span class="badge badge-pill badge-dark">Sin plan</span></h5>   
@@ -192,13 +198,18 @@
                                         @endif 
                                     </td>
                                     <td class="d-flex justify-content-center">
-                                        <a href="{{route('profile.show', ['profile_id' => $user->id])}}" type="button" class="btn btn-circle btn-light mx-1" title="Show"><i class="fa fa-eye"></i></a>
-                                        <a href="{{route('profile.edit', ['profile_id' => $user->id])}}" type="button" class="btn btn-circle btn-secondary" title="Edit"><i class="fa fa-pencil"></i></a>
+                                        <a href="{{ route('profile.show', ['profile_id' => $user->id]) }}" type="button" class="btn btn-circle btn-light mx-1" title="Ver usuario"><i class="fa fa-eye"></i></a>
+                                        <a href="{{ route('profile.edit', ['profile_id' => $user->id]) }}" type="button" class="btn btn-circle btn-secondary" title="Editar usuario"><i class="fa fa-pencil"></i></a>
                                         <form action="{{ route('profile.destroy', ['profile_id' => $user->id]) }}" method="POST">
                                             @csrf
                                             @method("DELETE")
-                                            <button class="btn btn-circle btn-danger mx-1" onclick="return confirm('¿Desea borrar al usuario {{ $user->name }}?')" title="Delete"><i class="fa fa-trash"></i></button>
+                                            <button class="btn btn-circle btn-danger mx-1" onclick="return confirm('¿Desea borrar al usuario {{ $user->name }}?')" title="Borrar usuario"><i class="fa fa-trash"></i></button>
                                         </form>
+                                        @if($user->lastSubscription()->first() != null)
+                                            <a href="{{ route('payment.create', ['profile_id' => $user->id]) }}" type="button" class="btn btn-circle btn-success" title="Crear pago"><i class="fa fa-dollar"></i></a>
+                                        @else
+                                            <a href="{{ route('payment.create', ['profile_id' => $user->id]) }}" type="button" class="btn btn-circle btn-secondary" title="Crear pago"><i class="fa fa-dollar"></i></a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
