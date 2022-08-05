@@ -192,7 +192,7 @@
                       <div class="text-center">             
                         @if($amounthMonthPay != 1)
                           <p class="d-inline">Cantidad de pagos a generar: <span class="font-weight-bold" id="valueInput"></span></p> 
-                          <p>Los pagos se generaran a partir de este mes {{ now()->locale('es')->monthName }} <span class="font-weight-bold">inclusive</span></p>
+                          <p>Los pagos se generaran a partir de <span id="monthToPay" class="font-weight-bold"></span></p>
                         @else 
                           <p>Se generara el pago en este mes <span id="monthToPay" class="font-weight-bold"></span></p>
                         @endif
@@ -246,6 +246,7 @@
       if (document.getElementById("valueInput") != null){
         var monthsToPay = document.getElementById("monthsToPay").value; 
         document.getElementById("valueInput").textContent = monthsToPay;
+        document.getElementById("monthToPay").textContent = new Date(date).toLocaleDateString("es-Es", {month: 'long'}) + " inclusive";
       }
 
       if (document.getElementById("monthToPay") != null){

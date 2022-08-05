@@ -129,17 +129,17 @@ class PaymentController extends Controller
 
             $user = User::with('lastSubscription')->findOrfail($profile_id);
             $userSubscription = $user->lastSubscription->first()->pivot;
+            $requestDate = new Carbon($request->date);
             $now = Carbon::now();
             for($size = 0; $size < $request->amounthMonthPay; $size++){
                 $userSubscription->payments()->create([
                     'user_subscription_id' => $userSubscription->id,
                     'price' => ($request->price / $request->amounthMonthPay),
-                    'date' => $now,
+                    'date' => $requestDate,
                     'payment_status_id' => $request->paymentStatus,
-                    'payment_status_updated_at' => now(),
+                    'payment_status_updated_at' => $now,
                 ]);
-                $now->addMonth()->firstOfMonth();
-                 
+                $requestDate->addMonth()->firstOfMonth();     
             }
 
             return redirect()
