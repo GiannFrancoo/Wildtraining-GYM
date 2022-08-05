@@ -136,7 +136,7 @@
                             @foreach ($payments as $payment)
                                 <tr>
                                     <td>{{ $payment->userSubscription->user->getFullNameAttribute() }}</td>
-                                    <td>{{ $payment->date->format('d/m/Y') }}</td>
+                                    <td data-sort="{{ strtotime($payment->date) }}">{{ $payment->date->format('d/m/Y') }}</td>
                                     <td><h5><span class="badge badge-pill badge-{{$payment->paymentStatus->color}}">{{ $payment->paymentStatus->name }}</span></h5></td>
                                     <td>{{ $payment->userSubscription->subscription->name }}</td>       
                                     <td class="d-flex justify-content-center">
@@ -230,7 +230,7 @@
             order: [[1, 'desc']],
         })
         $('#tableLastUsers').DataTable({
-            order: [[0, 'desc']],
+            order: [[0, 'asc']],
         })
     })
 </script>
