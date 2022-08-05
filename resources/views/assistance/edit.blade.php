@@ -35,7 +35,7 @@
                     <div class="col-6">                        
                         <div class="form-group focused">
                             <label class="form-control-label" for="user">Usuario</label>
-                            <select required class="custom-select" name="user_id" value="{{ $assistance->user->getFullNameAttribute() }}">                                         
+                            <select required class="custom-select" id="select2" name="user_id" value="{{ $assistance->user->getFullNameAttribute() }}">                                         
                                 @foreach ($users as $user)
                                     <option required value="{{ $user->id }}" {{($user->getFullNameAttribute() === $assistance->user->getFullNameAttribute()) ? 'Selected' : ''}}>
                                         {{ $user->getFullNameAttribute() }}
@@ -60,4 +60,16 @@
     </form>            
     
 
+@endsection
+
+@section('custom_js')
+<script>
+    $(document).ready(function () {
+        $('#select2').select2({
+            lenguage: 'es',
+            theme: 'bootstrap4',
+            width: '100%',
+        });
+    }); 
+</script>
 @endsection

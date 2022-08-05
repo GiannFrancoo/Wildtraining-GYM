@@ -33,6 +33,8 @@
 
     <!-- Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
+
 
 </head>
 <body id="page-top">
@@ -339,7 +341,7 @@
             url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
         },
     });
-
+    
     window.setTimeout(function() {
         $(".alert").fadeTo(500, 0).slideUp(500, function(){
             $(this).remove();

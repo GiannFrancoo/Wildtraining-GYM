@@ -31,11 +31,10 @@
             <form action="{{ route('assistance.store')}}" method="POST">
             @csrf
                 <div class="row">
-
                     <div class="col-lg-6">                        
                         <div class="form-group focused">
                             <label class="form-control-label" for="user">Usuario</label>
-                            <select  class="custom-select" required name="user_id" value="{{ old('user_id') }}">                                           
+                            <select  class="custom-select" id="select2" required name="user_id" value="{{ old('user_id') }}">                                           
                                 @foreach($users as $user)
                                     <option required value="{{ $user->id }}">{{ $user->getFullNameAttribute() }}</option>
                                 @endforeach
@@ -49,7 +48,6 @@
                             <input type="datetime-local" id="date" required class="form-control" placeholder="{{ date('d-m-Y H:i:s') }}" name="date" value="{{ now()->format('Y-m-d H:i:s') }}">
                         </div>
                     </div>
-
                 </div>
 
                 <hr class="mt-2">
@@ -61,4 +59,16 @@
             </form>            
         </div>
     </div>
+@endsection
+
+@section('custom_js')
+<script>
+    $(document).ready(function () {
+        $('#select2').select2({
+            lenguage: 'es',
+            theme: 'bootstrap4',
+            width: '100%',
+        });
+    }); 
+</script>
 @endsection
