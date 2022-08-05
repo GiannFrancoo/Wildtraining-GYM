@@ -64,6 +64,8 @@ class PaymentController extends Controller
             $userSelected = null;
             $subscription = null;
             $paymentStatusDefault = PaymentStatus::findOrFail(PaymentStatus::PAID);
+           
+
 
             if (isset($_GET['user']) && ($_GET['user'] != 'withoutUser') || $profile_id != null) { 
                 if($profile_id != null){
@@ -89,7 +91,7 @@ class PaymentController extends Controller
                 'subscription' => $subscription,
                 'amounthMonthPay' => 1,
                 'priceAmounthMonthPay' => null,
-                'paymentStatusDefault' => $paymentStatusDefault
+                'paymentStatusDefault' => $paymentStatusDefault,
             ]);
         }
         catch(Exception $e){
@@ -127,17 +129,17 @@ class PaymentController extends Controller
 
             $user = User::with('lastSubscription')->findOrfail($profile_id);
             $userSubscription = $user->lastSubscription->first()->pivot;
+            $requestDate = new Carbon($request->date);
             $now = Carbon::now();
             for($size = 0; $size < $request->amounthMonthPay; $size++){
                 $userSubscription->payments()->create([
                     'user_subscription_id' => $userSubscription->id,
                     'price' => ($request->price / $request->amounthMonthPay),
-                    'date' => $now,
+                    'date' => $requestDate,
                     'payment_status_id' => $request->paymentStatus,
-                    'payment_status_updated_at' => now(),
+                    'payment_status_updated_at' => $now,
                 ]);
-                $now->addMonth()->firstOfMonth();
-                 
+                $requestDate->addMonth()->firstOfMonth();     
             }
 
             return redirect()
@@ -344,5 +346,6 @@ class PaymentController extends Controller
         catch(Exception $e){
             return redirect()->back()->withErrors('Error al seleccionar usuario');
         }
-    }  
+    }
+   
 }

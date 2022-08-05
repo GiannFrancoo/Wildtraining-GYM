@@ -34,40 +34,40 @@
     <div class="row">
         <!-- Earnings (Monthly) Card Example -->
         <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1" id="ganancia">Ganancia (Mensual)</div>                            
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="eyeMonthlyDiv" style="display:none;">${{ number_format($monthlyRevenue, 2, '.',',') }}</div>
-                        </div> 
-                        <div class="col-auto">
-                            <a id="eyeMonthly" onclick="hiddenMonthly()">
+            <a onclick="hiddenMonthly()">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1" id="ganancia">Ganancia (Mensual)</div>                            
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="eyeMonthlyDiv">******</div>
+                            </div> 
+                            <div class="col-auto" id="eyeMonthly">
                                 <i class="fa fa-eye-slash fa-2x text-gray-300"></i>
-                            </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
 
         <!-- Earnings (Monthly) Card Example -->
         <div class="col-xl-3 col-md-6 mb-4">            
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Ganancia (Anual)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="eyeAnnualDiv" style="display:none;">${{ number_format($monthlyRevenue*12, 2, '.',',') }}</div>
-                        </div>
-                        <div class="col-auto">
-                            <a id="eyeAnnual" onclick="hiddenAnnual()">
+            <a onclick="hiddenAnnual()">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Ganancia (Anual)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" id="eyeAnnualDiv">******</div>
+                            </div>
+                            <div class="col-auto" id="eyeAnnual">
                                 <i class="fa fa-eye-slash fa-2x text-gray-300"></i>
-                            </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
 
         <!-- Pending payments -->
@@ -236,28 +236,30 @@
 </script>
 
 <script>
-  function hiddenMonthly() {
-    var x = document.getElementById("eyeMonthlyDiv");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
+    function hiddenMonthly() {        
+        var hiddenText = "******";
+        var monthlyRevenue = <?php echo json_encode(number_format($monthlyRevenue, 2, '.',',')); ?>;
+        var div = document.getElementById("eyeMonthlyDiv");
+        if (div.textContent == hiddenText){
+            div.textContent = "$" + monthlyRevenue;
+        }
+        else {
+            div.textContent = hiddenText;
+        }
+        $('#eyeMonthly').find("i").toggleClass("fa-eye fa-eye-slash");
     }
-    $('#eyeMonthly').find("i").toggleClass("fa-eye fa-eye-slash");
-  }
+
+    function hiddenAnnual(){
+        var hiddenText = "******";
+        var anualRevenue = <?php echo json_encode(number_format($monthlyRevenue*12, 2, '.',',')); ?>;
+        var div = document.getElementById("eyeAnnualDiv");
+        if (div.textContent == hiddenText){
+            div.textContent = "$" + anualRevenue;
+        }
+        else {
+            div.textContent = hiddenText;
+        }
+        $('#eyeAnnual').find("i").toggleClass("fa-eye fa-eye-slash");
+    }
 </script>
-
-<script>
-function hiddenAnnual(){
-  var x = document.getElementById("eyeAnnualDiv");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-  $('#eyeAnnual').find("i").toggleClass("fa-eye fa-eye-slash");
-}
-</script>
-
-
 @endsection
