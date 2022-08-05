@@ -33,7 +33,7 @@
         <div class="card-body">
           <div class="row">
             <div class="col form-group focused">
-              <select class="custom-select" name="user">
+              <select class="custom-select" name="user" id="select2">
                 <option selected value="withoutUser">{{ __('Seleccione un usuario') }}</option>                                  
                 @foreach($users as $user)
                   @if($userSelected != null)
@@ -58,7 +58,6 @@
     <form action="{{ route('payment.store', ['profile_id' => $userSelected->id]) }}" method="POST">
     @csrf
       <div class="row d-flex">
-
         <div class="col-lg-9 col-md-9 col-sm-12 order-md-1 order-sm-2">
           <div class="card shadow mb-3">
             <div class="card-header py-3">
@@ -76,9 +75,9 @@
                       </div>
 
                       @if($amounthMonthPay === 1)
-                        <input type="number" required class="form-control" min="1" name="price" value="{{ $subscription->month_price }}">
+                        <input type="number" required class="form-control" id="priceInput" min="1" name="price" value="{{ $subscription->month_price }}">
                       @else
-                        <input type="number" required class="form-control" min="1" name="price" value="{{ $priceAmounthMonthPay }}">
+                        <input type="number" required class="form-control" min="1" id="priceInput" name="price" value="{{ $priceAmounthMonthPay }}">
                       @endif
                     </div>
                     @error('price')
@@ -122,11 +121,11 @@
                 <div class="col-6">
                   <div class="form-group focused">
                       <label class="form-control-label" for="paymentStatus">{{ __('Estado del pago') }}</label>
-                      <select class="custom-select" name="paymentStatus" value="{{ old('paymentStatus') }}">                                          
+                      <select class="custom-select" id="statusPayment" name="paymentStatus" value="{{ old('paymentStatus') }}">                                          
                         <option value="{{ $paymentStatusDefault->id }}" selected>{{ $paymentStatusDefault->name }}</option>
-                          @foreach($paymentStatuses as $paymentStatus)
-                            @if($paymentStatus->id != $paymentStatusDefault->id)
-                              <option value="{{ $paymentStatus->id }}" {{( old('paymentStatus') === $paymentStatus->id) ? 'Selected' : ''}}>{{ $paymentStatus->name }}</option>
+                          @foreach($paymentStatuses as $payment)
+                            @if($payment->id != $paymentStatusDefault->id)
+                              <option value="{{ $payment->id }}" {{( old('paymentStatus') === $payment->id) ? 'Selected' : ''}}>{{ $payment->name }}</option>
                             @endif
                           @endforeach
                       </select>
@@ -134,9 +133,8 @@
                 </div>
               </div>
             </div>
-            
             <div class="card-footer text-center">
-              <button type="submit" class="btn btn-dark"><i class="fa fa-floppy-disk mr-1"></i>{{ __('Generar pago') }}</button>
+              <button type="button" class="btn btn-dark" name="activateModal" data-toggle="modal" data-target="#exampleModalCenter" onClick="getValueInput()" ><i class="fa fa-floppy-disk mr-1"></i>{{ __('Generar pago') }}</button>
             </div>
           </div>
         </div>
@@ -147,16 +145,91 @@
               <h6 class="m-0 font-weight-bold text-danger">Meses a abonar</h6>    
             </div>
             <div class="card-body text-center align-items-center">
-              <input type="number" class="form-control text-center" id="onthsPay" min="1" name="amounthMonthPay" value="{{ $amounthMonthPay }}">
+              <input type="number" class="form-control text-center" id="domTextElement" id="onthsPay" min="1" name="amounthMonthPay" value="{{ $amounthMonthPay }}">
             </div>
             <div class="card-footer text-center">
               <button type="submit" class="btn btn-dark" name="btnApply"><i class="fa fa-forward mr-1"></i>{{ __('Aplicar') }}</button>
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered "  role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title-center" id="exampleModalLongTitle">Generando pagos</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="card-body table-responsive">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">Abonado <i class="fa fa-credit-card" aria-hidden="true"></i></th>
+                              <td scope="col">Fecha <i class="fa fa-calendar" aria-hidden="true"></i></td>
+                              <td scope="col">Usuario <i class="fa fa-user"></i></td>
+                              <td scope="col">Plan activo <i class="fa fa-flag" aria-hidden="true"></i></td>
+                              <td scope="col">Estado del pago</td>
+                              <td scope="col"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <div class="card">
+                                <th>$ <p class="d-inline" id="valuePrice"></p></th>
+                                <th>{{ now()->format('d/m/Y') }}</th>
+                                <th>{{ $userSelected->getFullNameAttribute() }}</th>
+                                <th>{{ $subscription->name }}</th>
+                                <th><p class="d-inline" id="valueStatus"></p></th>
+                                  @if($amounthMonthPay != 1)
+                                      <td class="bg-danger text-left"><FONT COLOR="white"><li >Cantidad de pagos a generar: &nbsp; <p id="valueInput" class="d-inline"></p></li>
+                                      <li>Los pagos se generaran a partir de este mes ({{ now()->locale('es')->monthName }}) inclusive</li></FONT></td>
+                                  @else
+                                    <td class="bg-dark"><FONT COLOR="white"><li>Se generara el pago de este mes ({{ now()->locale('es')->monthName }})</li></FONT></td>
+                                  @endif
+                                </div>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="modal-footer text-left">
+                      <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar <i class="fa fa-times" aria-hidden="true"></i></button>
+                      <button type="submit" class="btn btn-success">Confirmar <i class="fa fa-check" aria-hidden="true"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
       </div>
     </form> 
   @endif
+  @endsection
 
+@section('custom_js')
+<script>
+   function getValueInput (){
+      let inputValue = document.getElementById("domTextElement").value; 
+        document.getElementById("valueInput").innerHTML = inputValue; 
+        
+        inputValue = document.getElementById("priceInput").value; 
+        document.getElementById("valuePrice").innerHTML = inputValue;
+        console.log(inputValue);
+
+        inputValue = document.getElementById("statusPayment").value; 
+          document.getElementById("valueStatus").innerHTML = inputValue;
+    }
+
+    
+
+    $(document).ready(function () {
+      $('#select2').select2({
+              lenguage: 'es',
+              theme: 'bootstrap4',
+              width: '100%',
+        });
+    });
+
+</script>
 @endsection

@@ -32,7 +32,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group focused">
-                            <select onChange="this.form.submit()" name="user" id="select2" class="custom-select">   
+                            <select name="user" id="select2" class="custom-select">   
                                 <option selected value="withoutUser">Seleccione usuario</option>                                                      
                                 @foreach($users as $user)
                                     @if($userSelected != null)
@@ -43,6 +43,10 @@
                                 @endforeach
                             </select>
                         </div>
+                    </div>
+
+                    <div class="card-footer text-center align-items-center" onChange="this.form.submit()">
+                        <button type="submit" class="btn btn-dark"><i class="fa fa-search mr-1"></i>Buscar</button>
                     </div>
                 </div>
             </form>

@@ -64,6 +64,8 @@ class PaymentController extends Controller
             $userSelected = null;
             $subscription = null;
             $paymentStatusDefault = PaymentStatus::findOrFail(PaymentStatus::PAID);
+           
+
 
             if (isset($_GET['user']) && ($_GET['user'] != 'withoutUser') || $profile_id != null) { 
                 if($profile_id != null){
@@ -89,7 +91,7 @@ class PaymentController extends Controller
                 'subscription' => $subscription,
                 'amounthMonthPay' => 1,
                 'priceAmounthMonthPay' => null,
-                'paymentStatusDefault' => $paymentStatusDefault
+                'paymentStatusDefault' => $paymentStatusDefault,
             ]);
         }
         catch(Exception $e){
@@ -344,5 +346,6 @@ class PaymentController extends Controller
         catch(Exception $e){
             return redirect()->back()->withErrors('Error al seleccionar usuario');
         }
-    }  
+    }
+   
 }
