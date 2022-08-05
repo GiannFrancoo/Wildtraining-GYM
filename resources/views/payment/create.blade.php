@@ -145,60 +145,70 @@
               <h6 class="m-0 font-weight-bold text-danger">Meses a abonar</h6>    
             </div>
             <div class="card-body text-center align-items-center">
-              <input type="number" class="form-control text-center" id="domTextElement" id="onthsPay" min="1" name="amounthMonthPay" value="{{ $amounthMonthPay }}">
+              <input type="number" class="form-control text-center" id="monthsToPay" id="onthsPay" min="1" name="amounthMonthPay" value="{{ $amounthMonthPay }}">
             </div>
             <div class="card-footer text-center">
               <button type="submit" class="btn btn-dark" name="btnApply"><i class="fa fa-forward mr-1"></i>{{ __('Aplicar') }}</button>
+              
               <!-- Modal -->
               <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered "  role="document">
+                <div class="modal-dialog modal-md modal-dialog-centered "  role="document">
                   <div class="modal-content">
+                    
                     <div class="modal-header">
-                      <h5 class="modal-title-center" id="exampleModalLongTitle">Generando pagos</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
+                      <h5 class="modal-title w-100 text-center" id="exampleModalLongTitle">Generando pagos</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
+
                     <div class="modal-body">
-                      <div class="card-body table-responsive">
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th scope="col">Abonado <i class="fa fa-credit-card" aria-hidden="true"></i></th>
-                              <td scope="col">Fecha <i class="fa fa-calendar" aria-hidden="true"></i></td>
-                              <td scope="col">Usuario <i class="fa fa-user"></i></td>
-                              <td scope="col">Plan activo <i class="fa fa-flag" aria-hidden="true"></i></td>
-                              <td scope="col">Estado del pago</td>
-                              <td scope="col"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></td>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <div class="card">
-                                <th>$ <p class="d-inline" id="valuePrice"></p></th>
-                                <th>{{ now()->format('d/m/Y') }}</th>
-                                <th>{{ $userSelected->getFullNameAttribute() }}</th>
-                                <th>{{ $subscription->name }}</th>
-                                <th><p class="d-inline" id="valueStatus"></p></th>
-                                  @if($amounthMonthPay != 1)
-                                      <td class="bg-danger text-left"><FONT COLOR="white"><li >Cantidad de pagos a generar: &nbsp; <p id="valueInput" class="d-inline"></p></li>
-                                      <li>Los pagos se generaran a partir de este mes ({{ now()->locale('es')->monthName }}) inclusive</li></FONT></td>
-                                  @else
-                                    <td class="bg-dark"><FONT COLOR="white"><li>Se generara el pago de este mes ({{ now()->locale('es')->monthName }})</li></FONT></td>
-                                  @endif
-                                </div>
-                            </tr>
-                          </tbody>
-                        </table>
+                      <table class="table table-borderless">
+                        <tbody>
+                          <tr>
+                            <td class="text-left"><i class="fa fa-user mr-1"></i>Usuario</td>
+                            <td class="text-right">{{ $userSelected->getFullNameAttribute() }}</td>
+                          </tr>
+                          <tr>
+                            <td class="text-left"><i class="fa fa-credit-card mr-1" aria-hidden="true"></i>Abonado</td>
+                            <td class="text-right">$ <p class="d-inline" id="valuePrice"></p></td>
+                          </tr>
+                          <tr>
+                            <td class="text-left"><i class="fa fa-calendar mr-1" aria-hidden="true"></i>Fecha</td>
+                            <td class="text-right" id="valueDate"></td>
+                          </tr>
+                          <tr>
+                            <td class="text-left"><i class="fa fa-flag mr-1" aria-hidden="true"></i>Plan activo</td>
+                            <td class="text-right">{{ $subscription->name }}</td>
+                          </tr>
+                          <tr>
+                            <td class="text-left"><i class="fa fa-flag mr-1" aria-hidden="true"></i>Estado del pago</td>
+                            <td class="text-right"><p id="valueStatus"></p></td>
+                          </tr>                          
+                        </tbody>
+                      </table>
+                      
+                      <hr>
+                      
+                      <span class="text-danger"><i class="fa fa-exclamation-triangle mr-1 mb-1" aria-hidden="true"></i></span>
+                      <div class="text-center">             
+                        @if($amounthMonthPay != 1)
+                          <p class="d-inline">Cantidad de pagos a generar: <span class="font-weight-bold" id="valueInput"></span></p> 
+                          <p>Los pagos se generaran a partir de este mes {{ now()->locale('es')->monthName }} <span class="font-weight-bold">inclusive</span></p>
+                        @else 
+                          <p>Se generara el pago en este mes <span id="monthToPay" class="font-weight-bold"></span></p>
+                        @endif
                       </div>
+
                     </div>
-                    <div class="modal-footer text-left">
-                      <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar <i class="fa fa-times" aria-hidden="true"></i></button>
-                      <button type="submit" class="btn btn-success">Confirmar <i class="fa fa-check" aria-hidden="true"></i></button>
+
+                    <div class="modal-footer d-flex justify-content-between">
+                      <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fa fa-times mr-1" aria-hidden="true"></i>Cancelar</button>
+                      <button type="submit" class="btn btn-success"><i class="fa fa-check mr-1" aria-hidden="true"></i>Confirmar</button>
                     </div>
+
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
@@ -210,15 +220,38 @@
 @section('custom_js')
 <script>
    function getValueInput (){
-      let inputValue = document.getElementById("domTextElement").value; 
-        document.getElementById("valueInput").innerHTML = inputValue; 
-        
-        inputValue = document.getElementById("priceInput").value; 
-        document.getElementById("valuePrice").innerHTML = inputValue;
-        console.log(inputValue);
+      //recupero los valores
+      var toPay = document.getElementById("priceInput").value;
+      var paymentStatus = document.getElementById("statusPayment").value;
 
-        inputValue = document.getElementById("statusPayment").value; 
-          document.getElementById("valueStatus").innerHTML = inputValue;
+      var date = document.getElementById("date").value;
+      var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      var newDate = new Date(date).toLocaleDateString("es-Es", options);
+      
+      //asigno valores al modal
+      document.getElementById("valuePrice").textContent = toPay;
+      document.getElementById("valueDate").textContent = newDate;
+      
+      //harcodeadeado
+      if (paymentStatus == 1){
+        document.getElementById("valueStatus").textContent = "Pendiente"; 
+      }      
+      if (paymentStatus == 2){
+        document.getElementById("valueStatus").textContent = "Pagado"; 
+      }
+      if (paymentStatus == 3){
+        document.getElementById("valueStatus").textContent = "Cancelado"; 
+      }   
+      
+      if (document.getElementById("valueInput") != null){
+        var monthsToPay = document.getElementById("monthsToPay").value; 
+        document.getElementById("valueInput").textContent = monthsToPay;
+      }
+
+      if (document.getElementById("monthToPay") != null){
+        document.getElementById("monthToPay").textContent = new Date(date).toLocaleDateString("es-Es", {month: 'long'});
+      }
+
     }
 
     
@@ -230,6 +263,5 @@
               width: '100%',
         });
     });
-
 </script>
 @endsection
