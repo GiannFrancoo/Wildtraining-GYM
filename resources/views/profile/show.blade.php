@@ -137,7 +137,7 @@
                             @foreach ($userPayments as $payment)  
                                 <tr>                               
                                     <td>${{ $payment->price }}</td>
-                                    <td>{{ $payment->date->format('d/m/Y') }}</td>
+                                    <td data-sort="{{ strtotime($payment->date) }}">{{ $payment->date->format('d/m/Y') }}</td>
                                     <td>{{ $payment->userSubscription->subscription->name }}</td>
                                     <td><h5><span class="badge badge-pill badge-{{$payment->paymentStatus->color}}">{{ $payment->paymentStatus->name }}</span></h5></td>
                                     <td>
@@ -182,7 +182,7 @@
                             @foreach ($userSubscriptions as $userSubscription)
                                 <tr>                               
                                     <td>{{ $userSubscription->subscription->name }}</td>
-                                    <td data-order="Ymd">{{ $userSubscription->user_subscription_status_updated_at->format('d/m/Y') }}</td>
+                                    <td data-sort="{{ strtotime($payment->date) }}">{{ $userSubscription->user_subscription_status_updated_at->format('d/m/Y') }}</td>
                                     <td><h5><span class="badge badge-pill badge-{{$userSubscription->status->color}}">{{ $userSubscription->status->name }}</td>                                
                                 </tr>
                             @endforeach
