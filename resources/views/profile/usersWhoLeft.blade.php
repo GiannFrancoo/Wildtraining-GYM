@@ -94,7 +94,7 @@
 <script>
     $(document).ready(function () {
         $('#dataTable').DataTable({
-            order: [3, 'desc'],
+            order: [0, 'asc'],
         })
     })
 </script>
