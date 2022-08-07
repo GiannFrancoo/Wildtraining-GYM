@@ -59,7 +59,6 @@ class UserSeeder extends Seeder
             User::updateOrCreate($userAdmin);
         }       
         
-        //User::factory(200)->create();       
-
+        User::factory(10)->create();       
     }
 }

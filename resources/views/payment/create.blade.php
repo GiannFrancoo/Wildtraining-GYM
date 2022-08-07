@@ -161,14 +161,14 @@
                     </div>
 
                     <div class="modal-body">
-                      <table class="table table-borderless">
+                      <table class="table">
                         <tbody>
                           <tr>
-                            <td class="text-left"><i class="fa fa-user mr-1"></i>Usuario</td>
+                            <td class="text-left"><i class="fa fa-user mr-1" aria-hidden="true"></i>Usuario</td>
                             <td class="text-right">{{ $userSelected->getFullNameAttribute() }}</td>
                           </tr>
                           <tr>
-                            <td class="text-left"><i class="fa fa-credit-card mr-1" aria-hidden="true"></i>Abonado</td>
+                            <td class="text-left"><i class="fa fa-dollar-sign mr-1" aria-hidden="true"></i>Abonado</td>
                             <td class="text-right">$ <p class="d-inline" id="valuePrice"></p></td>
                           </tr>
                           <tr>
@@ -180,8 +180,8 @@
                             <td class="text-right">{{ $subscription->name }}</td>
                           </tr>
                           <tr>
-                            <td class="text-left"><i class="fa fa-flag mr-1" aria-hidden="true"></i>Estado del pago</td>
-                            <td class="text-right"><p id="valueStatus"></p></td>
+                            <td class="text-left"><i class="fa fa-lightbulb mr-1" aria-hidden="true"></i>Estado del pago</td>
+                            <td class="text-right"><p id="valueStatus" class="d-inline"></p></td>
                           </tr>                          
                         </tbody>
                       </table>
