@@ -53,7 +53,7 @@
       </div>
   </form>
  
-    @if($userSelected != null)
+  @if($userSelected != null)
     <hr>
     <form action="{{ route('payment.store', ['profile_id' => $userSelected->id]) }}" method="POST">
     @csrf

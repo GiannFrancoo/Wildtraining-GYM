@@ -4,10 +4,43 @@
 
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-2">
-        <h1 class="h3 text-gray-800">{{ __('Pagos pendientes') }}</h1>   
-        <a href="{{ route('payment.generatePendingPayments') }}" type="button" class="btn btn-dark" title="create_pending_payments" method="GET" data-toggle="tooltip"><i class="fa fa-clock mr-1"></i>{{ __('Generar pagos pendientes') }}</a>    
+        <h1 class="h3 text-gray-800">{{ __('Pagos pendientes') }}</h1> 
 
+        <a type="button" class="btn btn-dark" title="Generar pagos pendientes" data-toggle="modal" data-target="#informativeModal"><i class="fa fa-clock mr-1"></i>{{ __('Generar pagos pendientes') }}</a>    
+        
     </div>
+
+    <!-- Informative Modal -->
+    <div class="modal fade" id="informativeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <form action="{{ route('payment.generatePendingPayments') }}">        
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{ __('Generando pagos pendientes') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>Se generaran pagos pendientes a aquellos alumnos que tengan un plan activo y además</p>
+                        <ul>
+                            <li>No tiene ningun pago registrado en este mes.</li>
+                            <li>En caso de tener pagos registrados, pero estan cancelados.</li>
+                        </ul>
+                    </div>
+
+                    <div class="modal-footer d-flex justify-content-between">
+                        <button type="button" class="btn btn-dark" data-dismiss="modal"><i class="fa fa-close mr-1"></i>Cancelar</button>
+                        <button type="submit" class="btn btn-success"><i class="fa fa-check mr-1"></i>Confirmar</button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
 
     @if (session('success'))
         <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
