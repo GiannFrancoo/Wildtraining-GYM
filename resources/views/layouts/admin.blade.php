@@ -204,6 +204,25 @@
             </div>
         </div>
 
+        <!-- Nav Item - Reports -->
+        <li class="nav-item {{ Nav::isRoute('Reports.*') }}">
+            <a class="nav-link" data-toggle="collapse" href="#collapseReports" role="button" aria-expanded="false" aria-controls="collapseReports">
+                <i class="fa fa-bar-chart"></i>
+                <span>{{ __('Reportes') }}</span>
+            </a>
+        </li>
+        <div class="collapse ml-1 {{ Nav::isRoute('report.*', 'show') }}" id="collapseReports"> 
+            <div class="border-left-light collapse-inner">
+                <!-- Report date -->
+                <li class="nav-item {{ Nav::isRoute('report.index') }}">
+                    <a class="nav-link" href="{{ route('report.index') }}">
+                        <i class="fa-solid fa-calendar"></i>
+                        <span>{{ __('Mensual') }}</span>
+                    </a>
+                </li>
+            </div>
+        </div>
+
         <!-- Divider -->
         <hr class="sidebar-divider">
 

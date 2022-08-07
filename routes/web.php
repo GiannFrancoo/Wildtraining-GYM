@@ -4,6 +4,7 @@ use App\Http\Controllers\AssistanceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SubscriptionController;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Auth;
@@ -74,6 +75,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/payment/changeStatus/{payment_id}', [PaymentController::class, 'changeStatus'])->name('payment.changeStatus');
     Route::get('/payment/generatePendingPayments', [PaymentController::class, 'generatePendingPayments'])->name('payment.generatePendingPayments');
    
+    //Route for report
+    Route::get('/report', [ReportController::class, 'index'])->name('report.index');
+    Route::get('/reportMonth', [ReportController::class, 'showMonth'])->name('report.showMonth');
     
     Route::get('/about', function () {
         return view('about');
