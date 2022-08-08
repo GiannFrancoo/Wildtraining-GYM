@@ -35,7 +35,6 @@ class PaymentController extends Controller
             }      
 
             $payments = Payment::orderBy('date','desc')->get();
-
             $paymentStatuses = PaymentStatus::all();
 
             return view('payment.index')
@@ -59,7 +58,6 @@ class PaymentController extends Controller
     public function create($profile_id = null)
     {   
         try{
-            
             $paymentStatuses = PaymentStatus::all();
             $users = User::has('lastSubscription')->get();
             $userSelected = null;

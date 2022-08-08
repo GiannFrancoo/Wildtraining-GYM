@@ -31,45 +31,81 @@
 @endif
 
 
-    <form action="{{ route('report.index') }}" method="GET">
-    @csrf
-        <div class="card shadow mb-4">
-            <div class="card-header">
-                <h6 class="font-weight-bold text-danger">{{ __('Indique el intervalo de fecha') }}</h6>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <label class="form-control-label" for="month">{{ __('Seleccione el mes') }}<span class="small text-danger">*</span></label>
-                        <select class="custom-select" name="month">
-                            @foreach(range(1,12) as $month)
-                                <option value="{{$month}}">
-                                    {{date("M", strtotime('2016-'.$month))}}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-lg-6">
-                        <label class="form-control-label" for="year">{{ __('Seleccione el año') }}<span class="small text-danger">*</span></label>
-                        <select class="custom-select" name="year">
-                            @for ($year = date('Y'); $year > date('Y') - 100; $year--)
-                                <option value="{{$year}}">{{$year}}</option>
-                            @endfor
-                        </select>
+    <div class="row">
+        <!-- Cantidad de pagos -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Cantidad de pagos</div>                            
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $payments->count() }}</div>
+                        </div> 
+                        <div class="col-auto" id="eyeMonthly">
+                            <i class="fa fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="card-footer text-center">
-                <button type="submit" name="btnSearch" class="btn btn-dark"><i class="fa fa-search mr-1"></i>Buscar</button>
+        </div>
+
+        <!-- paymentGenerated -->
+        <div class="col-xl-3 col-md-6 mb-4">      
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dinero acumulado</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="eyeAnnualDiv">${{ $paymentGenerated }}</div>
+                        </div>
+                        <div class="col-auto" id="eyeAnnual">
+                            <i class="fa fa-sack-dollar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </form>
 
-    @if($selectedDate != null)
+        <!-- New users -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-dark shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">{{ __('Usuarios nuevos') }}</div>
+                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $cantNewUsers }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--  -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="mb-4">
 
     <!-- Payments table -->
     <div class="row">
-        <div class="col-12">
+        <div class="col-lg-8">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
                     <h6 class="m-0 font-weight-bold text-danger">{{ __('Pagos registrados en la fecha') }}</h6>
@@ -80,18 +116,43 @@
                         <thead>
                             <tr>
                                 <th>Usuario</th>
+                                <th>Abonado</th>
                                 <th>Fecha</th>
-                                <th>Estado</th>
                                 <th>Plan</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                                <th>Cambiar estado</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($payments as $payment)
                                 <tr>
-                                    <td>$ {{ $payment->price }}</td>
-                                    <td>{{ $payment->date }}</td>
-                                    <td>{{ $payment->payment_status_id }}</td>
-                                    <td>{{ $payment->date }}</td>
+                                    @if($payment->userSubscription->user != NULL)
+                                        <td>{{ $payment->userSubscription->user->getFullNameAttribute() }}</td>
+                                    @endif
+                                    <th>${{ $payment->price }}</th>
+                                    <td data-sort="{{ strtotime($payment->date) }}">{{ $payment->date->format('d/m/Y') }}</td> 
+                                    <td>{{ $payment->userSubscription->subscription->name }}</td>                                    
+                                    <td><h5><span class="badge badge-pill badge-{{$payment->paymentStatus->color}}">{{ $payment->paymentStatus->name }}</span></h5></td>                                    
+                                    <td class="text-center d-flex justify-content-center">                                    
+                                        <a href="{{ route('payment.edit', ['payment_id' => $payment->id]) }}" type="button" class="btn btn-circle btn-secondary" title="Edit" data-toggle="tooltip"><i class="fa fa-pencil"></i></a>
+                                        <div>
+                                            <form action="{{ route('payment.destroy', ['payment_id' => $payment->id]) }}" method="POST"> 
+                                                @csrf 
+                                                @method("DELETE") 
+                                                <button type="submit" class="btn btn-circle btn-danger ml-2" onclick="return confirm('¿Desea borrar pago seleccionado?')" title="Delete" data-toggle="tooltip"><i class="fa fa-trash"></i></button> 
+                                            </form>  
+                                        </div>                          
+                                    </td>  
+                                    <td>  
+                                        <form action="{{ route('payment.changeStatus', ['payment_id' => $payment->id]) }}" method="GET">
+                                            <select class="custom-select" style="text-align:center;" onChange="this.form.submit()" name="new_payment_status_id" value="old(new_payment_status_id)">                                           
+                                                @foreach($paymentStatuses as $paymentStatus)    
+                                                    <option value="{{ $paymentStatus->id }}"  {{($payment->paymentStatus->id === $paymentStatus->id) ? 'Selected' : ''}}>{{ $paymentStatus->name }}</option>
+                                                @endforeach
+                                            </select>   
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -101,13 +162,9 @@
         </div>   
     </div>
 
-    @endif
-
-
 @endsection
 
-<script>
-
+<script type="text/javascript">
     $(document).ready(function () {
         $('#select2').select2({
                 lenguage: 'es',
@@ -115,4 +172,9 @@
                 width: '100%',
         });
     });
+
+
+    //Graphic assistance
+
+    //Graphic payments
 </script>
