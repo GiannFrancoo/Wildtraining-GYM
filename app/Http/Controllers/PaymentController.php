@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use App\Models\PaymentStatus;
 use App\Models\UserSubscription;
 use App\Models\UserSubscriptionStatus;
-use Illuminate\Database\Eloquent\Collection;
 use App\Http\Requests\Payment\PaymentStoreRequest;
 use App\Http\Requests\Payment\PaymentUpdateRequest;
 
@@ -62,14 +61,12 @@ class PaymentController extends Controller
         try{
             
             $paymentStatuses = PaymentStatus::all();
-            $users = User::whereHas('lastSubscription')->get();
+            $users = User::has('lastSubscription')->get();
             $userSelected = null;
             $subscription = null;
             $paymentStatusDefault = PaymentStatus::findOrFail(PaymentStatus::PAID);
            
-
-
-            if (isset($_GET['user']) && ($_GET['user'] != 'withoutUser') || $profile_id != null) { 
+            if (isset($_GET['user']) || $profile_id != null) { 
                 if($profile_id != null){
                     $userSelected = User::with('lastSubscription')->find($profile_id);
                 }
@@ -92,7 +89,7 @@ class PaymentController extends Controller
                 'userSelected' => $userSelected,
                 'subscription' => $subscription,
                 'amounthMonthPay' => 1,
-                'priceAmounthMonthPay' => null,
+                'priceAmounthMonthPay' => 1,
                 'paymentStatusDefault' => $paymentStatusDefault,
             ]);
         }
@@ -110,7 +107,7 @@ class PaymentController extends Controller
     public function store(PaymentStoreRequest $request, $profile_id)
     {
         try{
-            /*if (isset($_POST['btnApply'])) {
+            if (isset($_POST['btnApply'])) {
                 $paymentStatuses = PaymentStatus::all();
                 $users = User::has('lastSubscription')->get();
                 $userSelected = User::with('lastSubscription')->find($profile_id);
@@ -127,7 +124,7 @@ class PaymentController extends Controller
                     'priceAmounthMonthPay' => $priceAmounthMonthPay,
                     'paymentStatusDefault' => $paymentStatusDefault,
                 ]);
-            }*/
+            }
 
             $user = User::with('lastSubscription')->findOrfail($profile_id);
             $userSubscription = $user->lastSubscription->first()->pivot;
