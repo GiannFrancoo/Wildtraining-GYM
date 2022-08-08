@@ -26,6 +26,7 @@ class PaymentController extends Controller
     {
         try{
             $monthlyRevenue = 0;
+            $userSelected = null;
             $users = User::has('lastSubscription')
                 ->with('lastSubscription')
                 ->get();
@@ -43,6 +44,7 @@ class PaymentController extends Controller
                     'payments' => $payments,
                     'paymentStatuses' => $paymentStatuses,
                     'monthlyRevenue' => $monthlyRevenue,
+                    'userSelected' => $userSelected
                 ]);
         }
         catch(Exception $e){
@@ -108,7 +110,7 @@ class PaymentController extends Controller
     public function store(PaymentStoreRequest $request, $profile_id)
     {
         try{
-            if (isset($_POST['btnApply'])) {
+            /*if (isset($_POST['btnApply'])) {
                 $paymentStatuses = PaymentStatus::all();
                 $users = User::has('lastSubscription')->get();
                 $userSelected = User::with('lastSubscription')->find($profile_id);
@@ -125,7 +127,7 @@ class PaymentController extends Controller
                     'priceAmounthMonthPay' => $priceAmounthMonthPay,
                     'paymentStatusDefault' => $paymentStatusDefault,
                 ]);
-            }
+            }*/
 
             $user = User::with('lastSubscription')->findOrfail($profile_id);
             $userSubscription = $user->lastSubscription->first()->pivot;
