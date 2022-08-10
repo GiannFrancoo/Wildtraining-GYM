@@ -24,6 +24,6 @@ class UserSubscriptionSeeder extends Seeder
             UserSubscription::updateOrCreate($userSubscription);
         } 
 
-        UserSubscription::factory(20)->create();
+        UserSubscription::factory(30)->create();
     }
 }
