@@ -212,12 +212,19 @@
             </a>
         </li>
         <div class="collapse ml-1 {{ Nav::isRoute('report.*', 'show') }}" id="collapseReports"> 
-            <div class="border-left-light collapse-inner">
-                <!-- Report date -->
-                <li class="nav-item {{ Nav::isRoute('report.index') }}">
-                    <a class="nav-link" href="{{ route('report.index') }}">
-                        <i class="fa-solid fa-calendar"></i>
+            <div class="border-left-light collapse-inner">                
+                <!-- Report date by month -->
+                <li class="nav-item {{ Nav::isRoute('report.indexMonth') }}">
+                    <a class="nav-link" href="{{ route('report.indexMonth') }}">
+                        <i class="fa-solid fa-calendar-week"></i>
                         <span>{{ __('Mensual') }}</span>
+                    </a>
+                </li>
+                <!-- Report date by year -->
+                <li class="nav-item {{ Nav::isRoute('report.indexYear') }}">
+                    <a class="nav-link" href="{{ route('report.indexYear') }}">
+                        <i class="fa-solid fa-calendar-xmark"></i>
+                        <span>{{ __('Anual') }}</span>
                     </a>
                 </li>
             </div>

@@ -76,8 +76,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/payment/generatePendingPayments', [PaymentController::class, 'generatePendingPayments'])->name('payment.generatePendingPayments');
    
     //Route for report
-    Route::get('/report', [ReportController::class, 'index'])->name('report.index');
+    Route::get('/report/month', [ReportController::class, 'indexMonth'])->name('report.indexMonth');
     Route::get('/reportMonth', [ReportController::class, 'showMonth'])->name('report.showMonth');
+    Route::get('/report/year', [ReportController::class, 'indexYear'])->name('report.indexYear');
+    Route::get('/reportYear', [ReportController::class, 'showYear'])->name('report.showYear');
     
     Route::get('/about', function () {
         return view('about');

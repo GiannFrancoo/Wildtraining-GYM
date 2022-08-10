@@ -5,30 +5,24 @@
   <!-- Page Heading -->
   <h1 class="h3 mb-4 text-gray-800">{{ __('Registro por mes') }}</h1>
 
-@if (session('success'))
-    <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-@endif
+    @if (session('success'))
+        <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
 
-@if (session('status'))
-    <div class="alert alert-success border-left-success" role="alert">
-        {{ session('status') }}
-    </div>
-@endif
-
-@if ($errors->any())
-    <div class="alert alert-danger border-left-danger" role="alert">
-        <ul class="pl-4 my-2">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+    @if ($errors->any())
+        <div class="alert alert-danger border-left-danger" role="alert">
+            <ul class="pl-4 my-2">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
 
     <div class="row">
@@ -55,7 +49,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dinero acumulado</div>
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Dinero recaudado</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800" id="eyeAnnualDiv">${{ $paymentGenerated }}</div>
                         </div>
                         <div class="col-auto" id="eyeAnnual">
@@ -72,7 +66,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">{{ __('Usuarios nuevos') }}</div>
+                            <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">{{ __('Usuarios registrado') }}</div>
                             <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $cantNewUsers }}</div>
                         </div>
                         <div class="col-auto">
@@ -105,10 +99,10 @@
 
     <!-- Payments table -->
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                    <h6 class="m-0 font-weight-bold text-danger">{{ __('Pagos registrados en la fecha') }}</h6>
+                    <h6 class="m-0 font-weight-bold text-danger"> Pagos registrados en el año: {{ $year }}</h6>
                     <a href="{{ route('payment.create') }}" type="button" class="btn btn-dark" title="add" method="GET" data-toggle="tooltip"><i class="fa fa-add mr-1"></i>{{ __('Nuevo pago') }}</a>
                 </div>
                 <div class="card-body table-responsive">
@@ -161,10 +155,20 @@
             </div>   
         </div>   
     </div>
-
 @endsection
 
-<script type="text/javascript">
+@section('custom_js')
+<script>
+
+    //Payments table
+    $(document).ready(function () {
+        $('#tableLastPayments').DataTable( {
+            order: [[0, 'asc']],
+        })
+    });
+    
+
+    //select2
     $(document).ready(function () {
         $('#select2').select2({
                 lenguage: 'es',
@@ -178,3 +182,4 @@
 
     //Graphic payments
 </script>
+@endsection
