@@ -72,20 +72,18 @@ class ProfileController extends Controller
                 ->latest()
                 ->get();
 
-            $menUsers = $users
+            $totalUsersWithActiveSubscription = $users
+                ->filter(fn($user) => $user->lastSubscription->isNotEmpty());
+
+            $menUsers = $totalUsersWithActiveSubscription
                 ->where('gender_id', Gender::MAN)
                 ->count();
 
-            $womenUsers = $users->count() - $menUsers;
+            $womenUsers = $totalUsersWithActiveSubscription->count() - $menUsers;
                 
-            $averageAge = $users
+            $averageAge = $totalUsersWithActiveSubscription
                 ->filter(fn($user) => !is_null($user->birthday))
-                ->avg(fn($user) => $user->birthday->age);            
-            
-            $totalUsersWithActiveSubscription = $users
-                ->filter(fn($user) => $user->lastSubscription
-                ->isNotEmpty())
-                ->count();
+                ->avg(fn($user) => $user->birthday->age);                      
 
             return view('profile.index',)->with([
                 'users' => $users, 
@@ -93,7 +91,7 @@ class ProfileController extends Controller
                 'womenUsers' => $womenUsers,
                 'averageAge' => floor($averageAge),
                 'subscriptions' => $subscriptions,
-                'totalUsersWithActiveSubscription' => $totalUsersWithActiveSubscription,
+                'totalUsersWithActiveSubscription' => $totalUsersWithActiveSubscription->count(),
             ]);
         }
         catch(Exception $e){
