@@ -82,7 +82,7 @@ class ReportController extends Controller
                     return Carbon::parse($payment->date)->format('m');
                 });
 
-            $array= [
+            $arrayPayments= [
                 1 => '0',
                 2 => '0',
                 3 => '0',
@@ -97,17 +97,33 @@ class ReportController extends Controller
                 12 => '0',
              ];
 
-            $revenuePerMonth = $revenuePerMonth->each(function($month, $key) use (&$array){
-                $array[(int)$key] = array_sum($month->map(function($payment){
+            $revenuePerMonth = $revenuePerMonth->each(function($month, $key) use (&$arrayPayments){
+                $arrayPayments[(int)$key] = array_sum($month->map(function($payment){
                     return $payment->price;
                 })->toArray());
             });
+
+            //Payment statuses
+            $paymentStatusCount = Payment::whereBetween('date', [$initDate, $endDate])
+                ->get()
+                ->groupBy('payment_status_id')
+                ->toArray();
+
+            $paymentStatusCountArray = [];
+            foreach ($paymentStatusCount as $key => $value) {
+                $paymentStatusCountArray[$key] = count($value);
+            }
+            $paymentStatusCountArray = array_values($paymentStatusCountArray);
 
 
             // Users
             $users = User::whereBetween('start_date', [$initDate, $endDate])->with('lastSubscription')->get();
 
+
+
             // Assistances
+
+
 
             return view('report.show_year')
             ->with([
@@ -116,7 +132,8 @@ class ReportController extends Controller
                 'paymentStatuses' => $paymentStatuses,
                 'paymentGenerated' => $paymentGenerated,
                 'users' => $users,
-                'array' => $array,
+                'arrayPayments' => $arrayPayments,
+                'paymentStatusCountArray' => $paymentStatusCountArray,
             ]);
         }
         catch(Exception $e){

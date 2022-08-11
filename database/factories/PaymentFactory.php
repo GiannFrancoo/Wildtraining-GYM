@@ -22,8 +22,9 @@ class PaymentFactory extends Factory
         return [      
             'user_subscription_id'      => UserSubscription::inRandomOrder()->first()->id,
             'price'                     => rand(2500, 5000),
-            'date'                      => Carbon::now()->subYears(rand(1, 55))->subMonth(rand(1, 12))->subDay(rand(1, 20)),
-            'payment_status_id'         => rand(1, 3),
+            'date'                      => Carbon::now()->subYears(rand(0, 3))->subMonth(rand(1, 12))->subDay(rand(1, 20)),
+            'payment_status_id'         => rand(1,2),
+            // 'payment_status_id'         => rand(1,3),
             'payment_status_updated_at' => Carbon::now(),
         ];
     }

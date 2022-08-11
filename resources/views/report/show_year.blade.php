@@ -97,12 +97,25 @@
     <hr class="mb-4">
 
     <!-- Renevue x month chart -->
-    <div class="row">
-        <div class="col-12 mb-4">
+    <div class="row d-flex align-items-stretch">
+        <div class="col-md-8 mb-4">
             <div class="card shadow ">
                 <div class="card-body">
                     <canvas id="revenuePerMonth" width="400" height="400"></canvas>
                 </div> 
+                <div class="card-footer text-center">
+                    <p class="d-inline"><span class="text-danger">*</span>Solo se tiene en cuenta los pagos con estado <span class="text-success">pagado</span></p>
+                </div>
+            </div>   
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card shadow ">
+                <div class="card-body">
+                    <canvas id="paymentsStatus" width="400" height="400"></canvas>
+                </div> 
+                <div class="card-footer text-center">
+                    <p class="d-inline"><span class="text-danger">*</span>Estados de los pagos</span></p>
+                </div>
             </div>   
         </div>
     </div>
@@ -219,6 +232,7 @@
 @endsection
 
 @section('custom_js')
+<!-- Payments/User table  -->
 <script>
 
     //Payments table
@@ -245,20 +259,17 @@
     });  
 </script>
 
+<!-- Payments x month Bar Chart -->
 <script>
-    //Payments x month chart
-
     // Utils.months({ count:7 });
     const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
     
-    const revenuePerMonth = <?php echo json_encode(array_values($array)) ?>;
-    // [65, 59, 80, 81, 56, 55, 40, 10, 20, 30, 44, 10]
-    
+    const revenuePerMonth = <?php echo json_encode(array_values($arrayPayments)) ?>;
 
     const data = {
         labels: months,
         datasets: [{
-            label: 'Pagos registrados',
+            label: 'Dinero recaudado $',
             data: revenuePerMonth,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
@@ -286,17 +297,56 @@
         type: 'bar',
         data: data,
         options: {
-            responsive:true,
+            responsive: true,
             maintainAspectRatio: false,
             scales: {
                 y: {
-                    beginAtZero: true
-                }
-            }
+                    beginAtZero: true,
+                },
+            },
         },
     };
 
     const myChart = new Chart( document.getElementById('revenuePerMonth'), config);
+
+</script>
+
+<!-- Payment status Doughnut Chart -->
+<script>
+
+    const style = getComputedStyle(document.body);
+    let success = style.getPropertyValue('--success');
+    let secondary = style.getPropertyValue('--secondary');
+    let warning = style.getPropertyValue('--warning');
+
+    const dataDoughnut = {
+        labels: [
+            'Pendientes',
+            'Pagados',
+            'Cancelados'
+        ],
+        datasets: [{
+            label: 'Estados de los pagos',
+            data: <?php echo json_encode($paymentStatusCountArray) ?>,//[300, 50, 100],
+            backgroundColor: [
+                warning,
+                success,
+                secondary,
+            ],
+            hoverOffset: 4
+        }]
+    };
+
+    const configDoughnut = {
+        type: 'doughnut',
+        data: dataDoughnut,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+        },
+    };
+
+    const myChartDoughnut = new Chart(document.getElementById('paymentsStatus'), configDoughnut);
 
 </script>
 @endsection
